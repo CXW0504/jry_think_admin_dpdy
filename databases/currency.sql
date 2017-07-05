@@ -2,7 +2,8 @@
 SQLyog v10.2 
 MySQL - 5.5.53 : Database - currency
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,15 +13,15 @@ MySQL - 5.5.53 : Database - currency
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`currency` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`jry_think_admin_dpdy` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `currency`;
+USE `jry_think_admin_dpdy`;
 
 /*Table structure for table `file` */
 
-DROP TABLE IF EXISTS `file`;
+DROP TABLE IF EXISTS `dpdy_file`;
 
-CREATE TABLE `file` (
+CREATE TABLE `dpdy_file` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ext` varchar(30) DEFAULT NULL COMMENT '文件后缀名称',
   `key` varchar(30) DEFAULT NULL COMMENT '文件类型关键字，如果是图片则为image',
@@ -41,9 +42,9 @@ CREATE TABLE `file` (
 
 /*Table structure for table `file_link` */
 
-DROP TABLE IF EXISTS `file_link`;
+DROP TABLE IF EXISTS `dpdy_file_link`;
 
-CREATE TABLE `file_link` (
+CREATE TABLE `dpdy_file_link` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `file_id` int(10) unsigned NOT NULL COMMENT '图片编号',
   `target_id` int(10) unsigned NOT NULL COMMENT '目标编号',
@@ -61,9 +62,9 @@ CREATE TABLE `file_link` (
 
 /*Table structure for table `user` */
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `dpdy_user`;
 
-CREATE TABLE `user` (
+CREATE TABLE `dpdy_user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(200) DEFAULT NULL COMMENT '登录用户名',
   `password` char(32) DEFAULT NULL COMMENT 'MD5加密后的密码',
@@ -81,9 +82,9 @@ CREATE TABLE `user` (
 
 /*Table structure for table `user_blood` */
 
-DROP TABLE IF EXISTS `user_blood`;
+DROP TABLE IF EXISTS `dpdy_user_blood`;
 
-CREATE TABLE `user_blood` (
+CREATE TABLE `dpdy_user_blood` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `blood_name` varchar(200) DEFAULT NULL COMMENT '血型名称',
   `blood_type` tinyint(3) unsigned DEFAULT '1' COMMENT '血型类型，1普通ABO型，2Rh型号',
@@ -97,9 +98,9 @@ CREATE TABLE `user_blood` (
 
 /*Table structure for table `user_city` */
 
-DROP TABLE IF EXISTS `user_city`;
+DROP TABLE IF EXISTS `dpdy_user_city`;
 
-CREATE TABLE `user_city` (
+CREATE TABLE `dpdy_user_city` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(100) NOT NULL COMMENT '城市名称',
   `speel` varchar(100) DEFAULT NULL COMMENT '城市拼音',
@@ -3346,9 +3347,9 @@ insert  into `user_city`(`id`,`name`,`speel`,`code`,`abbreviation`,`commend`) va
 
 /*Table structure for table `user_group` */
 
-DROP TABLE IF EXISTS `user_group`;
+DROP TABLE IF EXISTS `dpdy_user_group`;
 
-CREATE TABLE `user_group` (
+CREATE TABLE `dpdy_user_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL COMMENT '权限组名称，限制60中文汉字',
   `content` text COMMENT '权限详情。多个权限用英文半角逗号区分。如：Admin/Index/index,Admin/Index/chat',
@@ -3362,9 +3363,9 @@ CREATE TABLE `user_group` (
 
 /*Table structure for table `user_info` */
 
-DROP TABLE IF EXISTS `user_info`;
+DROP TABLE IF EXISTS `dpdy_user_info`;
 
-CREATE TABLE `user_info` (
+CREATE TABLE `dpdy_user_info` (
   `id` int(10) unsigned NOT NULL COMMENT '用户编号，注册用户时也需要在此处添加一条记录',
   `sex` tinyint(3) unsigned DEFAULT '0' COMMENT '性别，0保密1男2女',
   `birthdy` date DEFAULT NULL COMMENT '用户生日',
@@ -3383,9 +3384,9 @@ CREATE TABLE `user_info` (
 
 /*Table structure for table `user_log` */
 
-DROP TABLE IF EXISTS `user_log`;
+DROP TABLE IF EXISTS `dpdy_user_log`;
 
-CREATE TABLE `user_log` (
+CREATE TABLE `dpdy_user_log` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_type` tinyint(3) unsigned DEFAULT '1' COMMENT '操作类型：1用户登录，2用户注册，3用户找回密码，97其他添加操作，98其他更新操作，99其他删除操作',
   `user_name` varchar(100) DEFAULT NULL COMMENT '操作的表名',
@@ -3405,9 +3406,9 @@ CREATE TABLE `user_log` (
 
 /*Table structure for table `user_office` */
 
-DROP TABLE IF EXISTS `user_office`;
+DROP TABLE IF EXISTS `dpdy_user_office`;
 
-CREATE TABLE `user_office` (
+CREATE TABLE `dpdy_user_office` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `office_name` varchar(200) DEFAULT NULL COMMENT '职业名称，限制60中文汉字',
   `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间',
@@ -3421,9 +3422,9 @@ CREATE TABLE `user_office` (
 
 /*Table structure for table `user_school` */
 
-DROP TABLE IF EXISTS `user_school`;
+DROP TABLE IF EXISTS `dpdy_user_school`;
 
-CREATE TABLE `user_school` (
+CREATE TABLE `dpdy_user_school` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL COMMENT '名称',
   `fid` int(10) unsigned DEFAULT '0' COMMENT '父级编号[如果是0则为顶级，即城市列表]',

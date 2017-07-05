@@ -1,1 +1,4 @@
 /nbproject/
+/Public/Runtime
+/Public/Upload
+Application/Common/Conf/config.php

@@ -156,11 +156,15 @@ class Verify {
         $codeNX = 0; // 验证码第N个字符的左边距
         if($this->useZh){ // 中文验证码
             for ($i = 0; $i<$this->length; $i++) {
+                // 修改为每个验证码字符一个颜色
+                $this->_color = imagecolorallocate($this->_image, mt_rand(1,150), mt_rand(1,150), mt_rand(1,150));
                 $code[$i] = iconv_substr($this->zhSet,floor(mt_rand(0,mb_strlen($this->zhSet,'utf-8')-1)),1,'utf-8');
                 imagettftext($this->_image, $this->fontSize, mt_rand(-40, 40), $this->fontSize*($i+1)*1.5, $this->fontSize + mt_rand(10, 20), $this->_color, $this->fontttf, $code[$i]);
             }
         }else{
             for ($i = 0; $i<$this->length; $i++) {
+                // 修改为每个验证码字符一个颜色
+                $this->_color = imagecolorallocate($this->_image, mt_rand(1,150), mt_rand(1,150), mt_rand(1,150));
                 $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet)-1)];
                 $codeNX  += mt_rand($this->fontSize*1.2, $this->fontSize*1.6);
                 imagettftext($this->_image, $this->fontSize, mt_rand(-40, 40), $codeNX, $this->fontSize*1.6, $this->_color, $this->fontttf, $code[$i]);

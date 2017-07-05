@@ -27,10 +27,10 @@ return array(
     // 此处配置为远程数据库配置
     // 'DB_TYPE' =>  'mysql',     // 数据库类型 默认配置为mysql，故此处已注释
     'DB_HOST' =>  'localhost', // 服务器地址
-    'DB_NAME' =>  'xiaoyutab_emlog',          // 数据库名
-    'DB_USER' =>  'emlog_xiaoyutab',      // 用户名
-    'DB_PWD' =>  '5YYoXAxUdcj0&XgY',          // 密码
-    'DB_PREFIX' =>  'emlog_',    // 数据库表前缀
+    'DB_NAME' =>  'jry_think_admin_dpdy', // 数据库名
+    'DB_USER' =>  'root',      // 用户名
+    'DB_PWD' =>  'root',          // 密码
+    'DB_PREFIX' =>  'dpdy_',    // 数据库表前缀
     'DB_PORT' =>  '3306',    // 端口
 //    'DB_CHARSET'  =>  'utf8', // 数据库编码默认采用utf8。默认配置为mysql，故此处已注释
     // 此处配置为本地数据库配置【此文件不允许上传】

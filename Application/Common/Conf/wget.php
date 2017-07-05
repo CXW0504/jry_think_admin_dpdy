@@ -51,4 +51,9 @@ return array(
         'js' => array('wget/viewer/viewer-0.1.0/viewer'),
         'css' => array('wget/viewer/viewer-0.1.0/viewer'),
     ),
+    // 蓝色MUI模板框架
+    'jquery_pintuer' => array(
+        'js' => array('wget/jquery/pintuer-1.0/js/pintuer'),
+        'css' => array('wget/jquery/pintuer-1.0/css/pintuer'),
+    ),
 );

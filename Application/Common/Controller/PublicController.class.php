@@ -80,10 +80,22 @@ class PublicController extends Controller {
      */
     private function _wget() {
         $cconfig = C('SHOW_WGET_LIST');
+        $temp = array();
+        foreach($this->wget as $v){
+            array_unshift($temp,$v);
+        }
+        $this->wget = $temp;
+        unset($temp);
         foreach($this->wget as $name){
             if (isset($cconfig[$name])) {
-                isset($cconfig[$name]['css']) && $this->css($cconfig[$name]['css']);
-                isset($cconfig[$name]['js']) && $this->js($cconfig[$name]['js']);
+                if(isset($cconfig[$name]['css'])){
+                    foreach($cconfig[$name]['css'] as $vs)
+                        array_unshift($this->css,$vs);
+                }
+                if(isset($cconfig[$name]['js'])){
+                    foreach($cconfig[$name]['js'] as $vs)
+                        array_unshift($this->js,$vs);
+                }
             }
         }
         return $this;
