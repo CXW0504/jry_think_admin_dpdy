@@ -35,4 +35,16 @@ class IndexController extends CommonController{
     public function indexAction(){
     	return $this->display();
     }
+    
+    /**
+     * 网站欢迎页面
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-05 18:58:30
+     */
+    public function helloAction(){
+        return $this->display();
+    }
 }
