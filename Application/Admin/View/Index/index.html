@@ -11,7 +11,7 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
   <?php $menu = C('MENU_CONFIG'); ?>
   <foreach item="v" name="menu" key="k">
-    <h2><span class="icon-user"></span>{$v.name}</h2>
+    <h2><span class="{$v.class}"></span>{$v.name}</h2>
     <ul>
         <foreach name="v.content" item="vt" key='kt'>
             <li><a href="{:U($k.'/'.$kt)}" target="right"><span class="icon-caret-right"></span>{$vt}</a></li>
