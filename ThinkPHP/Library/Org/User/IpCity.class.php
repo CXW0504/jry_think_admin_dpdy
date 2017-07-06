@@ -3,6 +3,7 @@ namespace Org\User;
 /**
  * PHP根据IP地址获取所在城市具体实现
  * @adtime 2017-07-03 19:29:12
+ * @copyright (c) 2017, xiaoyutab
  * @author 于茂敬<xiaoyutab@qq.com>
  */
 class IpCity {

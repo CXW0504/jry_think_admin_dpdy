@@ -5,6 +5,10 @@ namespace Admin\Controller;
 use Admin\Model\UserModel;
 
 class CommonController extends \Common\Controller\PublicController {
+    /**
+     * 公用模板，方便权限控制或者登录验证
+     * @return $this
+     */
     public function __construct() {
         parent::__construct();
         if (empty($_SESSION)) {

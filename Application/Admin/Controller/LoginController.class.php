@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Verify;
+use Admin\Model\UserModel;
 
 /**
  * 网站登录页面信息
@@ -35,8 +36,22 @@ class LoginController extends \Common\Controller\PublicController{
     public function loginAction(){
         if(I('post.')){
             $ver = new Verify();
+            $ver->reset = false;
             if($ver->check(I('post.code'))){
-                return $this->success('登录成功',U('Index/index'));
+                $user = new UserModel();
+                // 查询用户的个人信息
+                $info = $user->login(I('post.name'),I('post.password'));
+                if($info){
+                    session('admin.usertime',time());
+                    session('admin.userinfo',$info);
+                    session('admin.usertoken',md5(pass(I('post.password'), microtime ())));
+                    // 设置用户登录标识token
+                    $user->set_user_token($info['id'], session('admin.usertoken'),1);
+                    // 设置用户登录日志
+                    $user->set_user_login_log();
+                    return $this->success('登录成功',U('Index/index'));
+                }
+                return $this->error('用户名/密码输入错误');
             }
             return $this->error('验证码输入错误');
             exit;
@@ -44,6 +59,19 @@ class LoginController extends \Common\Controller\PublicController{
     	return $this->display();
     }
     
+    /**
+     * 退出登录页面
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-06 10:26:45
+     */
+    public function logoutAction(){
+        $_SESSION = array();
+        return $this->success('退出登录成功',U('Login/login'));
+    }
+
     /**
      * 获取验证码信息
      *      备注：验证验证码时请使用(new Verify())->check('xxx')进行验证

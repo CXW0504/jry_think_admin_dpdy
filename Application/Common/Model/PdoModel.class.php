@@ -15,7 +15,7 @@ class PdoModel{
     private $dns = '';
     private $db_user = '';
     private $db_pass = '';
-    private static $db;
+    private $db;
     
     /**
      * 构造函数，作用为创建PDO类
@@ -35,13 +35,13 @@ class PdoModel{
     public function __construct($dns = '',$user = '',$pass = '') {
         // 设置DNS[暂时只支持MySQL]
         if(empty($dns)){
-            $dns = 'mysql:host=localhost;dbname=test;charset=utf8';
+            $dns = 'mysql:host=localhost;dbname=jry_think_admin_dpdy;charset=utf8';
         } else {
             $this->dns = $dns;
         }
         $this->db_user = empty($user) ? 'root' : $user ;// 设置用户
         $this->db_pass = empty($pass) ? 'root' : $pass ;// 设置密码
-        self::$db = new \PDO($this->dns,$this->db_user,$this->db_pass);
+        $this->db = new \PDO($dns,$this->db_user,$this->db_pass);
     }
 
     /**
@@ -56,7 +56,7 @@ class PdoModel{
      * @adtime 2017-06-30 14:45:08
      */
     public function query($sql,$data = array()){
-        $res = self::$db->prepare($sql);
+        $res = $this->db->prepare($sql);
         $res->execute($data);
         return $res->fetchAll(\PDO::FETCH_ASSOC);
     }
