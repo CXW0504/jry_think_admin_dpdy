@@ -1,0 +1,44 @@
+<?php $menu = C('MENU_CONFIG'); ?>
+<foreach name="menu" item="v" key="k">
+    <div class="panel admin-panel" style="margin-bottom:10px;">
+        <div class="panel-head" id="add"><strong><span class="{$v.class}"></span> {$v.name}</strong>&nbsp;&nbsp;&nbsp;<input id="{$k}" type="checkbox">全选</div>
+        <div class="body-content">
+            <div class="form-x">
+                <div class="form-group">
+                    <div class="label">
+                        <label>权限列表&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    </div>
+                    <div class="field" style="padding-top:8px;"> 
+                        <foreach name="v.content" item="vs" key="ks"><input name="content[]" class="{$k}" value="{$k}/{$ks}" type="checkbox">{$vs}</foreach>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>隐藏操作权限&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    </div>
+                    <div class="field" style="padding-top:8px;"> 
+                        <foreach name="v.child" item="vs" key="ks"><input name="content[]" class="{$k}" value="{$k}/{$ks}" type="checkbox">{$vs}</foreach>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</foreach>
+<div class="form-group">
+    <div class="label">
+        <label></label>
+    </div>
+    <div class="field">
+        <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+    </div>
+</div>
+<script>
+<foreach name="menu" item="v" key="k">
+$("#{$k}").click(function(){
+    var stat = this.checked;
+    $("input[class='{$k}']").each(function(){
+        this.checked = stat;
+    });
+});
+</foreach>
+</script>

@@ -99,4 +99,18 @@ class UserController extends CommonController{
         }
         return $this->error('删除失败',U('group_list'));
     }
+    
+    /**
+     * 为权限组进行授权
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-06 21:11:06
+     */
+    public function group_jurisdictionAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+    }
 }
