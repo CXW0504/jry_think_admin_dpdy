@@ -28,6 +28,8 @@ class CommonController extends \Common\Controller\PublicController {
         }
         $user = new UserModel();
         if ($user->checkUser()) {
+            C('TMPL_ACTION_ERROR','Common:ct_error');
+            C('TMPL_ACTION_SUCCESS','Common:ct');
             $this->wget('jquery')->wget('jquery_pintuer')->css('Css/Admin/admin');
             return $this;
         }
