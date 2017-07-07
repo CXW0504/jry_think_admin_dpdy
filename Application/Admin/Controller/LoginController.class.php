@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 use Think\Verify;
 use Admin\Model\UserModel;
+use Admin\Model\UserLogModel;
 
 /**
  * 网站登录页面信息
@@ -68,6 +69,10 @@ class LoginController extends \Common\Controller\PublicController{
      * @adtime 2017-07-06 10:26:45
      */
     public function logoutAction(){
+        $user = new UserModel();
+        $info = $user->get_user_info();
+        $user->del_user_token($info['id'],1);// 退出系统
+        $user->set_user_logout_log();
         $_SESSION = array();
         return $this->success('退出登录成功',U('Login/login'));
     }

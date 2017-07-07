@@ -28,10 +28,20 @@ class CommonController extends \Common\Controller\PublicController {
         }
         $user = new UserModel();
         if ($user->checkUser()) {
+            // 如果用户登录了就进行判断当前操作有无权限访问
             C('TMPL_ACTION_ERROR','Common:ct_error');
             C('TMPL_ACTION_SUCCESS','Common:ct');
             $this->wget('jquery')->wget('jquery_pintuer')->css('Css/Admin/admin');
-            return $this;
+            $info = $user->get_user_info();
+            if(in_array(CONTROLLER_NAME . '/' . ACTION_NAME, C('NO_JURISDICTION'))){
+                // 如果是谁都有权限访问的模块
+                return $this;
+            } else if(in_array(CONTROLLER_NAME . '/' . ACTION_NAME, $info['content'])){
+                // 如果用户有权限访问该模块
+                return $this;
+            } else {
+                return $this->error('抱歉，您没有权限进行此操作',U('Index/hello'));
+            }
         }
         return $this->error('登录信息失效，请重新登录', U('Login/login'));
     }
