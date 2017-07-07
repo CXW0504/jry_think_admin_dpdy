@@ -97,7 +97,7 @@ class UserController extends CommonController{
         if($group->delete_group($info['id'],$info['status'])){
             return $this->success('删除成功');
         }
-        return $this->error('删除失败',U('group_list'));
+        return $this->error('删除失败');
     }
     
     /**
@@ -109,8 +109,15 @@ class UserController extends CommonController{
      * @adtime 2017-07-06 21:11:06
      */
     public function group_jurisdictionAction(){
+        $group = new UserGroupModel();
+        $info = $group->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
         if(!I('post.')){
+            $this->assign('jurisdiction_list', explode(',', $info['content']));
             return $this->display();
         }
+        if($group->save_group_jurisdiction(I('get.id'),$info['content'],I('post.content'))){
+            return $this->success('更新成功',U('group_list'));
+        }
+        return $this->error('更新失败');
     }
 }

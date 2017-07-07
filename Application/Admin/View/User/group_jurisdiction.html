@@ -1,4 +1,5 @@
 <?php $menu = C('MENU_CONFIG'); ?>
+<form action="" method="post">
 <foreach name="menu" item="v" key="k">
     <div class="panel admin-panel" style="margin-bottom:10px;">
         <div class="panel-head" id="add"><strong><span class="{$v.class}"></span> {$v.name}</strong>&nbsp;&nbsp;&nbsp;<input id="{$k}" type="checkbox">全选</div>
@@ -32,6 +33,7 @@
         <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
     </div>
 </div>
+</form>
 <script>
 <foreach name="menu" item="v" key="k">
 $("#{$k}").click(function(){
