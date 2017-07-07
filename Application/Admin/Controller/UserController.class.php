@@ -120,4 +120,25 @@ class UserController extends CommonController{
         }
         return $this->error('更新失败');
     }
+    
+    /**
+     * 获取用户列表页面
+     */
+    public function user_listAction(){
+        $group = new UserGroupModel();
+        $count = $group->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $group->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getList($page->firstRow, $page->listRows);
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
 }

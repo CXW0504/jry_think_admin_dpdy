@@ -209,5 +209,4 @@ class UserModel extends \Common\Model\PdoModel {
             return $info;
         return array();
     }
-
 }
