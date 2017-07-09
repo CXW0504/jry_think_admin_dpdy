@@ -78,38 +78,13 @@ class PublicController extends Controller {
      * @return object       当前对象
      * 备注：相应插件需要配置在Common/Conf/config.php文件中
      */
-    private function _wget() {
+    public function wget($name = 'ueditor') {
         $cconfig = C('SHOW_WGET_LIST');
-        $temp = array();
-        foreach($this->wget as $v){
-            array_unshift($temp,$v);
-        }
-        $this->wget = $temp;
-        unset($temp);
-        foreach($this->wget as $name){
-            if (isset($cconfig[$name])) {
-                if(isset($cconfig[$name]['css'])){
-                    foreach($cconfig[$name]['css'] as $vs)
-                        array_unshift($this->css,$vs);
-                }
-                if(isset($cconfig[$name]['js'])){
-                    foreach($cconfig[$name]['js'] as $vs)
-                        array_unshift($this->js,$vs);
-                }
-            }
-        }
-        return $this;
-    }
-    
-    /**
-     * 设置页面的WGET挂件列表，即页面中需要哪些插件
-     * @param string $value 插件名称
-     * @return object 当前对象
-     */
-    public function wget($value = '') {
-        if (!empty($value)) {
-            is_string($value) && $this->wget[] = trim($value);
-            is_array($value) && $this->wget = array_merge($this->wget, $value);
+        if (isset($cconfig[$name])) {
+            if (isset($cconfig[$name]['css']))
+                $this->css($cconfig[$name]['css']);
+            if (isset($cconfig[$name]['js']))
+                $this->js($cconfig[$name]['js']);
         }
         return $this;
     }
@@ -297,7 +272,7 @@ class PublicController extends Controller {
      * @return mixed
      */
     public function display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') {
-        $this->_wget()->assign(array(
+        $this->assign(array(
             '__a_title__' => $this->title,
             '__a__css__' => $this->css,
             '__a_js__' => $this->js,

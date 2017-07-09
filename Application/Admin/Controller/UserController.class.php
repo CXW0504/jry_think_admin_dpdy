@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Admin\Model\UserGroupModel;
+use Admin\Model\UserModel;
 use Think\Page;
 /**
  * 网站首页信息
@@ -123,10 +124,19 @@ class UserController extends CommonController{
     
     /**
      * 获取用户列表页面
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-09 11:56:30
      */
     public function user_listAction(){
+        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $group = new UserGroupModel();
-        $count = $group->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getCount();
+        $list = $group->getList(0, 100);
+        $this->assign('group_list',$list);
+        $user = new UserModel();
+        $count = $user->get_count(I('get.keywords',''),I('get.group_id',-1,'intval'),I('get.times',''),I('get.times_end',''));
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -134,11 +144,59 @@ class UserController extends CommonController{
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $list = $group->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getList($page->firstRow, $page->listRows);
+        $list = $user->get_list(I('get.keywords',''),I('get.group_id',-1,'intval'),I('get.times',''),I('get.times_end',''),$page->firstRow, $page->listRows);
         return $this->assign(array(
             'count' => $count,
             'list' => $list,
             'page' => $page->show(),
         ))->display();
+    }
+    
+    /**
+     * 添加用户操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-09 15:12:18
+     */
+    public function user_addAction(){
+        $user = new UserModel();
+        if(!I('post.')){
+            $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
+            $group = new UserGroupModel();
+            $list = $group->getList(0, 100);
+            $info = $user->get_user_info();
+            if($info['group_id'] == 0){
+                array_unshift($list, array('id'=>0,'name'=>'超级管理员'));
+            }
+            $this->assign('group_list',$list);
+            return $this->display();
+        }
+        $info = $user->create_user(I('post.username'),I('post.phone'),I('post.birthdy'),I('post.group_id'),I('post.password'),I('post.sex'));
+        if($info === TRUE){
+            return $this->success('添加成功',U('User/user_add'));
+        }
+        return $this->error($info);
+    }
+    
+    
+    /**
+     * 修改用户密码操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-09 15:12:18
+     */
+    public function user_saveAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $user = new UserModel();
+        if($user->save_user_password(I('get.id'),I('post.password'))){
+            return $this->success('修改成功',U('user_list'));
+        }
+        return $this->error('修改失败',U('user_list'));
     }
 }

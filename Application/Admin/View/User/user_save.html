@@ -1,0 +1,32 @@
+<div class="panel admin-panel margin-top">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span> 重置用户登录密码</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户名：</label>
+                </div>
+                <div class="field">
+                    <div class="tips">{:I('get.username','未知用户')}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>请输入新用户密码：</label>
+                </div>
+                <div class="field">
+                    <input type="password" class="input" name="password" value=""/>         
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
