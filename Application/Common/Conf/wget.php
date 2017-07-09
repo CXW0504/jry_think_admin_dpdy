@@ -56,4 +56,16 @@ return array(
         'js' => array('wget/jquery/pintuer-1.0/js/pintuer'),
         'css' => array('wget/jquery/pintuer-1.0/css/pintuer'),
     ),
+    // 百度图库插件完整版本
+    'echarts' => array(
+        'js' => array('wget/echarts/3.6.2/echarts.min'),
+    ),
+    // 百度图库插件常用插件库版本
+    'echarts-common' => array(
+        'js' => array('wget/echarts/3.6.2/echarts.common.min'),
+    ),
+    // 百度图库插件精简插件库版本
+    'echarts-simple' => array(
+        'js' => array('wget/echarts/3.6.2/echarts.simple.min'),
+    ),
 );

@@ -2,19 +2,35 @@
 
 // 菜单列表
 return array(
-//    'Index' => array(
-//        'name' => '基本信息',
-//        'class' => 'icon-home',
-//        'content' => array(
-//            'info' => '网站基本信息',
-//        ),
-//        'child' => array(
-//            // 隐藏权限信息
-//            'index' => '首页框架',
-//            'info' => '后台详情页面',
-//            'hello' => '后台欢迎页面',
-//        ),
-//    ),
+    'Loan' => array(
+        'name' => '订单管理',
+        'class' => 'icon-file',
+        'content' => array(
+            'list1' => '分配订单',
+            'list2' => '处理中订单',
+            'list3' => '待处理订单',
+            'list4' => '审核完成订单',
+            'list5' => '已完成订单',
+            'list6' => '已终止订单',
+        ),
+        'child' => array(),
+    ),
+    'Word' => array(
+        'name' => '考勤管理',
+        'class' => 'icon-clock-o',
+        'content' => array(
+            'list1' => '考勤',
+        ),
+        'child' => array(),
+    ),
+    'Data' => array(
+        'name' => '数据分析',
+        'class' => 'icon-bar-chart-o',
+        'content' => array(
+            'list1' => '数据分析',
+        ),
+        'child' => array(),
+    ),
     'User' => array(
         'name' => '用户管理',
         'class' => 'icon-user',
@@ -31,5 +47,14 @@ return array(
             'user_del' => '删除用户',
             'user_save' => '更新用户信息',
         ),
+    ),
+    'Log' => array(
+        'name' => '日志管理',
+        'class' => 'icon-save',
+        'content' => array(
+            'login' => '后台登录日志',
+            'logi1n' => '后台登录日志',
+        ),
+        'child' => array(),
     ),
 );

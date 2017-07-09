@@ -3,12 +3,12 @@
     <h1><img src="__PUBLIC__/Images/Admin/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />后台管理中心</h1>
   </div>
   <div class="head-l">
-      <a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;
+      <!--<a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;-->
       <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 修改登录密码</a> &nbsp;&nbsp;
       <a class="button button-little bg-red" href="{:U('Login/logout')}"><span class="icon-power-off"></span> 退出登录</a> </div>
 </div>
 <div class="leftnav">
-  <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
+    <div class="leftnav-title"><h3>&nbsp;&nbsp;列表管理</h3></div>
   <?php $menu = C('MENU_CONFIG'); ?>
   <foreach item="v" name="menu" key="k">
     <h2><span class="{$v.class}"></span>{$v.name}</h2>
