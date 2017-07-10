@@ -3,7 +3,6 @@ namespace Home\Controller;
 
 use Org\Office\Word\PHPWord;
 use Think\Controller;
-
 /**
  * 网站首页信息
  * 
@@ -34,6 +33,16 @@ class IndexController extends \Common\Controller\PublicController{
      * @adtime 2017-06-30 10:35:03
      */
     public function indexAction(){
+        // 测试极光推送消息
+        // 帐号 actine@foxmail.com
+        $jp = new \Org\SDK\JPush\Client('46af5188a106754675cc19d5', '72bcb04b4e8d74faafae9f56',RUNTIME_PATH . 'SDK/Jplus.log');
+        dump($jp);
+        $result = $jp->push()
+        ->setPlatform('all')
+        ->addAllAudience()
+        ->setNotificationAlert("这是测试的推送")
+        ->send();
+        dump($result);
     	return $this->display();
     }
     

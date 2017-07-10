@@ -31,6 +31,13 @@ return array(
         ),
         'child' => array(),
     ),
+    '' => array(
+        'name' => '系统配置',
+        'class' => 'icon-cogs',
+        'content' => array(
+            'selects' => '下拉选项',
+        ),
+    ),
     'User' => array(
         'name' => '用户管理',
         'class' => 'icon-user',

@@ -6,7 +6,7 @@ namespace Admin\Controller;
  * 网站订单管理方法，集合了订单的各种操作
  * 
  * @author xiaoyutab<xiaoyutab@qq.com>
- * @version v1.0.2
+ * @version v1.0.0
  * @copyright (c) 2017, xiaoyutab
  * @adtime 2017-07-10 10:25:56
  */
@@ -19,7 +19,7 @@ class LoanController extends CommonController {
      * 
      * @return void
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.0
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-10 10:30:37
      */
