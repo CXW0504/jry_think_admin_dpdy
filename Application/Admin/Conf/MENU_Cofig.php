@@ -13,7 +13,11 @@ return array(
             'file' => '已完成订单',
             'termination' => '已终止订单',
         ),
-        'child' => array(),
+        'child' => array(
+            'distribution_add' => '发起新任务',
+            'distribution_view' => '查看任务',
+            'distribution_update' => '修改任务',
+        ),
     ),
     'Word' => array(
         'name' => '考勤管理',

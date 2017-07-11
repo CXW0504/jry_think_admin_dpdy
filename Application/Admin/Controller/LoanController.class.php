@@ -24,6 +24,7 @@ class LoanController extends CommonController {
      * @adtime 2017-07-10 10:30:37
      */
     public function distributionAction() {
+        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         return $this->display();
     }
 

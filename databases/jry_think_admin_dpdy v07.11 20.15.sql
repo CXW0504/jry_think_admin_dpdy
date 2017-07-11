@@ -238,6 +238,30 @@ CREATE TABLE `dpdy_loan_personnel` (
 
 /*Data for the table `dpdy_loan_personnel` */
 
+/*Table structure for table `dpdy_log` */
+
+DROP TABLE IF EXISTS `dpdy_log`;
+
+CREATE TABLE `dpdy_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_type` tinyint(3) unsigned DEFAULT '1' COMMENT '操作类型：1查看2添加3修改4删除[5工单保存6审批操作7申请操作]',
+  `user_name` varchar(100) DEFAULT NULL COMMENT '操作的表名，不带前缀',
+  `old_key` int(10) unsigned DEFAULT NULL COMMENT '修改的表的主键编号',
+  `tab_key` text COMMENT '修改表中的哪几个字段，英文半角逗号区分',
+  `old_val` text COMMENT '表中的旧的值，英文半角逗号分割',
+  `new_val` text COMMENT '更新成的值，英文半角逗号分割',
+  `uid` int(10) unsigned DEFAULT '0' COMMENT '哪个用户操作的',
+  `ad_time` int(10) unsigned DEFAULT NULL COMMENT '操作时间',
+  `browser` varchar(60) DEFAULT NULL COMMENT '操作人浏览器类型,用英文半角逗号间隔浏览器和版本',
+  `system` varchar(60) DEFAULT NULL COMMENT '操作人系统类型，用英文半角逗号间隔系统名称和版本号',
+  `user_agent` varchar(200) DEFAULT NULL COMMENT '用户操作时发送过来的User-Agent请求头',
+  `ad_ip` varchar(50) DEFAULT NULL COMMENT '操作人电脑IP',
+  `ip_city` varchar(200) DEFAULT NULL COMMENT '根据操作用户IP地址判断出来的位置',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='整个系统的日志记录[不包含用户相关]';
+
+/*Data for the table `dpdy_log` */
+
 /*Table structure for table `dpdy_user` */
 
 DROP TABLE IF EXISTS `dpdy_user`;
@@ -276,9 +300,22 @@ CREATE TABLE `dpdy_user_blood` (
   `status` tinyint(3) unsigned DEFAULT '99' COMMENT '状态，99正常98删除',
   `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户血型表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户血型表';
 
 /*Data for the table `dpdy_user_blood` */
+
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (1,'A型',1,1499772947,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (2,'B型',1,1499772947,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (3,'AB型',1,1499772947,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (4,'O型',1,1499772947,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (5,'A型 Rh+',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (6,'A型 Rh-',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (7,'B型 Rh+',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (8,'B型 Rh-',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (9,'AB型 Rh+',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (10,'AB型 Rh-',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (11,'O型 Rh+',2,1499773051,99,NULL);
+insert  into `dpdy_user_blood`(`id`,`blood_name`,`blood_type`,`ad_time`,`status`,`del_time`) values (12,'O型 Rh-',2,1499773051,99,NULL);
 
 /*Table structure for table `dpdy_user_city` */
 
@@ -3632,9 +3669,30 @@ CREATE TABLE `dpdy_user_office` (
   `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
   `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属父级职业编号',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户职业表，保存有所有的职业信息';
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='用户职业表，保存有所有的职业信息';
 
 /*Data for the table `dpdy_user_office` */
+
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (1,'互联网/信息技术',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (2,'制造业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (3,'贸易/批发/零售',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (4,'房地产业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (5,'建筑业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (6,'金融业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (7,'服务业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (8,'运输/物流/仓储',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (9,'教育行业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (10,'文体/娱乐/传媒',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (11,'商业服务/租赁',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (12,'医疗医药',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (13,'政府/事业单位',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (14,'社会组织',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (15,'科研服务',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (16,'公共/环境',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (17,'居民服务',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (18,'开采业',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (19,'农/林/牧/渔',1499773412,99,NULL,0);
+insert  into `dpdy_user_office`(`id`,`office_name`,`ad_time`,`status`,`del_time`,`fid`) values (20,'电/热/燃气/水供应',1499773412,99,NULL,0);
 
 /*Table structure for table `dpdy_user_school` */
 

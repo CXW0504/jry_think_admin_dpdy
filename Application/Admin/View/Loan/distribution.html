@@ -1,0 +1,92 @@
+<div class="panel admin-panel" id="listform">
+    <div class="panel-head"><strong class="icon-file"> 分配列表</strong> </div>
+    <div class="padding border-bottom">
+        <form method="get" >
+            <ul class="search" style="padding-left:10px;">
+                <li> <a class="button border-main" href="{:U('distribution_add')}"> 发起任务</a> </li>
+                <li>
+                    <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
+                    <input type="text" placeholder="编号" name="sequence" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
+                </li>
+                <li>
+                    <input type="text" placeholder="合作机构" name="mechanism" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
+                </li>
+                <li>
+                    <input type="text" placeholder="客户姓名" name="customer_name" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
+                </li>
+                <li>分配时间：</li>
+                <li>
+                    <input type="text" name="com_time" value="{:date('Y-m-d')}" class="input" >
+                </li>
+                <li>~</li>
+                <li>
+                    <input type="text" name="com_time_end" value="{:date('Y-m-d')}" class="input" >
+                </li>
+                <li>
+                    <input type="submit" class="button border-main" value="搜索"/>
+                </li>
+                <li>
+                    <i>共查询出了 （{$count}） 条</i>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <table class="table table-hover text-center">
+        <tr>
+            <th width="100" style="text-align:left; padding-left:20px;">ID</th>
+            <th>编号</th>
+            <th>客户姓名</th>
+            <th>客户身份证号</th>
+            <th>合作机构</th>
+            <th>抵押权人</th>
+            <th>业务类型</th>
+            <th>公证人员</th>
+            <th>抵押人员</th>
+            <th width="10%">分配时间</th>
+            <th width="10%">操作</th>
+        </tr>
+        <foreach name="list" item="v">
+            <tr>
+                <td style="text-align:left; padding-left:20px;">{$v.id}</td>
+                <td>{$v.username}</td>
+                <td>{$v.phone}</td>
+                <td><?php if($v['group_id'] == 0){echo '超级管理员';}else{echo $v['name'];} ?></td>
+                <td>{$v.birthdy}</td>
+                <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <div class="button-group">
+                        <a class="button border-main" href="{:U('distribution_view',array('id'=>$v['id'],'username' => $v['username']))}">查看</a> 
+                        <a class="button border-main" href="{:U('distribution_update',array('id'=>$v['id'],'username' => $v['username']))}">修改</a> 
+                    </div>
+                </td>
+            </tr>
+        </foreach>
+        <tr>
+            <td colspan="7"><div class="pagelist"> 
+                    {$page}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        // 日期选择插件
+        $('input[name=com_time]').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        });
+        $('input[name=com_time_end]').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        });
+    })
+</script>
