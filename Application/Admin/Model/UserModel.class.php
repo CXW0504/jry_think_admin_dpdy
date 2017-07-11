@@ -42,7 +42,7 @@ class UserModel extends \Common\Model\PdoModel {
      */
     public function login($name = '', $pass = '') {
         $pir = C('DB_PREFIX');
-        $sql = "SELECT `id`,`password`,`rand_code` FROM `{$pir}user` WHERE `username` = ? OR `phone` = ? OR `email` = ?";
+        $sql = "SELECT `id`,`password`,`rand_code` FROM `{$pir}user` WHERE `status` = 99 AND ( `username` = ? OR `phone` = ? OR `email` = ? )";
         $data = $this->query($sql, array($name, $name, $name));
         if (empty($data)) {
             return NULL; // 查找不到对应的用户
