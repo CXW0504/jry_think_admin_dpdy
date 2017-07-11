@@ -305,7 +305,7 @@ class UserModel extends \Common\Model\PdoModel {
      */
     public function get_list($key_words = '',$group_id = -1,$times = '',$times_end = '',$p0 = 0,$p1 = 20){
         $pir = C('DB_PREFIX');
-        $where = " WHERE `{$pir}user`.`status` <> 98";
+        $where = " WHERE `{$pir}user`.`status` =99 ";
         $data = array();
         // 关键词判断
         if(!empty($key_words)){
