@@ -23,7 +23,7 @@ class UserModel extends \Common\Model\PdoModel {
         // 超时token效验
         if ($time < ( time() - C('MAC_TIME_LOGOUT'))) {
             session('admin.usertime', time());
-            return session('admin.usertoken') == md5(123456);
+            return session('admin.usertoken') == md5(time());
         }
         session('admin.usertime', time());
         return !empty($info);
@@ -446,5 +446,26 @@ class UserModel extends \Common\Model\PdoModel {
         $city || $city = '本地测试';
         $sql = "INSERT INTO `dpdy_user_log` (`user_type`,`old_key`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) VALUE(5,?,?,UNIX_TIMESTAMP(),?,?,?,?,?)";
         return $this->query($sql, array($uid,$info['id'], $ip, $brow, $system, $user_agent, $city));
+    }
+    
+    /**
+     * 检测用户输入的密码是否正确
+     * 
+     * @param string $password 用户输入的密码
+     * @return boolean 输入的密码是否正确
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-12 17:03:17
+     */
+    public function check_self_password($password = ''){
+        $pir = C('DB_PREFIX');
+        $sql = "SELECT `id`,`password`,`rand_code` FROM `{$pir}user` WHERE `status` = 99 AND `id` = ?";
+        $info = $this->get_user_info();
+        $data = $this->query($sql, array($info['id']));
+        if($this->cheskPassword($data, $password)){
+            return TRUE;
+        }
+        return FALSE;
     }
 }

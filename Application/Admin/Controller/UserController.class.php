@@ -16,6 +16,7 @@ class UserController extends CommonController{
      * 获取权限组列表页面
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 16:25:14
@@ -42,6 +43,7 @@ class UserController extends CommonController{
      * 添加权限组信息
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 17:50:51
@@ -61,6 +63,7 @@ class UserController extends CommonController{
      * 修改权限组信息
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 18:25:47
@@ -85,6 +88,7 @@ class UserController extends CommonController{
      * 删除权限组信息
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 19:37:53
@@ -105,6 +109,7 @@ class UserController extends CommonController{
      * 为权限组进行授权
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 21:11:06
@@ -126,6 +131,7 @@ class UserController extends CommonController{
      * 获取用户列表页面
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-09 11:56:30
@@ -156,6 +162,7 @@ class UserController extends CommonController{
      * 添加用户操作
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-09 15:12:18
@@ -185,6 +192,7 @@ class UserController extends CommonController{
      * 修改用户密码操作
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-09 15:12:18

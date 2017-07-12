@@ -17,6 +17,7 @@ class LoginController extends \Common\Controller\PublicController{
      * 构造函数类
      * 导入页面需要使用的jquery挂件和页面需要的样式表
      * 
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 16:41:19
@@ -30,6 +31,7 @@ class LoginController extends \Common\Controller\PublicController{
      * 登录页面信息
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 16:41:48
@@ -64,6 +66,7 @@ class LoginController extends \Common\Controller\PublicController{
      * 退出登录页面
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 10:26:45
@@ -82,6 +85,7 @@ class LoginController extends \Common\Controller\PublicController{
      *      备注：验证验证码时请使用(new Verify())->check('xxx')进行验证
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 18:08:48
@@ -95,5 +99,33 @@ class LoginController extends \Common\Controller\PublicController{
         $ver->useNoise = FALSE;
         $ver->fontttf = '9.ttf';
         $ver->entry();
+    }
+    
+    /**
+     * 用户修改自己的密码
+     *     备注：如果修改成功会自动跳转到hello欢迎页面
+     * 
+     * @return void
+     * @version v1.0.0
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-12 17:06:41
+     */
+    public function set_passwordAction(){
+        // 临时修改跳转页面地址
+        C('TMPL_ACTION_ERROR','Common:ct_error');
+        C('TMPL_ACTION_SUCCESS','Common:ct');
+        if(!I('post.')){
+            return $this->display();
+        }
+        $user = new UserModel();
+        $info = $user->get_user_info();
+        if($user->check_self_password(I('post.password'))){
+            if($user->save_user_password($info['id'],I('post.new_password'))){
+                return $this->success('修改成功',U('Index/hello'));
+            }
+            return $this->error('系统错误');
+        }
+        return $this->error('旧密码输入错误');
     }
 }

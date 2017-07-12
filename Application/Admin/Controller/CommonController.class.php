@@ -17,7 +17,7 @@ class CommonController extends \Common\Controller\PublicController {
      * @return $this
      * 
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.3
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 12:50:11
      */

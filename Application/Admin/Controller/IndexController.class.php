@@ -16,6 +16,7 @@ class IndexController extends CommonController {
      * 构造函数类
      * 导入页面需要使用的jquery挂件和页面需要的样式表
      * 
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 16:41:19
@@ -29,6 +30,7 @@ class IndexController extends CommonController {
      * 网站首页信息
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 16:41:48
@@ -41,6 +43,7 @@ class IndexController extends CommonController {
      * 网站欢迎页面
      * 
      * @return void
+     * @version v1.0.0
      * @author xiaoyutab<xiaoyutab@qq.com>
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-05 18:58:30
@@ -63,8 +66,13 @@ class IndexController extends CommonController {
 
     /**
      * 获取磁盘所占文件总大小
-     * @param type $dir
-     * @return type
+     * 
+     * @param string $dir 要查询的目录，默认当前目录
+     * @return string
+     * @version v1.0.0
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-12 17:08:30
      */
     private function getDirSize($dir = '.') {
         $handle = opendir($dir);
