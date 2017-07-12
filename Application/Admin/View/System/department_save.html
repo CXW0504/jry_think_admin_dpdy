@@ -1,0 +1,55 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;修改通讯录部门</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">  
+            <div class="form-group">
+                <div class="label">
+                    <label>上级通讯录部门</label>
+                </div>
+                <div class="field">
+                    <select name="fid" class="input w50">
+                        <option value="0">顶级部门</option>
+                        <optgroup label="--------------------"></optgroup>
+                        <foreach name="group_list" key="k" item="v">
+                            <option value="{$k}">{$v}</option>
+                        </foreach>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>通讯录部门名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$name}" name="name" data-validate="required:通讯录部门名称" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>通讯录部门备注</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$name}" name="remarks"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('select[name=fid]').val({$g_info.fid})
+        $('input[name=name]').val('{$g_info.name}')
+        $('input[name=remarks]').val('{$g_info.remarks}')
+    });
+</script>

@@ -35,11 +35,26 @@ return array(
         ),
         'child' => array(),
     ),
-    '' => array(
+    'System' => array(
         'name' => '系统配置',
         'class' => 'icon-cogs',
         'content' => array(
-            'selects' => '下拉选项',
+            'department_list' => '通讯录部门管理',
+            'directories_user_list' => '通讯录管理',
+            'loan_mold_list' => '抵押顺位管理',
+            'loan_customer_marriage_list' => '借款人婚姻情况管理',
+            'loan_hous_type_list' => '房产状态管理',
+            'loan_insurance_list' => '抵押权人管理',
+        ),
+        'child' => array(
+            'department_add' => '添加通讯录部门',
+            'department_save' => '修改通讯录部门',
+            'department_del' => '删除通讯录部门',
+            'directories_user_add' => '添加通讯录联系人',
+            'loan_mold_add' => '添加抵押顺位',
+            'loan_customer_marriage_add' => '添加借款人婚姻情况',
+            'loan_hous_type_add' => '添加房产状态',
+            'loan_insurance_add' => '添加抵押权人',
         ),
     ),
     'User' => array(
