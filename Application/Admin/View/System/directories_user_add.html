@@ -1,0 +1,75 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;添加通讯录部门</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">
+            <div class="form-group">
+                <div class="label">
+                    <label>工号</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="job_no"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>所属部门</label>
+                </div>
+                <div class="field">
+                    <select name="dep_id" class="input w50">
+                        <option value="0">无部门</option>
+                        <optgroup label="--------------------"></optgroup>
+                        <foreach name="group_list" key="k" item="v">
+                            <option value="{$k}">{$v}</option>
+                        </foreach>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>姓名</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="name" data-validate="required:姓名不能为空" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>手机号</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="phone" data-validate="required:手机号不能为空" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>电话</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="tel"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>邮箱</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="email"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

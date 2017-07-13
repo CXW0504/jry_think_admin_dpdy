@@ -117,5 +117,43 @@ class SystemController extends CommonController {
         }
         return $this->error('删除失败');
     }
+    
+    public function directories_user_addAction(){
+        $dir = new DirectoriesDepartmentModel();
+        $user = new DirectoriesUserModel();
+        if(!I('post.')){
+            $group_list = $dir->get_directories_department_list();
+            $this->assign('group_list',$group_list);
+            return $this->display();
+        }
+        if($dir->create_directories_department(I('post.fid'),I('post.name'),I('post.remarks'))){
+            return $this->success('添加成功',U('department_list'));
+        }
+        return $this->error('添加失败');
+    }
+
+    public function directories_user_listAction(){
+        $dir = new DirectoriesDepartmentModel();
+        $count = $dir->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $dir->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getList($page->firstRow, $page->listRows);
+        $user = new DirectoriesUserModel();
+        foreach($list as $k => $v){
+            $list[$k]['fid_name'] = $dir->get_directories_name($v['fid']);
+            $list[$k]['count_people'] = $user->get_directories_count_people($v['id']);
+            $list[$k]['count_directories'] = $dir->get_directories_count_directories($v['id']);
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
 
 }
