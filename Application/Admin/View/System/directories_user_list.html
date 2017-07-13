@@ -2,18 +2,37 @@
     <div class="panel-head"><strong class="icon-cogs"> 通讯录列表</strong> </div>
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <li> <a class="button border-main" href="{:U('directories_user_add')}"> 添加人员</a> </li>
-            <li>搜索：</li>
-            <li>
-                <form method="get" >
+            <form method="get" >
+                <li> <a class="button border-main" href="{:U('directories_user_add')}"> 添加人员</a> </li>
+                <li>搜索：</li>
+                <li>
                     <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
-                    <input type="text" placeholder="用户姓名/电话/邮箱/职位/工号" name="keywords" class="input" value="{:I('get.keywords')}" style="width:250px; line-height:17px;display:inline-block" />
+                    <input type="text" placeholder="用户姓名/手机" name="keywords" class="input" value="{:I('get.keywords')}" style="width:250px; line-height:17px;display:inline-block" />
+                </li>
+                <li>所属部门：</li>
+                <li>
+                    <select name="dep_id" class="form-control">
+                        <option value="0">无部门</option>
+                        <foreach name='group_list' item='v' key="k">
+                            <option value="{$k}">{$v}</option>
+                        </foreach>
+                    </select>
+                </li>
+                <li>添加时间：</li>
+                <li>
+                    <input type="text" name="times" value="{:date('Y-m-d')}" class="input" >
+                </li>
+                <li>~</li>
+                <li>
+                    <input type="text" name="times_end" value="{:date('Y-m-d')}" class="input" >
+                </li>
+                <li>
                     <input type="submit" class="button border-main icon-search" value="搜索"/>
-                </form>
-            </li>
-            <li>
-                <i>共查询出了 （{$count}） 条</i>
-            </li>
+                </li>
+                <li>
+                    <i>共查询出了 （{$count}） 条</i>
+                </li>
+            </form>
         </ul>
     </div>
     <table class="table table-hover text-center">
@@ -60,4 +79,23 @@
             window.location = url;
         }
     }
+    $(function () {
+        // 日期选择插件
+        $('input[name=times]').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        });
+        $('input[name=times_end]').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        });
+    })
 </script>

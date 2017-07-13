@@ -68,4 +68,13 @@ return array(
     'echarts-simple' => array(
         'js' => array('wget/echarts/3.6.2/echarts.simple.min'),
     ),
+    // 头像上传插件，依赖bootstarp
+    'cropper' => array(
+        'js' => array('wget/cropper/cropper.min'),
+        'css' => array('wget/cropper/cropper.min'),
+    ),
+    'sitelogo' => array(
+        'js' => array('wget/sitelogo/sitelogo'),
+        'css' => array('wget/sitelogo/sitelogo')
+    ),
 );

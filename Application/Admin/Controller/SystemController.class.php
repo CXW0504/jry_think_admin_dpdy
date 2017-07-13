@@ -118,7 +118,17 @@ class SystemController extends CommonController {
         return $this->error('删除失败');
     }
     
+    /**
+     * 添加通讯录人员
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 21:14:34
+     */
     public function directories_user_addAction(){
+        $this->wget('bootstrap')->wget('cropper')->wget('sitelogo');
         $dir = new DirectoriesDepartmentModel();
         $user = new DirectoriesUserModel();
         if(!I('post.')){
@@ -126,15 +136,30 @@ class SystemController extends CommonController {
             $this->assign('group_list',$group_list);
             return $this->display();
         }
-        if($dir->create_directories_department(I('post.fid'),I('post.name'),I('post.remarks'))){
-            return $this->success('添加成功',U('department_list'));
+        if($user->create_directories_user(I('post.name'),I('post.phone'),I('post.tel'),I('post.email'),I('post.dep_id'),I('post.avatar'),I('post.position'),I('post.phone_type'),I('post.job_no'))){
+            return $this->success('添加成功',U('directories_user_list'));
         }
         return $this->error('添加失败');
     }
 
+    /**
+     * 通讯录人员列表
+     * @return type
+     */
     public function directories_user_listAction(){
+        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $dir = new DirectoriesDepartmentModel();
-        $count = $dir->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getCount();
+        $user = new DirectoriesUserModel();
+        $group_list = $dir->get_directories_department_list();
+        $this->assign('group_list',$group_list);// 获取部门列表
+        $count = $user->where(array(array(
+            'name' => array('like','%'.I('get.keywords').'%'),
+            'phone' => array('like','%'.I('get.keywords').'%'),
+            '_logic' => 'or',
+        )))->where(array(
+            'dep_id'=>I('get.dep_id'),
+            'ad_time' => array(array('gt',strtotime(I('get.times').' 00:00:01')),array('lt',strtotime(I('get.times_end').' 23:59:59'))),
+        ))->getCount();
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -142,7 +167,14 @@ class SystemController extends CommonController {
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $list = $dir->where(array('name'=>array('like','%'.I('get.keywords').'%')))->getList($page->firstRow, $page->listRows);
+        $list = $user->where(array(array(
+            'name' => array('like','%'.I('get.keywords').'%'),
+            'phone' => array('like','%'.I('get.keywords').'%'),
+            '_logic' => 'or',
+        )))->where(array(
+            'dep_id'=>I('get.dep_id'),
+            'ad_time' => array(array('gt',strtotime(I('get.times').' 00:00:01')),array('lt',strtotime(I('get.times_end').' 23:59:59'))),
+        ))->getList($page->firstRow, $page->listRows);
         $user = new DirectoriesUserModel();
         foreach($list as $k => $v){
             $list[$k]['fid_name'] = $dir->get_directories_name($v['fid']);
