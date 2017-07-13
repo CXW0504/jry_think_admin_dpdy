@@ -70,10 +70,20 @@ class SystemController extends CommonController {
         return $this->error('添加失败');
     }
     
+    /**
+     * 修改部门操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 10:49:50
+     */
     public function department_saveAction(){
         $dir = new DirectoriesDepartmentModel();
         if(!I('post.')){
             $group_list = $dir->get_directories_department_list();
+            unset($group_list[I('get.id')]);
             $info = $dir->get_directories_info(I('get.id'));
             $this->assign('group_list',$group_list);
             return $this->assign('g_info',$info)->display();
@@ -82,6 +92,30 @@ class SystemController extends CommonController {
             return $this->success('添加成功',U('department_list'));
         }
         return $this->error('添加失败');
+    }
+    
+    /**
+     * 删除部门信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 11:12:18
+     */
+    public function department_delAction(){
+        $dir = new DirectoriesDepartmentModel();
+        $user = new DirectoriesUserModel();
+        if($dir->get_directories_count_directories(I('get.id')) > 0){
+            return $this->error('该部门的下属部门不为空');
+        }
+        if($dir->get_directories_count_directories(I('get.id')) > 0){
+            return $this->error('该部门的下属人员不为空');
+        }
+        if($dir->delete_directories(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
     }
 
 }

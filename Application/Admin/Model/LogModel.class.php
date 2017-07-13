@@ -29,7 +29,19 @@ class LogModel extends \Common\Model\AllModel{
         return $this->_create_date($arr);
     }
     
-    
+    /**
+     * 修改数据库日志
+     * 
+     * @param string $user_name 变更字段的表名
+     * @param number $id 变更字段的表的主键
+     * @param array $save 变更字段的新的值【关联数组】
+     * @param array $old 变更字段前的旧的值【关联数组】
+     * @return number 是否添加成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 10:47:48
+     */
     public function update_log($user_name = '',$id = 0,$save = array(),$old = array()){
         $arr = array(
             'user_type' => 3,
@@ -39,6 +51,32 @@ class LogModel extends \Common\Model\AllModel{
             'old_val' => implode(',', $old),
             'new_val' => implode(',', $save),
         );
+        return $this->_create_date($arr);
+    }
+    
+    /**
+     * 删除数据库日志
+     *      逻辑删除，非真实删除
+     * 
+     * @param string $user_name 变更字段的表名
+     * @param number $id 变更字段的表的主键
+     * @param number $old 变更前的状态
+     * @return number 是否添加成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 10:47:48
+     */
+    public function delete_log($user_name = '',$id = 0,$old = 99){
+        $arr = array(
+            'user_type' => 4,
+            'user_name' => $user_name,
+            'old_key' => intval($id),
+            'tab_key' => 'status,del_time',
+            'old_val' => $old.',',
+            'new_val' => '98,'.NOW_TIME,
+        );
+        return $this->_create_date($arr);
     }
 
     /**

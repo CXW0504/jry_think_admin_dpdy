@@ -167,18 +167,42 @@ class DirectoriesDepartmentModel extends \Common\Model\AllModel {
             $save_arr['name'] = $name;
             $old_arr['name'] = $info['name'];
         }
-        if($name != $info['fid']){
+        if($fid != $info['fid']){
             $save_arr['fid'] = $fid;
             $old_arr['fid'] = $info['fid'];
         }
-        if($name != $info['remarks']){
+        if($remarks != $info['remarks']){
             $save_arr['remarks'] = $remarks;
             $old_arr['remarks'] = $info['remarks'];
         }
         $status = $this->where(array('id'=> intval($id),'status'=>array('neq',98)))->save($save_arr);
         if($status){
+            // 如果成功修改就记录修改日志
             $log = new LogModel();
             $log->update_log('directories_department',$id,$save_arr,$old_arr);
+        }
+        return TRUE;
+    }
+    
+    /**
+     * 删除数据操作
+     * 
+     * @param string $id 要删除的数据编号
+     * @return boolean 是否删除成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-13 11:11:44
+     */
+    public function delete_directories($id = 0){
+        $info = $this->get_directories_info($id);
+        if(empty($info)){
+            return FALSE;
+        }
+        $status = $this->where(array('id'=>$info['id'],'status'=>array('neq',98)))->save(array('status'=>98,'del_time'=>NOW_TIME));
+        if($status){
+            $log = new LogModel();
+            $log->delete_log('directories_department',$info['id'],99);
         }
         return TRUE;
     }
