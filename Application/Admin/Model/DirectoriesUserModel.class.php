@@ -58,7 +58,13 @@ class DirectoriesUserModel extends \Common\Model\AllModel {
             'tel' => trim($tel),
             'email' => trim($email),
             'dep_id' => intval($dep_id),
-            'avatar' => intval($avatar),
+            // 将图片修改为存储图片的路径，而不再是图片编号。
+            // 因为如果存图片编号的话，一张图片会生成多张截图，
+            // 而一个用户可能生成很多张截图，
+            // 所以此处将图片编号修改为图片路径，
+            // 头像不在数据库中的文件表中存储
+            // 修改时间：2017-07-14 01:04:46
+            'avatar' => trim($avatar),
             'position' => trim($position),
             'phone_type' => intval($phone_type),
             'job_no' => trim($job_no),

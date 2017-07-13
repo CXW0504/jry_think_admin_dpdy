@@ -38,17 +38,12 @@ class FileController extends CommonController {
                 ->crop($imgs['width'], $imgs['height'], $imgs['x'], $imgs['y'])
                 ->thumb(200, 200,Image::IMAGE_THUMB_FIXED)
                 ->save(C('IMAGE_SAVE_PATH') . dirname($file) . '/crop_200x200_' . basename($file));
-        // 剪切成100x100的图片
-        $success = $img->open(C('IMAGE_SAVE_PATH') . $file)
-                ->crop($imgs['width'], $imgs['height'], $imgs['x'], $imgs['y'])
-                ->thumb(100, 100,Image::IMAGE_THUMB_FIXED)
-                ->save(C('IMAGE_SAVE_PATH') . dirname($file) . '/crop_100x100_' . basename($file));
-        // 添加数据并返回到页面上
-        $id = $f_model->create_file_data($info['avatar']['ext'], $info['avatar']['key'], $info['avatar']['md5'], $info['avatar']['sha1'], $info['avatar']['size'], $info['avatar']['type'], $file, dirname($file) . '/crop_200x200_' . basename($file), dirname($file) . '/crop_100x100_' . basename($file));
-        if($id){
-            die(json_encode(array('id'=>$id,'result' => dirname($file) . '/crop_200x200_' . basename($file))));
+        // 删除原图
+        unlink(C('IMAGE_SAVE_PATH') . $file );
+        if($success){
+            die(json_encode(array('id'=>dirname($file) . '/crop_200x200_' . basename($file),'result' => dirname($file) . '/crop_200x200_' . basename($file))));
         }
-        return $this->error('系统错误');
+        return $this->error('剪切图片出错');
     }
 
 }
