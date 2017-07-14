@@ -16,6 +16,60 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`jry_think_admin_dpdy` /*!40100 DEFAULT 
 
 USE `jry_think_admin_dpdy`;
 
+/*Table structure for table `dpdy_directories_department` */
+
+DROP TABLE IF EXISTS `dpdy_directories_department`;
+
+CREATE TABLE `dpdy_directories_department` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级部门编号，顶级部门为0',
+  `name` varchar(200) DEFAULT NULL COMMENT '部门名称，限制60汉字',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '部门备注，限制60汉字',
+  `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间',
+  `status` tinyint(3) unsigned DEFAULT '99' COMMENT '状态，99正常98删除',
+  `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='用户部门表，作为通讯录中的用户区分部门所使用';
+
+/*Data for the table `dpdy_directories_department` */
+
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (1,0,'测试顶级部门',NULL,NULL,99,NULL);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (2,1,'测试非顶级部门',NULL,NULL,98,1499915868);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (3,1,'测试顶级部门2',NULL,NULL,99,NULL);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (4,0,'测试顶级部门3',NULL,NULL,98,1499915918);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (5,8,'测试非顶级部门0','刚开始测试的菜单哦',NULL,98,1499915909);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (6,1,'测试非顶级部门1',NULL,NULL,98,1499915899);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (7,2,'网页测试非顶级部门之三级部门','网页测试非顶级部门之三级部门',1499854939,98,1499915857);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (8,7,'测试四级菜单','测试',1499856233,98,1499915607);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (9,0,'测试日志记录情况','测试日志',1499856309,98,1499915543);
+insert  into `dpdy_directories_department`(`id`,`fid`,`name`,`remarks`,`ad_time`,`status`,`del_time`) values (10,0,'顿顿','',1499950667,98,1499950682);
+
+/*Table structure for table `dpdy_directories_user` */
+
+DROP TABLE IF EXISTS `dpdy_directories_user`;
+
+CREATE TABLE `dpdy_directories_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL COMMENT '用户姓名，限制30中文汉字',
+  `phone` varchar(20) DEFAULT NULL COMMENT '用户手机，限制20英文字符',
+  `tel` varchar(30) DEFAULT NULL COMMENT '用户电话，限制30英文字符',
+  `email` varchar(200) DEFAULT NULL COMMENT '用户邮箱，限制200英文字符',
+  `dep_id` int(10) unsigned DEFAULT '0' COMMENT '用户所属部门编号，0为无部门用户',
+  `avatar` varchar(200) DEFAULT NULL COMMENT '用户头像，空为默认头像，存储为头像的相对路径',
+  `position` varchar(200) DEFAULT NULL COMMENT '用户职位名称，60中文汉字',
+  `phone_type` tinyint(3) unsigned DEFAULT '1' COMMENT '用户手机号展示类型。1全部显示2全部隐藏3中间隐藏4只显示后四位',
+  `job_no` varchar(100) DEFAULT NULL COMMENT '用户工号，限制100英文字符',
+  `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间',
+  `status` tinyint(3) unsigned DEFAULT '99' COMMENT '状态，99正常98删除',
+  `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户通讯录表，该表不管连用户表，仅用来做展示通讯录所用';
+
+/*Data for the table `dpdy_directories_user` */
+
+insert  into `dpdy_directories_user`(`id`,`name`,`phone`,`tel`,`email`,`dep_id`,`avatar`,`position`,`phone_type`,`job_no`,`ad_time`,`status`,`del_time`) values (1,'顿顿','15290210718','010','xiaoyutab@qq.com',3,'','',3,'0002',1499951484,98,1500021003);
+insert  into `dpdy_directories_user`(`id`,`name`,`phone`,`tel`,`email`,`dep_id`,`avatar`,`position`,`phone_type`,`job_no`,`ad_time`,`status`,`del_time`) values (2,'测试','15290210720','','',1,'','测试',3,'110',1499998859,99,NULL);
+
 /*Table structure for table `dpdy_file` */
 
 DROP TABLE IF EXISTS `dpdy_file`;
@@ -35,7 +89,7 @@ CREATE TABLE `dpdy_file` (
   `status` tinyint(3) unsigned DEFAULT '99' COMMENT '文件状态，99正常，98删除。备注：不建议删除图片，因为一张图片可能关联到N多条记录',
   `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件信息保存表，保存有所有上传的图片。该表中的值不建议删除';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='文件信息保存表，保存有所有上传的图片。该表中的值不建议删除';
 
 /*Data for the table `dpdy_file` */
 
@@ -112,7 +166,7 @@ CREATE TABLE `dpdy_loan_customer_marriage` (
   `status` tinyint(3) unsigned NOT NULL DEFAULT '99' COMMENT '状态，99正常98删除',
   `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='客户婚姻情况列表-用户的婚姻情况也关联该表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='客户婚姻情况列表-用户的婚姻情况也关联该表';
 
 /*Data for the table `dpdy_loan_customer_marriage` */
 
@@ -121,6 +175,7 @@ insert  into `dpdy_loan_customer_marriage`(`id`,`name`,`ad_time`,`status`,`del_t
 insert  into `dpdy_loan_customer_marriage`(`id`,`name`,`ad_time`,`status`,`del_time`) values (3,'离异',1499760922,99,NULL);
 insert  into `dpdy_loan_customer_marriage`(`id`,`name`,`ad_time`,`status`,`del_time`) values (4,'丧偶',1499760922,99,NULL);
 insert  into `dpdy_loan_customer_marriage`(`id`,`name`,`ad_time`,`status`,`del_time`) values (5,'再婚',1499760922,99,NULL);
+insert  into `dpdy_loan_customer_marriage`(`id`,`name`,`ad_time`,`status`,`del_time`) values (6,'夫妻',1500028168,98,1500028803);
 
 /*Table structure for table `dpdy_loan_hous` */
 
@@ -192,16 +247,17 @@ CREATE TABLE `dpdy_loan_mold` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL COMMENT '抵押顺位名称',
   `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间',
-  `status` tinyint(3) unsigned NOT NULL COMMENT '状态，99正常98删除',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '99' COMMENT '状态，99正常98删除',
   `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='工单顺位表，展示为抵押顺位，即：一抵、二抵';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='工单顺位表，展示为抵押顺位，即：一抵、二抵';
 
 /*Data for the table `dpdy_loan_mold` */
 
-insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (1,'一抵业务',1499761184,0,NULL);
-insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (2,'二抵业务',1499761184,0,NULL);
-insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (3,'三抵业务',1499761184,0,NULL);
+insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (1,'一抵业务',1499761184,99,NULL);
+insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (2,'二抵业务',1499761184,99,NULL);
+insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (3,'三抵业务',1499761184,98,1500023016);
+insert  into `dpdy_loan_mold`(`id`,`name`,`ad_time`,`status`,`del_time`) values (4,'三抵业务',1500025118,99,NULL);
 
 /*Table structure for table `dpdy_loan_owner` */
 
@@ -258,9 +314,83 @@ CREATE TABLE `dpdy_log` (
   `ad_ip` varchar(50) DEFAULT NULL COMMENT '操作人电脑IP',
   `ip_city` varchar(200) DEFAULT NULL COMMENT '根据操作用户IP地址判断出来的位置',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='整个系统的日志记录[不包含用户相关]';
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='整个系统的日志记录[不包含用户相关]';
 
 /*Data for the table `dpdy_log` */
+
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (1,2,'directories_department',7,'','','',1,1499856309,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (2,2,'directories_department',8,'','','',1,1499856309,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (3,2,'directories_department',9,'','','',1,1499856309,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (4,3,'directories_department',8,'fid,remarks','2,测试','8,测试',1,1499914459,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (5,3,'directories_department',8,'fid','8','9',1,1499914560,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (6,3,'directories_department',5,'fid,remarks','3,','8,刚开始测试的菜单哦',1,1499914616,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (7,3,'directories_department',8,'fid','9','7',1,1499914654,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (8,4,'directories_department',9,'status,del_time',',','98,1499915543',1,1499915543,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (9,4,'directories_department',8,'status,del_time','99,','98,1499915607',1,1499915607,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (10,4,'directories_department',7,'status,del_time','99,','98,1499915857',1,1499915857,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (11,4,'directories_department',2,'status,del_time','99,','98,1499915868',1,1499915868,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (12,4,'directories_department',6,'status,del_time','99,','98,1499915899',1,1499915899,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (13,4,'directories_department',5,'status,del_time','99,','98,1499915909',1,1499915909,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (14,4,'directories_department',4,'status,del_time','99,','98,1499915918',1,1499915918,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (15,3,'directories_department',3,'fid','0','1',1,1499916540,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (16,2,'file',1,'','','',1,1499949959,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (17,2,'file',2,'','','',1,1499950207,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (18,2,'file',3,'','','',1,1499950403,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (19,2,'file',4,'','','',1,1499950569,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (20,2,'file',5,'','','',1,1499950615,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (21,2,'directories_department',10,'','','',1,1499950667,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (22,4,'directories_department',10,'status,del_time','99,','98,1499950682',1,1499950682,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (23,2,'file',6,'','','',1,1499951332,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (24,2,'directories_user',1,'','','',1,1499951484,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (25,2,'directories_user',2,'','','',1,1499998859,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (26,3,'directories_user',1,'id,name,phone,tel,email,dep_id,avatar,position,phone_type,job_no,ad_time,status,del_time','1,顿顿,15290210718,,,3,avatar/2017-07-13/2017-07-13/crop_200x200_596770e6df172.jpg,,3,,1499951484,99,','010,xiaoyutab@qq.com,IOS,4,0002',1,1500020429,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (27,3,'directories_user',1,'position,phone_type','IOS,4',',2',1,1500020534,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (28,3,'directories_user',1,'avatar,phone_type','avatar/2017-07-13/2017-07-13/crop_200x200_596770e6df172.jpg,2','avatar/2017-07-14/2017-07-14/crop_200x200_59687f7f36530.jpg,3',1,1500020609,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (29,4,'directories_user',1,'status,del_time','99,','98,1500021003',1,1500021003,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (30,4,'loan_mold',3,'status,del_time','99,','98,1500023016',1,1500023016,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (31,3,'loan_mold',2,'name','二抵业务','二抵业务test',1,1500024697,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (32,3,'loan_mold',2,'name','二抵业务test','二抵业务',1,1500024712,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (33,2,'loan_mold',4,'','','',1,1500025118,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (34,2,'loan_customer_marriage',6,'','','',1,1500028168,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (35,3,'loan_customer_marriage',6,'name','夫妻分裂','夫妻',1,1500028473,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+insert  into `dpdy_log`(`id`,`user_type`,`user_name`,`old_key`,`tab_key`,`old_val`,`new_val`,`uid`,`ad_time`,`browser`,`system`,`user_agent`,`ad_ip`,`ip_city`) values (36,4,'loan_customer_marriage',6,'status,del_time','99,','98,1500028803',1,1500028803,'Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','0.0.0.0','本地测试');
+
+/*Table structure for table `dpdy_notice` */
+
+DROP TABLE IF EXISTS `dpdy_notice`;
+
+CREATE TABLE `dpdy_notice` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) DEFAULT NULL COMMENT '标题，限制60中文字符',
+  `author` varchar(200) DEFAULT NULL COMMENT '作者，限制60中文字符',
+  `content` text COMMENT '内容，百度编辑器编写的成型文案',
+  `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间/发送时间',
+  `status` tinyint(3) unsigned DEFAULT '99' COMMENT '状态，99正常98删除',
+  `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
+  `effective_time` int(10) unsigned DEFAULT '0' COMMENT '有效时间，单位：天。0为永久有效',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统公告表，保存有公告的相关信息。备注：查看有多少人阅读了本公告请在日志log表中查看';
+
+/*Data for the table `dpdy_notice` */
+
+/*Table structure for table `dpdy_sms` */
+
+DROP TABLE IF EXISTS `dpdy_sms`;
+
+CREATE TABLE `dpdy_sms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `s_id` int(10) unsigned DEFAULT '0' COMMENT '发件人编号，0为系统发件',
+  `c_id` int(10) unsigned DEFAULT '0' COMMENT '收件人编号，0为无效消息',
+  `title` varchar(200) DEFAULT NULL COMMENT '消息标题，限制60中文汉字',
+  `content` text COMMENT '消息内容',
+  `ad_time` int(10) unsigned DEFAULT NULL COMMENT '添加时间/发送时间',
+  `status` tinyint(3) unsigned DEFAULT NULL COMMENT '状态，99正常[未读]98删除97正常[已读]',
+  `del_time` int(10) unsigned DEFAULT NULL COMMENT '删除时间',
+  `read_time` int(10) unsigned DEFAULT NULL COMMENT '读取时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户消息表，该表保存了所有系统发送、后台发送、用户之间发送的所有消息';
+
+/*Data for the table `dpdy_sms` */
 
 /*Table structure for table `dpdy_user` */
 
@@ -285,7 +415,7 @@ CREATE TABLE `dpdy_user` (
 
 /*Data for the table `dpdy_user` */
 
-insert  into `dpdy_user`(`id`,`username`,`password`,`rand_code`,`phone`,`email`,`group_id`,`ad_time`,`status`,`del_time`) values (1,'admin','8e6964dec5562cea3354447a9e804b98','aA0645','15290210717',NULL,0,1499577191,99,NULL);
+insert  into `dpdy_user`(`id`,`username`,`password`,`rand_code`,`phone`,`email`,`group_id`,`ad_time`,`status`,`del_time`) values (1,'admin','8f1872e2b40a52a36566022faf70e671','OsmPuA','15290210717',NULL,0,1499577191,99,NULL);
 insert  into `dpdy_user`(`id`,`username`,`password`,`rand_code`,`phone`,`email`,`group_id`,`ad_time`,`status`,`del_time`) values (6,'test_admin','47ffe05e5ff538ee6fca5c313e3ed8b2','DJAj1G','15290210812',NULL,1,1499583477,99,NULL);
 
 /*Table structure for table `dpdy_user_blood` */
@@ -3627,7 +3757,7 @@ CREATE TABLE `dpdy_user_log` (
   `user_agent` varchar(200) DEFAULT NULL COMMENT '用户操作时发送过来的User-Agent请求头',
   `ip_city` varchar(200) DEFAULT NULL COMMENT '根据操作用户IP地址判断出来的位置',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='用户相关日志记录';
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='用户相关日志记录';
 
 /*Data for the table `dpdy_user_log` */
 
@@ -3656,6 +3786,25 @@ insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`n
 insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (23,1,NULL,NULL,NULL,NULL,1,1499653444,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
 insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (24,4,NULL,NULL,NULL,NULL,1,1499760553,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
 insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (25,1,NULL,NULL,NULL,NULL,1,1499760656,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (26,4,NULL,NULL,NULL,NULL,1,1499775798,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (27,1,NULL,NULL,NULL,NULL,1,1499775807,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (28,4,NULL,NULL,NULL,NULL,40011,1499844859,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (29,1,NULL,NULL,NULL,NULL,1,1499844871,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (30,5,NULL,1,NULL,NULL,1,1499850353,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (31,4,NULL,NULL,NULL,NULL,1,1499850967,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (32,1,NULL,NULL,NULL,NULL,1,1499850976,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (33,4,NULL,NULL,NULL,NULL,1,1499857794,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (34,1,NULL,NULL,NULL,NULL,1,1499857803,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (35,1,NULL,NULL,NULL,NULL,1,1499913531,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (36,1,NULL,NULL,NULL,NULL,1,1499998740,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (37,4,NULL,NULL,NULL,NULL,1,1500009600,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (38,1,NULL,NULL,NULL,NULL,1,1500009609,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (39,4,NULL,NULL,NULL,NULL,1,1500018940,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (40,1,NULL,NULL,NULL,NULL,1,1500018950,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (41,4,NULL,NULL,NULL,NULL,1,1500022686,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (42,1,NULL,NULL,NULL,NULL,1,1500022696,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (43,4,NULL,NULL,NULL,NULL,1,1500028273,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
+insert  into `dpdy_user_log`(`id`,`user_type`,`user_name`,`old_key`,`old_val`,`new_val`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) values (44,1,NULL,NULL,NULL,NULL,1,1500028283,'0.0.0.0','Chrome,57.0','Windows 7','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36','本地测试');
 
 /*Table structure for table `dpdy_user_office` */
 
@@ -16293,11 +16442,11 @@ CREATE TABLE `dpdy_user_token` (
   `user_type` tinyint(3) unsigned DEFAULT '1' COMMENT '用户设备，1网页登录2Android登录，3IOS登录，4客户端登录',
   `ad_time` int(10) unsigned DEFAULT NULL COMMENT '登录时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户登录标识表，保存有用户的登录token等一系列信息';
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='用户登录标识表，保存有用户的登录token等一系列信息';
 
 /*Data for the table `dpdy_user_token` */
 
-insert  into `dpdy_user_token`(`id`,`uid`,`token`,`user_type`,`ad_time`) values (11,1,'8efa49493bf2c0c2e0e29294ec3b8908',1,1499760656);
+insert  into `dpdy_user_token`(`id`,`uid`,`token`,`user_type`,`ad_time`) values (18,1,'524dd10f4ccb30452ca7da3e839caa76',1,1500028283);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

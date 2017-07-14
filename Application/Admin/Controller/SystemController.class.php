@@ -3,6 +3,7 @@ namespace Admin\Controller;
 use Admin\Model\DirectoriesDepartmentModel;
 use Admin\Model\DirectoriesUserModel;
 use Admin\Model\LoanMoldModel;
+use Admin\Model\LoanCustomerMarriageModel;
 use Think\Page;
 
 /**
@@ -337,5 +338,95 @@ class SystemController extends CommonController {
         }
         return $this->error('操作失败');
     }
-
+    
+    /**
+     * 借款人婚姻情况管理
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 18:19:50
+     */
+    public function loan_customer_marriage_listAction(){
+        $loan = new LoanCustomerMarriageModel();
+        $key = I('get.keywords','','trim');
+        $count = $loan->where(array('name'=>array('like','%'.$key.'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $loan->where(array('name'=>array('like','%'.$key.'%')))->getList($page->firstRow, $page->listRows);
+        $this->assign(array(
+            'l_list' => $list,
+            'count' => $count,
+            'page' => $page->show(),
+        ));
+        return $this->display();
+    }
+    
+    /**
+     * 添加借款人婚姻情况
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 17:36:14
+     */
+    public function loan_customer_marriage_addAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $loan = new LoanCustomerMarriageModel();
+        if($loan->create_loan_customer_marriage(I('post.name'))){
+            return $this->success('添加成功',U('loan_customer_marriage_list'));
+        }
+        return $this->error('操作失败');
+    }
+    
+    /**
+     * 修改借款人婚姻情况
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 18:32:12
+     */
+    public function loan_customer_marriage_saveAction(){
+        $loan = new LoanCustomerMarriageModel();
+        if(!I('post.')){
+            $info = $loan->get_info(I('get.id'));
+            if($info && $info['status'] != '98'){
+                // 获取到了详情信息，进行编辑操作
+                return $this->assign('l_info',$info)->display('loan_customer_marriage_add');
+            }
+            return $this->error('未查询到该借款人婚姻情况');
+        }
+        if($loan->save_loan_customer_marriage(I('get.id'),I('post.name'))){
+            return $this->success('修改成功',U('loan_mold_list'));
+        }
+        return $this->error('修改失败，可能未更改条目名称');
+    }
+    
+    /**
+     * 删除借款人婚姻情况
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 18:38:22
+     */
+    public function loan_customer_marriage_delAction(){
+        $loan = new LoanCustomerMarriageModel();
+        if($loan->delete_loan_customer_marriage(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
+    }
 }
