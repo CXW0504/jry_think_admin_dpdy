@@ -144,7 +144,12 @@ class SystemController extends CommonController {
 
     /**
      * 通讯录人员列表
-     * @return type
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.2
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 13:22:08
      */
     public function directories_user_listAction(){
         $times = explode(' ~ ', I('get.times_end'));
