@@ -150,7 +150,8 @@ class UserController extends CommonController{
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $list = $user->get_list(I('get.keywords',''),I('get.group_id',-1,'intval'),I('get.times',''),I('get.times_end',''),$page->firstRow, $page->listRows);
+        $times = explode(' ~ ', I('get.times_end'));
+        $list = $user->get_list(I('get.keywords',''),I('get.group_id',-1,'intval'),$times[0],$times[1],$page->firstRow, $page->listRows);
         return $this->assign(array(
             'count' => $count,
             'list' => $list,

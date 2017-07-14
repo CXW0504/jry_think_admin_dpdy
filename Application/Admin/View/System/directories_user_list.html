@@ -12,6 +12,7 @@
                 <li>所属部门：</li>
                 <li>
                     <select name="dep_id" class="form-control">
+                        <option value="-1">全部</option>
                         <option value="0">无部门</option>
                         <foreach name='group_list' item='v' key="k">
                             <option value="{$k}">{$v}</option>
@@ -20,11 +21,7 @@
                 </li>
                 <li>添加时间：</li>
                 <li>
-                    <input type="text" name="times" value="{:date('Y-m-d')}" class="input" >
-                </li>
-                <li>~</li>
-                <li>
-                    <input type="text" name="times_end" value="{:date('Y-m-d')}" class="input" >
+                    <input type="text" name="times_end" value="{:date('Y-m-d')} ~ {:date('Y-m-d')}" class="input" >
                 </li>
                 <li>
                     <input type="submit" class="button border-main icon-search" value="搜索"/>
@@ -49,24 +46,28 @@
             <th width="10%">添加时间</th>
             <th width="10%">操作</th>
         </tr>
-        <foreach name="list" item="v">
+        <foreach name="g_list" item="v">
             <tr>
                 <td style="text-align:left; padding-left:20px;">{$v.id}</td>
+                <td>{$v.job_no}</td>
+                <td><img src="<?php if(!empty($v['avatar'])): ?>__PUBLIC__/Upload/{$v.avatar}<?php else: ?>__PUBLIC__/Images/Admin/y.jpg<?php endif; ?>" style="width:50px;"/></td>
                 <td>{$v.name}</td>
-                <td>{$v.fid_name}</td>
-                <td>{$v.count_people}</td>
-                <td>{$v.count_directories}</td>
+                <td>{$v.phone|phont_view_type=$v['phone_type'],###}</td>
+                <td>{$v.tel}</td>
+                <td>{$v.email}</td>
+                <td>{$v.dep_id_name}</td>
+                <td>{$v.position}</td>
                 <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
                 <td>
                     <div class="button-group">
-                        <a class="button border-main" href="{:U('department_save',array('id'=>$v['id']))}">修改</a> 
-                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('department_del',array('id'=>$v['id']))}')">删除</a>
+                        <a class="button border-main" href="{:U('directories_user_save',array('id'=>$v['id']))}">修改</a> 
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('directories_user_del',array('id'=>$v['id']))}')">删除</a>
                     </div>
                 </td>
             </tr>
         </foreach>
         <tr>
-            <td colspan="7"><div class="pagelist"> 
+            <td colspan="11"><div class="pagelist"> 
                     {$page}
                 </div>
             </td>
@@ -80,22 +81,21 @@
         }
     }
     $(function () {
-        // 日期选择插件
-        $('input[name=times]').daterangepicker({
-            format: 'YYYY-MM-DD',
-            singleDatePicker: true,
-            locale : {
-                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
-            }
-        });
+        $('select[name=dep_id').val("{:I('get.dep_id',-1,'intval')}");
+        $('input[name=times_end').val("{:I('get.times_end')}");
+        // 时间段日期选择插件
         $('input[name=times_end]').daterangepicker({
             format: 'YYYY-MM-DD',
-            singleDatePicker: true,
-            locale : {
+            locale: {
+                applyLabel: '确认',
+                cancelLabel: '取消',
+                fromLabel : '起始时间',
+                toLabel : '结束时间',
                 daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
-            }
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ]
+            },
+            opens : 'left',    // 日期选择框的弹出位置
+            separator : ' ~ '
         });
     })
 </script>

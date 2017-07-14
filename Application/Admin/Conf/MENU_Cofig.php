@@ -24,6 +24,7 @@ return array(
         'class' => 'icon-clock-o',
         'content' => array(
             'timecard' => '考勤列表',
+            'setting' => '考勤规则配置',
         ),
         'child' => array(),
     ),
@@ -51,6 +52,8 @@ return array(
             'department_save' => '修改通讯录部门',
             'department_del' => '删除通讯录部门',
             'directories_user_add' => '添加通讯录联系人',
+            'directories_user_save' => '修改通讯录联系人',
+            'directories_user_del' => '删除通讯录联系人',
             'loan_mold_add' => '添加抵押顺位',
             'loan_customer_marriage_add' => '添加借款人婚姻情况',
             'loan_hous_type_add' => '添加房产状态',

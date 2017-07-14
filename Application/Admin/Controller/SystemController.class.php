@@ -147,19 +147,26 @@ class SystemController extends CommonController {
      * @return type
      */
     public function directories_user_listAction(){
+        $times = explode(' ~ ', I('get.times_end'));
         $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $dir = new DirectoriesDepartmentModel();
         $user = new DirectoriesUserModel();
         $group_list = $dir->get_directories_department_list();
         $this->assign('group_list',$group_list);// 获取部门列表
-        $count = $user->where(array(array(
-            'name' => array('like','%'.I('get.keywords').'%'),
-            'phone' => array('like','%'.I('get.keywords').'%'),
-            '_logic' => 'or',
-        )))->where(array(
-            'dep_id'=>I('get.dep_id'),
-            'ad_time' => array(array('gt',strtotime(I('get.times').' 00:00:01')),array('lt',strtotime(I('get.times_end').' 23:59:59'))),
-        ))->getCount();
+        $dep_id = I('get.dep_id',-1,'intval');
+        if(isset($_GET['dep_id'])){
+            $user->where(array(
+                'ad_time' => array(array('gt',strtotime($times[0].' 00:00:01')),array('lt',strtotime($times[1].' 23:59:59')))
+            ))->where(array(array(
+                'name' => array('like','%'.I('get.keywords').'%'),
+                'phone' => array('like','%'.I('get.keywords').'%'),
+                '_logic' => 'or',
+            )));
+            if($dep_id >= 0){
+                $user->where(array('dep_id'=>$dep_id));
+            }
+        }
+        $count = $user->getCount();
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -167,23 +174,25 @@ class SystemController extends CommonController {
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $list = $user->where(array(array(
-            'name' => array('like','%'.I('get.keywords').'%'),
-            'phone' => array('like','%'.I('get.keywords').'%'),
-            '_logic' => 'or',
-        )))->where(array(
-            'dep_id'=>I('get.dep_id'),
-            'ad_time' => array(array('gt',strtotime(I('get.times').' 00:00:01')),array('lt',strtotime(I('get.times_end').' 23:59:59'))),
-        ))->getList($page->firstRow, $page->listRows);
-        $user = new DirectoriesUserModel();
+        if(isset($_GET['dep_id'])){
+            $user->where(array(
+                'ad_time' => array(array('gt',strtotime($times[0].' 00:00:01')),array('lt',strtotime($times[1].' 23:59:59')))
+            ))->where(array(array(
+                'name' => array('like','%'.I('get.keywords').'%'),
+                'phone' => array('like','%'.I('get.keywords').'%'),
+                '_logic' => 'or',
+            )));
+            if($dep_id >= 0){
+                $user->where(array('dep_id'=>$dep_id));
+            }
+        }
+        $list = $user->getList($page->firstRow, $page->listRows);
         foreach($list as $k => $v){
-            $list[$k]['fid_name'] = $dir->get_directories_name($v['fid']);
-            $list[$k]['count_people'] = $user->get_directories_count_people($v['id']);
-            $list[$k]['count_directories'] = $dir->get_directories_count_directories($v['id']);
+            $list[$k]['dep_id_name'] = $group_list[$v['dep_id']];
         }
         return $this->assign(array(
             'count' => $count,
-            'list' => $list,
+            'g_list' => $list,
             'page' => $page->show(),
         ))->display();
     }
