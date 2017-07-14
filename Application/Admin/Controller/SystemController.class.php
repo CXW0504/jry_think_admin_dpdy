@@ -201,5 +201,20 @@ class SystemController extends CommonController {
             'page' => $page->show(),
         ))->display();
     }
+    
+    public function directories_user_saveAction(){
+        $this->wget('bootstrap')->wget('cropper')->wget('sitelogo');
+        $dir = new DirectoriesDepartmentModel();
+        $user = new DirectoriesUserModel();
+        if(!I('post.')){
+            $group_list = $dir->get_directories_department_list();
+            $this->assign('group_list',$group_list);
+            return $this->display();
+        }
+        if($user->save_directories_user(I('get.id'),I('post.name'),I('post.phone'),I('post.tel'),I('post.email'),I('post.dep_id'),I('post.avatar'),I('post.position'),I('post.phone_type'),I('post.job_no'))){
+            return $this->success('添加成功',U('directories_user_list'));
+        }
+        return $this->error('添加失败');
+    }
 
 }
