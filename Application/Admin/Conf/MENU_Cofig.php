@@ -55,6 +55,8 @@ return array(
             'directories_user_save' => '修改通讯录联系人',
             'directories_user_del' => '删除通讯录联系人',
             'loan_mold_add' => '添加抵押顺位',
+            'loan_mold_save' => '编辑抵押顺位',
+            'loan_mold_del' => '删除抵押顺位',
             'loan_customer_marriage_add' => '添加借款人婚姻情况',
             'loan_hous_type_add' => '添加房产状态',
             'loan_insurance_add' => '添加抵押权人',

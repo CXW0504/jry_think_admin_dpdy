@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 use Admin\Model\DirectoriesDepartmentModel;
 use Admin\Model\DirectoriesUserModel;
+use Admin\Model\LoanMoldModel;
 use Think\Page;
 
 /**
@@ -226,7 +227,7 @@ class SystemController extends CommonController {
         if($user->save_directories_user(I('get.id'),I('post.name'),I('post.phone'),I('post.tel'),I('post.email'),I('post.dep_id'),I('post.avatar'),I('post.position'),I('post.phone_type'),I('post.job_no'))){
             return $this->success('修改成功',U('directories_user_list'));
         }
-        return $this->error('修改失败，可能为更改该人员信息');
+        return $this->error('修改失败，可能未更改该人员信息');
     }
     
     /**
@@ -244,6 +245,97 @@ class SystemController extends CommonController {
             return $this->success('删除成功');
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 抵押顺位管理列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 17:33:33
+     */
+    public function loan_mold_listAction(){
+        $loan = new LoanMoldModel();
+        $key = I('get.keywords','','trim');
+        $count = $loan->where(array('name'=>array('like','%'.$key.'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $loan->where(array('name'=>array('like','%'.$key.'%')))->getList($page->firstRow, $page->listRows);
+        $this->assign(array(
+            'l_list' => $list,
+            'count' => $count,
+            'page' => $page->show(),
+        ));
+        return $this->display();
+    }
+    
+    /**
+     * 删除抵押顺位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 17:03:27
+     */
+    public function loan_mold_delAction(){
+        $loan = new LoanMoldModel();
+        if($loan->delete_loan_mold(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改抵押顺位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 17:33:09
+     */
+    public function loan_mold_saveAction(){
+        $loan = new LoanMoldModel();
+        if(!I('post.')){
+            $info = $loan->get_info(I('get.id'));
+            if($info && $info['status'] != '98'){
+                // 获取到了详情信息，进行编辑操作
+                return $this->assign('l_info',$info)->display();
+            }
+            return $this->error('未查询到该抵押顺位');
+        }
+        if($loan->save_loan_mold(I('get.id'),I('post.name'))){
+            return $this->success('修改成功',U('loan_mold_list'));
+        }
+        return $this->error('修改失败，可能未更改条目名称');
+    }
+    
+    /**
+     * 添加抵押顺位操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 17:36:14
+     */
+    public function loan_mold_addAction(){
+        if(!I('post.')){
+            return $this->display('loan_mold_save');
+        }
+        $loan = new LoanMoldModel();
+        if($loan->create_loan_mold(I('post.name'))){
+            return $this->success('添加成功',U('loan_mold_list'));
+        }
+        return $this->error('操作失败');
     }
 
 }
