@@ -77,4 +77,86 @@ class DirectoriesUserModel extends \Common\Model\AllModel {
         }
         return $id;
     }
+    
+    /**
+     * 修改通讯录人员信息
+     * 
+     * @param number $id 条目编号
+     * @param string $name 人员姓名
+     * @param string $phone 人员手机
+     * @param string $tel 人员电话
+     * @param string $email 人员邮箱
+     * @param number $dep_id 所属部门编号
+     * @param number $avatar 用户头像编号
+     * @param string $position 用户职位名称
+     * @param number $phone_type 手机号展示类型
+     * @param string $job_no 用户工号
+     * @return boolean 是否添加成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 16:15:06
+     */
+    public function save_directories_user($id = 0,$name = '',$phone = '',$tel = '',$email = '',$dep_id = '',$avatar = '',$position = '',$phone_type = '',$job_no = ''){
+        // 姓名不许为空
+        if(empty($name)){
+            return FALSE;
+        }
+        // 通讯录条目编号不允许为空
+        if($id <= 0){
+            return FALSE;
+        }
+        // 手机号不允许为空
+        if(empty($phone)){
+            return FALSE;
+        }
+        // 获取旧的信息
+        $old_arr = $this->where(array('id'=>$id))->find();
+        // 设置临时数组，用来判断哪些字段有改动
+        $temp_arr = array();
+        // 设置改动后的数组，用来改变数据库数据
+        $new_arr = array();
+        // 遍历旧的变量数组
+        foreach($old_arr as $k => $v){
+            if(!isset($$k) || $k == 'id'){
+                // 跳过未传值的字段和id字段
+                continue;
+            }
+            if($$k != $v){
+                // 获取修改的字段
+                $temp_arr[$k] = $v;
+                $new_arr[$k] = $$k;
+            }
+        }
+        $success = $this->where(array('id'=> intval($id)))->save($new_arr);
+        if($success){
+            $log = new LogModel();
+            $log->update_log('directories_user', $id,$new_arr,$temp_arr);
+        }
+        return $success;
+    }
+    
+    /**
+     * 删除通讯录条目信息
+     * 
+     * @param number $id 通讯录条目编号
+     * @return boolean 是否删除成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 16:29:29
+     */
+    public function delete_directories_user($id = 0){
+        // 如果传入的条目编号小于0，则返回删除失败
+        if($id <= 0){
+            return FALSE;
+        }
+        $info = $this->where(array('id'=> intval($id),'status'=>array('neq',98)))
+                ->save(array('status'=>98,'del_time'=>NOW_TIME));
+        if($info){
+            $log = new LogModel();
+            $log->delete_log('directories_user', intval($id), 99);
+        }
+        return $info;
+    }
 }

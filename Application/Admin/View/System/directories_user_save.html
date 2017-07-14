@@ -7,7 +7,7 @@
                     <label>工号</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="job_no"/>
+                    <input type="text" class="input w50" value="{$u_info.job_no}" name="job_no"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                         <option value="0">无部门</option>
                         <optgroup label="--------------------"></optgroup>
                         <foreach name="group_list" key="k" item="v">
-                            <option value="{$k}">{$v}</option>
+                            <option value="{$k}"<?php if($u_info['dep_id'] == $k){echo ' selected';} ?>>{$v}</option>
                         </foreach>
                     </select>
                     <div class="tips"></div>
@@ -31,7 +31,7 @@
                     <label>职位</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="position" />
+                    <input type="text" class="input w50" value="{$u_info.postion}" name="position" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <label>姓名</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="name" data-validate="required:姓名不能为空" />
+                    <input type="text" class="input w50" name="name" value="{$u_info.name}" data-validate="required:姓名不能为空" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <label>手机号</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="phone" data-validate="required:手机号不能为空" />
+                    <input type="text" class="input w50" name="phone" value="{$u_info.phone}" data-validate="required:手机号不能为空" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <label>电话</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="tel"/>
+                    <input type="text" class="input w50" value="{$u_info.tel}" name="tel"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     <label>邮箱</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="email"/>
+                    <input type="text" class="input w50" value="{$u_info.email}" name="email"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -77,17 +77,17 @@
                 </div>
                 <div class="field">
                     <div class="button-group radio" style="padding-left:0;">
-                        <label class="button active">
-                            <input name="phone_type" value="1" type="radio" checked="checked">全部显示
+                        <label class="button<?php if($u_info['phone_type'] == 1){echo ' active';} ?>">
+                            <input name="phone_type" value="1" type="radio" <?php if($u_info['phone_type'] == 1){echo 'checked="checked"';} ?>>全部显示
                         </label>
-                        <label class="button">
-                            <input name="phone_type" value="2" type="radio">全部隐藏
+                        <label class="button<?php if($u_info['phone_type'] == 2){echo ' active';} ?>">
+                            <input name="phone_type" value="2" type="radio" <?php if($u_info['phone_type'] == 2){echo 'checked="checked"';} ?>>全部隐藏
                         </label>
-                        <label class="button">
-                            <input name="phone_type" value="3" type="radio">中间隐藏
+                        <label class="button<?php if($u_info['phone_type'] == 3){echo ' active';} ?>">
+                            <input name="phone_type" value="3" type="radio" <?php if($u_info['phone_type'] == 3){echo 'checked="checked"';} ?>>中间隐藏
                         </label>
-                        <label class="button">
-                            <input name="phone_type" value="4" type="radio">只显示后四位
+                        <label class="button<?php if($u_info['phone_type'] == 4){echo ' active';} ?>">
+                            <input name="phone_type" value="4" type="radio" <?php if($u_info['phone_type'] == 4){echo 'checked="checked"';} ?>>只显示后四位
                         </label>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                         <div class="row">
                             <div id="crop-avatar" class="col-md-6">
                                 <div class="avatar-view" title="点击修改头像" style="width:100px;height:100px;">
-                                    <img src="__PUBLIC__/Images/Admin/y.jpg" alt="Logo" name="avatar" >
-                                    <input type="hidden" value="" name="avatar"/>
+                                    <img src="<?php if(!empty($u_info['avatar'])): ?>__PUBLIC__/Upload/{$u_info.avatar}<?php else: ?>__PUBLIC__/Images/Admin/y.jpg<?php endif; ?>" alt="Logo" name="avatar" >
+                                    <input type="hidden" value="{$u_info.avatar}" name="avatar"/>
                                 </div>
                             </div>
                         </div>

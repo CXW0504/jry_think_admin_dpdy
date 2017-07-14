@@ -60,11 +60,11 @@ function phont_view_type($type = 1, $phone = '') {
             break;
         case 2:
             // 全部隐藏
-            return '****';
+            return '***********';
             break;
         case 4:
             // 只显示后四位
-            return '****'.substr($phone, -4);
+            return '*******'.substr($phone, -4);
             break;
         default:
             // 中间隐藏

@@ -202,6 +202,16 @@ class SystemController extends CommonController {
         ))->display();
     }
     
+
+    /**
+     * 修改通讯录人员信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 16:24:48
+     */
     public function directories_user_saveAction(){
         $this->wget('bootstrap')->wget('cropper')->wget('sitelogo');
         $dir = new DirectoriesDepartmentModel();
@@ -209,12 +219,31 @@ class SystemController extends CommonController {
         if(!I('post.')){
             $group_list = $dir->get_directories_department_list();
             $this->assign('group_list',$group_list);
+            $info = $user->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+            $this->assign('u_info',$info);
             return $this->display();
         }
         if($user->save_directories_user(I('get.id'),I('post.name'),I('post.phone'),I('post.tel'),I('post.email'),I('post.dep_id'),I('post.avatar'),I('post.position'),I('post.phone_type'),I('post.job_no'))){
-            return $this->success('添加成功',U('directories_user_list'));
+            return $this->success('修改成功',U('directories_user_list'));
         }
-        return $this->error('添加失败');
+        return $this->error('修改失败，可能为更改该人员信息');
+    }
+    
+    /**
+     * 删除通讯录条目信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-14 16:29:57
+     */
+    public function directories_user_delAction(){
+        $user = new DirectoriesUserModel();
+        if($user->delete_directories_user(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
     }
 
 }
