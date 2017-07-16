@@ -80,6 +80,7 @@ return array(
         'child' => array(
             'group_del' => '删除权限组',
             'group_save' => '修改权限组',
+            'group_distribution' => '权限组授权分组',
             'group_jurisdiction' => '为权限组授权',
             'user_del' => '删除用户',
             'user_save' => '更新用户信息',
