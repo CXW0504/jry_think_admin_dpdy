@@ -154,6 +154,14 @@ class UserReceptionGroupModel extends \Common\Model\AllModel{
         return intval($count);
     }
     
+    /**
+     * 获取分组树形列表
+     * @return array 查询到的数据
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 16:00:06
+     */
     public function get_tree_group_list(){
         $list = $this->_get_tree_group_list(0, '&nbsp;&nbsp;&nbsp;&nbsp;');
         return $list;

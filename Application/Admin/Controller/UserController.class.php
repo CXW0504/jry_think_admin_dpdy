@@ -311,4 +311,141 @@ class UserController extends CommonController{
         }
         return $this->error('删除失败');
     }
+    
+    /**
+     * 获取前台用户列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 14:12:05
+     */
+    public function reception_listAction(){
+        $user = new UserReceptionModel();
+        $user_group = new UserReceptionGroupModel();
+        $this->assign('group_list',$user_group->get_tree_group_list());
+        $where = array();
+        if(I('get.keywords')){
+            $where[] = array(
+                    'username' => array('like','%'.I('get.keywords').'%'),
+                    'phone' => array('like','%'.I('get.keywords').'%'),
+                    'email' => array('like','%'.I('get.keywords').'%'),
+                    'nickname' => array('like','%'.I('get.keywords').'%'),
+                    '_logic' => 'or',
+                );
+        }
+        if(I('get.group_id') >= 0 && isset($_GET['group_id'])){
+            $where['group_id'] = I('get.group_id',0,'intval');
+        }
+        if(I('get.type')){
+            $where['type'] = I('get.type',0,'intval');
+        }
+        $count = $user->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $user->where($where)->getList($page->firstRow, $page->listRows);
+        foreach($list as $k => $v){
+            $list[$k]['type_name'] = $v['type'] == '1'?'抵押专员':'调评专员';
+            $info = $user_group->get_info($v['group_id']);
+            $list[$k]['group_id_name'] = $info['name']?$info['name']:'--';
+            $list[$k]['phone_view'] = phont_view_type(3, $v['phone']);
+        }
+        $this->assign(array(
+            'g_list' => $list,
+            'count' => $count,
+            'page' => $page->show(),
+        ));
+        return $this->display();
+    }
+    
+    /**
+     * 添加前台用户
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:33
+     */
+    public function reception_addAction(){
+        if(!I('post.')){
+            $user_group = new UserReceptionGroupModel();
+            $this->assign('group_list',$user_group->get_tree_group_list());
+            return $this->display();
+        }
+        $user = new UserReceptionModel();
+        if(!$user->name_value('username', I('post.username'))){
+            return $this->error('登录用户名已存在');
+        }
+        if(!$user->name_value('phone', I('post.phone'))){
+            return $this->error('用户手机号已存在');
+        }
+        if(!$user->name_value('email', I('post.email'))){
+            return $this->error('用户邮箱已存在');
+        }
+        if($user->create_info(I('post.'))){
+            return $this->success('添加成功',U('reception_list'));
+        }
+        return $this->error('操作失败');
+    }
+    
+    /**
+     * 修改前台用户信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.1
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:29
+     */
+    public function reception_saveAction(){
+        $user = new UserReceptionModel();
+        $info = $user->get_info(I('get.id'));
+        if(!I('post.')){
+            $user_group = new UserReceptionGroupModel();
+            $list = $user_group->get_tree_group_list();
+            $this->assign('group_list',$list);
+            if($info && $info['status'] != '98'){
+                // 获取到了详情信息，进行编辑操作
+                return $this->assign('g_info',$info)->display('reception_add');
+            }
+            return $this->error('未查询到该分组信息');
+        }
+        if(I('post.username') != $info['username'] && !$user->name_value('username', I('post.username'))){
+            return $this->error('登录用户名已存在');
+        }
+        if(I('post.phone') != $info['phone'] && !$user->name_value('phone', I('post.phone'))){
+            return $this->error('用户手机号已存在');
+        }
+        if(I('post.email') != $info['email'] && !$user->name_value('email', I('post.email'))){
+            return $this->error('用户邮箱已存在');
+        }
+        if($user->save_info(I('get.id'), I('post.'))){
+            return $this->success('修改成功',U('reception_list'));
+        }
+        return $this->error('修改失败，可能未更改条目信息');
+    }
+    
+    /**
+     * 删除前台用户
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:25
+     */
+    public function reception_delAction(){
+        $loan = new UserReceptionModel();
+        if($loan->delete_info(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
+    }
 }

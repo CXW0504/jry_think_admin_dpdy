@@ -89,6 +89,9 @@ return array(
             'reception_group_add' => '添加前台用户组',
             'reception_group_save' => '修改前台用户组',
             'reception_group_del' => '删除前台用户组',
+            'reception_add' => '添加前台用户',
+            'reception_save' => '修改前台用户',
+            'reception_del' => '删除前台用户',
         ),
     ),
     'Log' => array(

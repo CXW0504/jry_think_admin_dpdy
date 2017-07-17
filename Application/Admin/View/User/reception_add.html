@@ -1,0 +1,96 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;<?php if(!empty($g_info)){echo '修改';}else{echo '添加';} ?>前台用户</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">  
+            <div class="form-group">
+                <div class="label">
+                    <label>所属分组</label>
+                </div>
+                <div class="field">
+                    <select name="group_id" class="input w50">
+                        <option value="0">无分组</option>
+                        <optgroup label="--------------------"></optgroup>
+                        <foreach name="group_list" key="k" item="v">
+                            <option value="{$k}">{$v}</option>
+                        </foreach>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户名</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.username}" readonly="true" name="username" data-validate="required:登录用户名不能为空,username:登录用户名格式不正确" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录密码</label>
+                </div>
+                <div class="field">
+                    <input type="password" class="input w50" value="" name="password" <?php if(empty($g_info)): ?> data-validate="required:密码不能为空"<?php endif; ?> />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>昵称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.nickname}" name="nickname"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>手机</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.phone}" name="phone"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>邮箱</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.email}" name="email"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>用户类型</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button <?php if($g_info['type'] == '1'): ?> active<?php endif; ?>">
+                            <span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="type" value="1" type="radio" <?php if($g_info['type'] == '1'): ?> checked="checked"<?php endif; ?>>抵押专员
+                        </label>
+                        <label class="button <?php if($g_info['type'] == '2'): ?> active<?php endif; ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="type" value="2"  type="radio" <?php if($g_info['type'] == '2'): ?> checked="checked"<?php endif; ?>>调评专员
+                        </label>
+                    </div>  
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('select[name=group_id]').val({$g_info.group_id});
+    })
+</script>
