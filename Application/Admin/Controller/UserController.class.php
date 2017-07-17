@@ -2,7 +2,9 @@
 namespace Admin\Controller;
 use Admin\Model\UserGroupModel;
 use Admin\Model\UserModel;
+use Admin\Model\UserReceptionGroupModel;
 use Think\Page;
+use Admin\Model\UserReceptionModel;
 /**
  * 网站首页信息
  * 
@@ -207,5 +209,106 @@ class UserController extends CommonController{
             return $this->success('修改成功',U('user_list'));
         }
         return $this->error('修改失败',U('user_list'));
+    }
+    
+    /**
+     * 获取前台用户组列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 14:12:05
+     */
+    public function reception_group_listAction(){
+        $user = new UserReceptionGroupModel();
+        $key = I('get.keywords','','trim');
+        $count = $user->where(array('name'=>array('like','%'.$key.'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $user->where(array('name'=>array('like','%'.$key.'%')))->getList($page->firstRow, $page->listRows);
+        $_user = new UserReceptionModel();
+        foreach($list as $k => $v){
+            $list[$k]['fid_name'] = $user->get_reception_group_name($v['fid']);
+            $list[$k]['count_people'] = $_user->get_group_count($v['id']);
+            $list[$k]['count_reception_group'] = $user->get_reception_group_count($v['id']);
+        }
+        $this->assign(array(
+            'g_list' => $list,
+            'count' => $count,
+            'page' => $page->show(),
+        ));
+        return $this->display();
+    }
+    
+    /**
+     * 添加前台用户组
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:33
+     */
+    public function reception_group_addAction(){
+        $loan = new UserReceptionGroupModel();
+        if(!I('post.')){
+            $this->assign('group_list',$loan->get_tree_group_list());
+            return $this->display();
+        }
+        if($loan->create_info(I('post.fid'),I('post.name'))){
+            return $this->success('添加成功',U('reception_group_list'));
+        }
+        return $this->error('操作失败');
+    }
+    
+    /**
+     * 修改前台用户分组信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.1
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:29
+     */
+    public function reception_group_saveAction(){
+        $loan = new UserReceptionGroupModel();
+        if(!I('post.')){
+            $list = $loan->get_tree_group_list();
+            unset($list[I('get.id')]);
+            $this->assign('group_list',$list);
+            $info = $loan->get_info(I('get.id'));
+            if($info && $info['status'] != '98'){
+                // 获取到了详情信息，进行编辑操作
+                return $this->assign('g_info',$info)->display('reception_group_add');
+            }
+            return $this->error('未查询到该分组信息');
+        }
+        if($loan->save_info(I('get.id'), I('post.fid'), I('post.name'))){
+            return $this->success('修改成功',U('reception_group_list'));
+        }
+        return $this->error('修改失败，可能未更改条目信息');
+    }
+    
+    /**
+     * 删除前台用户分组
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-17 15:38:25
+     */
+    public function reception_group_delAction(){
+        $loan = new UserReceptionGroupModel();
+        if($loan->delete_info(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
     }
 }

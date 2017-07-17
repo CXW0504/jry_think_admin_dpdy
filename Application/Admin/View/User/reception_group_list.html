@@ -1,8 +1,8 @@
 <div class="panel admin-panel" id="listform">
-    <div class="panel-head"><strong class="icon-user"> 内容列表</strong> </div>
+    <div class="panel-head"><strong class="icon-user"> 前台用户组列表</strong> </div>
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <li><a class="button border-main" href="{:U('group_add')}"> 添加权限组</a></li>
+            <li> <a class="button border-main" href="{:U('reception_group_add')}"> 添加用户组</a> </li>
             <li>搜索：</li>
             <li>
                 <form method="get" >
@@ -19,27 +19,31 @@
     <table class="table table-hover text-center">
         <tr>
             <th width="100" style="text-align:left; padding-left:20px;">ID</th>
-            <th>分类名称</th>
+            <th>部门名称</th>
+            <th>上级部门名称</th>
+            <th>旗下人员数量</th>
+            <th>旗下部门数量</th>
             <th width="15%">添加时间</th>
-            <th width="25%">操作</th>
+            <th width="20%">操作</th>
         </tr>
-        <foreach name="list" item="v">
+        <foreach name="g_list" item="v">
             <tr>
                 <td style="text-align:left; padding-left:20px;">{$v.id}</td>
                 <td>{$v.name}</td>
+                <td>{$v.fid_name}</td>
+                <td>{$v.count_people}</td>
+                <td>{$v.count_reception_group}</td>
                 <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
                 <td>
                     <div class="button-group">
-                        <a class="button border-main" href="{:U('group_save',array('id'=>$v['id']))}">修改</a> 
-                        <a class="button border-green" href="{:U('group_jurisdiction',array('id'=>$v['id']))}">授权</a> 
-                        <a class="button border-green" href="{:U('group_distribution',array('id'=>$v['id']))}">理组</a> 
-                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('group_del',array('id'=>$v['id']))}')">删除</a>
+                        <a class="button border-main" href="{:U('reception_group_save',array('id'=>$v['id']))}">修改</a> 
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('reception_group_del',array('id'=>$v['id']))}')">删除</a>
                     </div>
                 </td>
             </tr>
         </foreach>
         <tr>
-            <td colspan="4"><div class="pagelist"> 
+            <td colspan="7"><div class="pagelist"> 
                     {$page}
                 </div>
             </td>
