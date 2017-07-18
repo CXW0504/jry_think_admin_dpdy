@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Model;
 use Admin\Model\UserLogModel;
+use Admin\Model\LogModel;
 
 class UserGroupModel extends \Common\Model\AllModel {
 
@@ -90,8 +91,32 @@ class UserGroupModel extends \Common\Model\AllModel {
             'content' => implode(',', $new)
         ));
         if($data){
-            $log = new UserLogModel();
-            $log->delete_log('user_group',$id,$old,implode(',', $new));// 添加删除日志
+            $log = new LogModel();
+            $log->update_log('user_group',$id,array('content'=>implode(',', $new)),array('content' => $old));// 添加更新日志
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    /**
+     * 为权限组分配前台用户组
+     * 
+     * @param number $id 要删除的权限组编号
+     * @param array $new 修改成什么样的权限
+     * @param string $old 权限组现在的状态
+     * @return boolean 是否删除成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-18 16:10:02
+     */
+    public function save_group_distribution($id = 0,$new = array(),$old = ''){
+        $data = $this->where(array('id'=>$id,'status'=>array('neq',98)))->save(array(
+            'all_group_id' => implode(',', $new)
+        ));
+        if($data){
+            $log = new LogModel();
+            $log->update_log('user_group',$id,array('all_group_id'=>implode(',', $new)),array('all_group_id' => $old));// 添加更新日志
             return TRUE;
         }
         return FALSE;

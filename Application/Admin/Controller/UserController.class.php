@@ -448,4 +448,32 @@ class UserController extends CommonController{
         }
         return $this->error('删除失败');
     }
+    
+    /**
+     * 理组操作
+     *      为权限组进行授予用户分组，进行分工操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-18 16:03:40
+     */
+    public function group_distributionAction(){
+        $group = new UserGroupModel();
+        $info = $group->where(array('status'=>array('neq',98),'id'=>I('get.id',0,'intval')))->find();
+        if(!I('post.')){
+            if(empty($info)){
+                return $this->error('查无数据');
+            }
+            $user_group = new UserReceptionGroupModel();
+            $this->assign('group_list',$user_group->getList(0, 999));
+            $this->assign('group_ids', explode(',', $info['all_group_id']));
+            return $this->display();
+        }
+        if($group->save_group_distribution(I('get.id'),I('post.content'),$info['all_group_id'])){
+            return $this->success('更新成功',U('group_list'));
+        }
+        return $this->error('更新失败');
+    }
 }

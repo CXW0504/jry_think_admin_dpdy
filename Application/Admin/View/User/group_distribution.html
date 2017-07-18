@@ -1,0 +1,33 @@
+<form action="" method="post">
+    <div class="panel admin-panel" style="margin-bottom:10px;">
+        <div class="panel-head" id="add"><strong><span class="{$v.class}"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="all" type="checkbox">全选</div>
+        <div class="body-content">
+            <div class="form-x">
+                <div class="form-group">
+                    <foreach name="group_list" item="v" key="k">
+                        <div class="field" style="padding-top:8px;"> 
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <input name="content[]" <?php if(in_array($v['id'],$group_ids)){echo 'checked';} ?> class="all" value="{$v.id}" type="checkbox">{$v.name}
+                        </div>
+                    </foreach>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label></label>
+        </div>
+        <div class="field">
+            <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+        </div>
+    </div>
+</form>
+<script>
+$("#all").click(function(){
+    var stat = this.checked;
+    $("input[class=all]").each(function(){
+        this.checked = stat;
+    });
+});
+</script>

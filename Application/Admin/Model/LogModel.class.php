@@ -43,6 +43,8 @@ class LogModel extends \Common\Model\AllModel{
      * @adtime 2017-07-13 10:47:48
      */
     public function update_log($user_name = '',$id = 0,$save = array(),$old = array()){
+        $save = $this->_englist_import($save);
+        $old = $this->_englist_import($old);
         $arr = array(
             'user_type' => 3,
             'user_name' => $user_name,
@@ -77,6 +79,22 @@ class LogModel extends \Common\Model\AllModel{
             'new_val' => '98,'.NOW_TIME,
         );
         return $this->_create_date($arr);
+    }
+    
+    /**
+     * 字符串替换操作，将原来的,替换成|
+     * @param array $arr
+     * @return array
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-18 16:16:05
+     */
+    private function _englist_import($arr = array()){
+        foreach($arr as $k => $v){
+            $arr[$k] = str_replace(',', '|', $v);
+        }
+        return $arr;
     }
 
     /**

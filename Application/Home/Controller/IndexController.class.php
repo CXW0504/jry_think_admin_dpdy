@@ -35,13 +35,14 @@ class IndexController extends \Common\Controller\PublicController{
     public function indexAction(){
         // 测试极光推送消息
         // 帐号 actine@foxmail.com
-//        $jp = new \Org\SDK\JPush\Client('2988ee3f7318357e9d916434', '2a3989136b283974d16f7f0a',RUNTIME_PATH . 'SDK/Jplus.log');
-//        $result = $jp->push()
-//        ->setPlatform('android')
-//        ->addRegistrationId('190e35f7e072448b2ef')
-//        ->setNotificationAlert("这是测试的推送")
-//        ->send();
-//        dump($result);
+        $jp = new \Org\SDK\JPush\Client('2988ee3f7318357e9d916434', '2a3989136b283974d16f7f0a',RUNTIME_PATH . 'SDK/Jplus.log');
+        $result = $jp->push()
+        ->setPlatform('ios')
+//        ->addRegistrationId('190e35f7e072448b2ef') // android设备虚拟机
+        ->addRegistrationId('191e35f7e0724023b6a')
+        ->setNotificationAlert("这是测试的苹果推送")
+        ->send();
+        dump($result);
 //array(3) {
 //  ["body"] => array(2) {
 //    ["sendno"] => string(5) "91759"
