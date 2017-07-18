@@ -1,0 +1,80 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-cogs"></span>&nbsp;<?php if(!empty($l_info)){echo '修改';}else{echo '增加';} ?>广告信息</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>Banner标题</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.title}" name="title" data-validate="required:请输入Banner标题" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>跳转链接</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.href}" name="href" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>广告类型</label>
+                </div>
+                <div class="field">
+                    <select name="type" class="input w50">
+                        <option value="1">手机导航条广告</option>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>排序</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.order}" name="order"/>
+                    <div class="tips"></div><div class="input-help"><ul><li class="tigs">该排序字段数字越大排序越靠前，最大值为100</li></ul></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>图片选择</label>
+                </div>
+                <div class="field">
+                    <input type="file" name="file" class="input w50" style="border:none"/>
+                    <div class="tips"></div><div class="input-help"><ul><li>图片大小建议为360x180</li></ul></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('input[name=order]').blur(function(){
+            var intv = parseInt($(this).val());
+            if(isNaN($(this).val())){
+                $('.tigs').html('<span style="color:red">请输入一个数字</span>');
+            } else if(intv > 100){
+                $('.tigs').html('<span style="color:red">数字不能大于100</span>');
+            } else if(intv < 1){
+                $('.tigs').html('<span style="color:red">数字不能小于1</span>');
+            } else if($(this).val() == ''){
+                $('.tigs').html('该排序字段数字越大排序越靠前，最大值为100');
+            } else {
+                $('.tigs').html('<span style="color:green">正确</span>');
+            }
+        });
+    });
+</script>

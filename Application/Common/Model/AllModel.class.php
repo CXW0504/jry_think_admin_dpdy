@@ -36,17 +36,18 @@ class AllModel extends Model {
      * @param  integer $p0     开始条数
      * @param  integer $p1     查询条数
      * @param  boolean $status 查询状态，false为全部未删除的，数字为相应状态的文章
+     * @param  string $order 排序规则，根据什么进行排序
      * @return array           查询到的列表数据
      * 
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.0
+     * @version v1.0.2
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-04-16 22:26:24
      */
-    public function getList($p0 = 0, $p1 = 20, $status = false) {
+    public function getList($p0 = 0, $p1 = 20, $status = false,$order = '`ad_time` DESC') {
         if ($status === false)
-            return $this->where(array('status' => array('neq', 98)))->order('`ad_time` DESC')->limit($p0, $p1)->select();
-        return $this->where(array('status' => $status))->order('`ad_time` DESC')->limit($p0, $p1)->select();
+            return $this->where(array('status' => array('neq', 98)))->order($order)->limit($p0, $p1)->select();
+        return $this->where(array('status' => $status))->order($order)->limit($p0, $p1)->select();
     }
     
     /**

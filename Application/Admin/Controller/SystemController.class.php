@@ -7,6 +7,8 @@ use Admin\Model\LoanCustomerMarriageModel;
 use Admin\Model\LoanHousTypeModel;
 use Admin\Model\LoanInsuranceModel;
 use Think\Page;
+use Admin\Model\BannerModel;
+use Admin\Model\FileModel;
 
 /**
  * 系统管理模块控制器
@@ -612,5 +614,57 @@ class SystemController extends CommonController {
             return $this->success('删除成功');
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 获取banner列表页面
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-18 21:19:33
+     */
+    public function banner_listAction(){
+        $banner = new BannerModel();
+        $key = I('get.keywords','','trim');
+        $count = $banner->where(array('title'=>array('like','%'.$key.'%')))->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $banner->where(array('title'=>array('like','%'.$key.'%')))->order('`order` DESC,`id` DESC')->getList($page->firstRow, $page->listRows,FALSE,'`order` DESC,`id` DESC');
+        $this->assign(array(
+            'l_list' => $list,
+            'count' => $count,
+            'page' => $page->show(),
+        ));
+        return $this->display();
+    }
+    
+    /**
+     * 添加banner页面
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-18 21:20:24
+     */
+    public function banner_addAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $loan = new BannerModel();
+        $file = new FileModel();
+        $fid = $file->upload_file();
+        dump($fid);exit;// 获取上传的图片信息
+        if($loan->create_info(I('post.'))){
+            return $this->success('添加成功',U('banner_list'));
+        }
+        return $this->error('操作失败');
     }
 }
