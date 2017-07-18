@@ -35,14 +35,32 @@ class IndexController extends \Common\Controller\PublicController{
     public function indexAction(){
         // 测试极光推送消息
         // 帐号 actine@foxmail.com
-        $jp = new \Org\SDK\JPush\Client('46af5188a106754675cc19d5', '72bcb04b4e8d74faafae9f56',RUNTIME_PATH . 'SDK/Jplus.log');
-        dump($jp);
-        $result = $jp->push()
-        ->setPlatform('all')
-        ->addAllAudience()
-        ->setNotificationAlert("这是测试的推送")
-        ->send();
-        dump($result);
+//        $jp = new \Org\SDK\JPush\Client('2988ee3f7318357e9d916434', '2a3989136b283974d16f7f0a',RUNTIME_PATH . 'SDK/Jplus.log');
+//        $result = $jp->push()
+//        ->setPlatform('android')
+//        ->addRegistrationId('190e35f7e072448b2ef')
+//        ->setNotificationAlert("这是测试的推送")
+//        ->send();
+//        dump($result);
+//array(3) {
+//  ["body"] => array(2) {
+//    ["sendno"] => string(5) "91759"
+//    ["msg_id"] => string(10) "1923758674"
+//  }
+//  ["http_code"] => int(200)
+//  ["headers"] => array(10) {
+//    [0] => string(15) "HTTP/1.1 200 OK"
+//    ["Server"] => string(5) "nginx"
+//    ["Date"] => string(29) "Tue, 18 Jul 2017 03:56:22 GMT"
+//    ["Content-Type"] => string(16) "application/json"
+//    ["Transfer-Encoding"] => string(7) "chunked"
+//    ["Connection"] => string(10) "keep-alive"
+//    ["X-Rate-Limit-Limit"] => string(3) "600"
+//    ["X-Rate-Limit-Remaining"] => string(3) "598"
+//    ["X-Rate-Limit-Reset"] => string(2) "49"
+//    ["X-JPush-MsgId"] => string(10) "1923758674"
+//  }
+//}
     	return $this->display();
     }
 
