@@ -2,6 +2,7 @@
 namespace Home\Controller;
 
 use Org\Office\Word\PHPWord;
+use Org\Office\Excel\PHPExcel;
 use Think\Controller;
 /**
  * 网站首页信息
@@ -36,13 +37,13 @@ class IndexController extends \Common\Controller\PublicController{
         // 测试极光推送消息
         // 帐号 actine@foxmail.com
         $jp = new \Org\SDK\JPush\Client('2988ee3f7318357e9d916434', '2a3989136b283974d16f7f0a',RUNTIME_PATH . 'SDK/Jplus.log');
-        $result = $jp->push()
-        ->setPlatform('ios')
-//        ->addRegistrationId('190e35f7e072448b2ef') // android设备虚拟机
-        ->addRegistrationId('191e35f7e0724023b6a')
-        ->setNotificationAlert("这是测试的苹果推送")
-        ->send();
-        dump($result);
+//        $result = $jp->push()
+//        ->setPlatform('ios')
+////        ->addRegistrationId('190e35f7e072448b2ef') // android设备虚拟机
+//        ->addRegistrationId('191e35f7e0724023b6a')
+//        ->setNotificationAlert("这是测试的苹果推送")
+//        ->send();
+//        dump($result);
 //array(3) {
 //  ["body"] => array(2) {
 //    ["sendno"] => string(5) "91759"
@@ -96,15 +97,16 @@ class IndexController extends \Common\Controller\PublicController{
         // 设置文档默认字体
         $PHPWord->setDefaultFontName('微软雅黑');
         // 设置文档默认字体大小，单位px
-        $PHPWord->setDefaultFontSize(16);
+        $PHPWord->setDefaultFontSize(12);
         // 添加一个页面并设置相关属性
         $section = $PHPWord->createSection();
         // 获取页脚属性，可以使用$footer->xxx来进行设置相关信息
         $footer = $section->createFooter();
         $footer->addPreserveText('{PAGE} / {NUMPAGES}',array(
             'italic' => true,// 使用斜体
-            'color' => 'cccccc',// 灰色字体
-            'align' => 'right', // 居中对齐
+            'color' => 'c4c4c4',// 灰色字体
+        ),array(
+            'align' => 'center',
         ));
         $section->addText('Hello world!');
         $section->addText('Hello world! I am formatted.世界你好', array(
@@ -115,7 +117,9 @@ class IndexController extends \Common\Controller\PublicController{
         ));
         $PHPWord->addFontStyle('myOwnStyle', array('name'=>'Verdana', 'size'=>14, 'color'=>'1B2232'));
         $section->addText('Hello world! I am formatted by a user defined style');
-        $section->addImage( trim('./icon.png'));
+        $section->addImage( trim('./icon.png'),array(
+            '_align' => 'center',
+        ));
         $myTextElement = $section->addText('Hello World!' ,array('name'=>'Tahoma', 'size'=>110, 'bold'=>true));
 
         $objWriter = \PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');

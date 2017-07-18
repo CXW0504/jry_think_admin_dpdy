@@ -66,7 +66,7 @@ class PHPWord_Section_Footer_PreserveText {
 	public function __construct($text = null, $styleFont = null, $styleParagraph = null) {
 		// Set font style
 		if(is_array($styleFont)) {
-			$this->_styleFont = new PHPWord_Style_Font('text');
+			$this->_styleFont = new \PHPWord_Style_Font('text');
 			
 			foreach($styleFont as $key => $value) {
 				if(substr($key, 0, 1) != '_') {

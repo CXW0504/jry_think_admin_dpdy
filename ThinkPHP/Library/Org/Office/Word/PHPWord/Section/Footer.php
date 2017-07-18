@@ -165,7 +165,7 @@ class PHPWord_Section_Footer {
 	public function addPreserveText($text, $styleFont = null, $styleParagraph = null) {
 //		$text = utf8_encode($text);
 //		$text = utf8_encode($text);
-		$ptext = new PHPWord_Section_Footer_PreserveText($text, $styleFont, $styleParagraph);
+		$ptext = new \PHPWord_Section_Footer_PreserveText($text, $styleFont, $styleParagraph);
 		$this->_elementCollection[] = $ptext;
 		return $ptext;
 	}
