@@ -637,6 +637,12 @@ class SystemController extends CommonController {
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         $list = $banner->where(array('title'=>array('like','%'.$key.'%')))->order('`order` DESC,`id` DESC')->getList($page->firstRow, $page->listRows,FALSE,'`order` DESC,`id` DESC');
+        $file = new FileModel();
+        foreach($list as $k => $v){
+            $info = $file->get_info($v['file_id']);
+            // 设置文件图片，如果没有就显示暂无图片的标
+            $list[$k]['thumb_100'] = $info['thumb_100']?$info['thumb_100']:'../Images/Admin/none.jpg';
+        }
         $this->assign(array(
             'l_list' => $list,
             'count' => $count,
@@ -661,10 +667,55 @@ class SystemController extends CommonController {
         $loan = new BannerModel();
         $file = new FileModel();
         $fid = $file->upload_file();
-        dump($fid);exit;// 获取上传的图片信息
-        if($loan->create_info(I('post.'))){
+        if($loan->create_info(I('post.'),$fid)){
             return $this->success('添加成功',U('banner_list'));
         }
         return $this->error('操作失败');
+    }
+    
+    /**
+     * 删除banner操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-19 15:40:36
+     */
+    public function banner_delAction(){
+        $banner = new BannerModel();
+        if($banner->delete_banner(I('get.id'))){
+            return $this->success('删除成功',U('banner_list'));
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改Banner详情信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-7-19 16:06:16
+     */
+    public function banner_saveAction(){
+        $banner = new BannerModel();
+        $info = $banner->get_info(I('get.id'));
+        if(!$info || $info['status'] == '98'){
+            return $this->error('查无数据');
+        }
+        $file = new FileModel();
+        $info_temp = $file->get_info($info['file_id']);
+        // 设置文件图片，如果没有就显示暂无图片的标
+        $info['thumb_100'] = $info_temp['file_path']?$info_temp['file_path']:'../Images/Admin/none.jpg';
+        if(!I('post.')){
+            return $this->assign('l_info',$info)->display('banner_add');
+        }
+        $fid = $file->upload_file();
+        if($banner->update_info(I('get.id'),I('post.'),$fid)){
+            return $this->success('更新成功',U('banner_list'));
+        }
+        return $this->error('修改失败，可能未更改条目信息');
     }
 }

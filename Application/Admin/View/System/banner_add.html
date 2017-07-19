@@ -40,6 +40,17 @@
                     <div class="tips"></div><div class="input-help"><ul><li class="tigs">该排序字段数字越大排序越靠前，最大值为100</li></ul></div>
                 </div>
             </div>
+            <?php if(!empty($l_info)): ?>
+            <div class="form-group">
+                <div class="label">
+                    <label>原图预览</label>
+                </div>
+                <div class="field">
+                    <img src="__PUBLIC__/Upload/{$l_info.thumb_100}" style="height:60px;"/>
+                    备注：若不上传图片则继续使用该图片
+                </div>
+            </div>
+            <?php endif; ?>
             <div class="form-group">
                 <div class="label">
                     <label>图片选择</label>

@@ -128,4 +128,17 @@ class FileModel extends \Common\Model\AllModel {
         }
         return $info['id'];
     }
+    
+    /**
+     * 获取图片文件详情信息
+     * @param number $fid 图片编号
+     * @return array 查询到的信息
+     */
+    public function get_info($fid = 0){
+        if($fid <= 0){
+            return array();
+        }
+        $info = $this->where(array('id'=>$fid))->find();
+        return $info;
+    }
 }

@@ -40,7 +40,7 @@ return array(
         'name' => '系统配置',
         'class' => 'icon-cogs',
         'content' => array(
-            'banner_list' => '广告管理',
+//            'banner_list' => '广告管理',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'department_list' => '通讯录部门管理',
             'directories_user_list' => '通讯录管理',
             'loan_mold_list' => '抵押顺位管理',
@@ -49,9 +49,9 @@ return array(
             'loan_insurance_list' => '抵押权人管理',
         ),
         'child' => array(
-            'banner_add' => '添加广告',
-            'banner_save' => '修改广告',
-            'banner_del' => '删除广告',
+//            'banner_add' => '添加广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+//            'banner_save' => '修改广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+//            'banner_del' => '删除广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'department_add' => '添加通讯录部门',
             'department_save' => '修改通讯录部门',
             'department_del' => '删除通讯录部门',
