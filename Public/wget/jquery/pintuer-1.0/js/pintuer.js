@@ -126,6 +126,8 @@ $(function(){
 			case "required":return /[^(^\s*)|(\s*$)]/.test($pintu);break;
 			case "chinese":return /^[\u0391-\uFFE5]+$/.test($pintu);break;
 			case "number":return /^\d+$/.test($pintu);break;
+			case "checktime":return /^([0-2][0-9]):([0-5][0-9])$/.test($pintu);break;
+			case "checktime2":return /^([0-2][0-9]):([0-5][0-9]):([0-5][0-9])$/.test($pintu);break;
 			case "integer":return /^[-\+]?\d+$/.test($pintu);break;
 			case "plusinteger":return /^[+]?\d+$/.test($pintu);break;
 			case "double":return /^[-\+]?\d+(\.\d+)?$/.test($pintu);break;

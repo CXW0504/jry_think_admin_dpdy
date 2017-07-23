@@ -45,25 +45,34 @@ class PublicController extends Controller {
         $cellNum = count($expCellName);
         $dataNum = count($expTableData);
 
-        vendor("PHPExcel.PHPExcel");
-
         $objPHPExcel = new PHPExcel();
-        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
-
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 
+            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 
+            'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
+        // 设置单表单标题
+        $objPHPExcel->getActiveSheet(0)->setTitle($expTitle);
         //合并单元格并居中
         $objPHPExcel->getActiveSheet(0)->mergeCells('A1:' . $cellName[$cellNum - 1] . '1')->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', $expTitle);
+        $objPHPExcel->getActiveSheet(0)->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet(0)->getStyle('A1')->getFont()->setSize(30);
+        $objPHPExcel->getActiveSheet(0)->getStyle('A1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet(0)->getStyle('A1')->getFont()->getColor()->setARGB(\PHPExcel_Style_Color::COLOR_BLUE);
 
         for ($i = 0; $i < $cellNum; $i++) {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i] . '2', $expCellName[$i][1]);
+            $objPHPExcel->getActiveSheet(0)->getColumnDimension($cellName[$i])->setWidth($expCellName[$i][2]?$expCellName[$i][2]:12);
+            $objPHPExcel->getActiveSheet(0)->getStyle($cellName[$i] . '2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet(0)->getStyle($cellName[$i] . '2')->getFont()->setBold(true);
         }
+
         // Miscellaneous glyphs, UTF-8
         for ($i = 0; $i < $dataNum; $i++) {
             for ($j = 0; $j < $cellNum; $j++) {
                 $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j] . ($i + 3), $expTableData[$i][$expCellName[$j][0]]);
             }
         }
+
         header('pragma:public');
         header('Content-type:application/vnd.ms-excel;charset=utf-8;name="' . $xlsTitle . '.xls"');
         header("Content-Disposition:attachment;filename={$fileName}.xls"); //attachment新窗口打印inline本窗口打印

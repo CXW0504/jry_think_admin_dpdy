@@ -1,0 +1,110 @@
+<div class="panel admin-panel" id="listform">
+    <div class="panel-head" id="add"><strong><span class="icon-clock-o"></span>&nbsp;<?php if(!empty($g_info)){echo '修改';}else{echo '添加';} ?>考勤规则</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>规则名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.name}" name="name" data-validate="required:规则名称为必填选项" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>考勤地址</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.addr}" name="addr" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>经纬度</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.coordinate}" name="coordinate" data-validate="required:经纬度为必填选项"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>经纬度帮助</label>
+                </div>
+                <div class="field">
+                    经纬度坐标是从高德地图上获取到的经纬度坐标，<a class="a-on" target="_blank" href="http://lbs.amap.com/console/show/picker">点击获取</a>|<a class="a-on" href="{:U('help_timecard_coordinate')}">查看帮助</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>有效距离</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$g_info.distance}" name="distance" data-validate="integer:有效距离为一个整数"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>有效距离帮助</label>
+                </div>
+                <div class="field">
+                    有效距离为距离上个字段的坐标点的半径范围，在这个范围内均可以进行打卡考勤。距离单位：米。默认距离为200米
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>上班时间</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="<?php echo $g_info['morning_time']?$g_info['morning_time']:'09:00'; ?>" name="morning_time" data-validate="checktime:时间格式不正确"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>下班时间</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="<?php echo $g_info['afternoon_time']?$g_info['afternoon_time']:'18:00'; ?>" name="afternoon_time" data-validate="checktime:时间格式不正确"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>针对用户类型</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button <?php if($g_info['type'] == '0'): ?> active<?php endif; ?>">
+                            <span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="type" value="0" type="radio" <?php if($g_info['type'] == '0'): ?> checked="checked"<?php endif; ?>>全体前端用户
+                        </label>
+                        <label class="button <?php if($g_info['type'] == '1'): ?> active<?php endif; ?>">
+                            <span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="type" value="1" type="radio" <?php if($g_info['type'] == '1'): ?> checked="checked"<?php endif; ?>>抵押专员
+                        </label>
+                        <label class="button <?php if($g_info['type'] == '2'): ?> active<?php endif; ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="type" value="2"  type="radio" <?php if($g_info['type'] == '2'): ?> checked="checked"<?php endif; ?>>调评专员
+                        </label>
+                    </div>  
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>

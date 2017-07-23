@@ -25,35 +25,33 @@ class ApiController extends Controller {
      */
     public function returnCode($code = '') {
         $error_code = C('ERROR_CODE');
-        if (empty($code)) {
-            $success = json_encode(array(
-                'code' => 'R0001',
-                'msg' => $error_code['R0001'],
-                'time' => date('Y-m-d H:i:s'),
-                'data' => array(),
-            ));
-        } else if (is_array($code)) {
-            $success = json_encode(array(
+        if (is_array($code)) {
+            $success = array(
                 'code' => 'R0000',
                 'msg' => $error_code['R0000'],
-                'time' => date('Y-m-d H:i:s'),
                 'data' => $code,
-            ));
-        } else {
-            $success = json_encode(array(
+            );
+        } else if(isset($error_code[$code])){
+            $success = array(
                 'code' => $code,
                 'msg' => $error_code[$code],
-                'time' => date('Y-m-d H:i:s'),
                 'data' => array(),
-            ));
+            );
+        } else {
+            $success = array(
+                'code' => 'R0001',
+                'msg' => $error_code['R0001'],
+                'data' => array(),
+            );
         }
+        $success['time'] = date('Y-m-d H:i:s');
         // 设置json返回头信息
         header("Content-Type:application/Json");
         // 支持jsonp格式调用
         if (!empty($_GET['jsoncallback'])) {
-            die($_GET['jsoncallback'] . "(" . $success . ')');
+            die($_GET['jsoncallback'] . "(" . json_encode($success) . ')');
         }
-        die($success);
+        die(json_encode($success));
     }
     
     /**

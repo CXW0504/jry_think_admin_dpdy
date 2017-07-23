@@ -1,0 +1,107 @@
+<style type="text/css">
+h2.top_title{border-bottom:none;background:0 0;text-align:center;line-height:2pc;font-size:20px}
+h2.top_title span{font-size:9pt;color:#666;font-weight:500}
+img{max-width:100%}
+.cd-container{width:90%;max-width:1170px;margin:0 auto}
+.cd-container:after{content:'';display:table;clear:both}
+#cd-timeline{position:relative;padding:2em 0;margin-top:2em;margin-bottom:2em}
+#cd-timeline:before{content:'';position:absolute;top:0;left:18px;height:100%;width:4px;background:#d7e4ed}
+@media only screen and (min-width:1170px){#cd-timeline{margin-top:3em;margin-bottom:3em}
+#cd-timeline:before{left:50%;margin-left:-2px}
+}
+.cd-timeline-block{position:relative;margin:2em 0}
+.cd-timeline-block:after{content:"";display:table;clear:both}
+.cd-timeline-block:first-child{margin-top:0}
+.cd-timeline-block:last-child{margin-bottom:0}
+@media only screen and (min-width:1170px){.cd-timeline-block{margin:4em 0}
+.cd-timeline-block:first-child{margin-top:0}
+.cd-timeline-block:last-child{margin-bottom:0}
+}
+.cd-timeline-img{position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 4px #fff,inset 0 2px 0 rgba(0,0,0,.08),0 3px 0 4px rgba(0,0,0,.05)}
+.cd-timeline-img{text-align:center;padding-top:8px;font-size:20px;font-weight: bold;}
+.cd-timeline-img.cd-picture{background:#75ce66}
+.cd-timeline-img.cd-movie{background:#c03b44}
+.cd-timeline-img.cd-location{background:#f0ca45}
+@media only screen and (min-width:1170px){.cd-timeline-img{width:60px;height:60px;left:50%;margin-left:-30px;-webkit-transform:translateZ(0);-webkit-backface-visibility:hidden}
+.cssanimations .cd-timeline-img.is-hidden{visibility:hidden}
+.cssanimations .cd-timeline-img.bounce-in{visibility:visible;-webkit-animation:cd-bounce-1 .6s;animation:cd-bounce-1 .6s}
+}
+.cd-timeline-content{position:relative;margin-left:60px;background:#fff;border-radius:.25em;padding:1em;box-shadow:0 3px 0 #d7e4ed}
+.cd-timeline-content:after{content:"";display:table;clear:both}
+.cd-timeline-content h2{color:#303e49}
+.cd-timeline-content .cd-date,.cd-timeline-content .cd-read-more,.cd-timeline-content p{font-size:13px;font-size:.8125rem}
+.cd-timeline-content .cd-date,.cd-timeline-content .cd-read-more{display:inline-block}
+.cd-timeline-content p{margin:1em 0;line-height:1.6}
+.cd-timeline-content .cd-read-more{float:right;padding:.8em 1em;background:#acb7c0;color:#fff;border-radius:.25em}
+.no-touch .cd-timeline-content .cd-read-more:hover{background-color:#bac4cb}
+a.cd-read-more:hover{text-decoration:none;background-color:#424242}
+.cd-timeline-content .cd-date{float:left;padding:.8em 0;opacity:.7}
+.cd-timeline-content:before{content:'';position:absolute;top:1pc;right:100%;height:0;width:0;border:7px solid transparent;border-right:7px solid #fff}
+@media only screen and (min-width:768px){.cd-timeline-content h2{font-size:20px;font-size:1.25rem}
+.cd-timeline-content p{font-size:1pc;font-size:1rem}
+.cd-timeline-content .cd-date,.cd-timeline-content .cd-read-more{font-size:14px;font-size:.875rem}
+}
+@media only screen and (min-width:1170px){.cd-timeline-content{margin-left:0;padding:1.6em;width:45%}
+.cd-timeline-content:before{top:24px;left:100%;border-color:transparent;border-left-color:#fff}
+.cd-timeline-content .cd-read-more{float:left}
+.cd-timeline-content .cd-date{position:absolute;width:100%;left:122%;top:6px;font-size:1pc;font-size:1rem}
+.cd-timeline-block:nth-child(even) .cd-timeline-content{float:right}
+.cd-timeline-block:nth-child(even) .cd-timeline-content:before{top:24px;left:auto;right:100%;border-color:transparent;border-right-color:#fff}
+.cd-timeline-block:nth-child(even) .cd-timeline-content .cd-read-more{float:right}
+.cd-timeline-block:nth-child(even) .cd-timeline-content .cd-date{left:auto;right:122%;text-align:right}
+.cssanimations .cd-timeline-content.is-hidden{visibility:hidden}
+.cssanimations .cd-timeline-content.bounce-in{visibility:visible;-webkit-animation:cd-bounce-2 .6s;animation:cd-bounce-2 .6s}
+}
+@media only screen and (min-width:1170px){.cssanimations .cd-timeline-block:nth-child(even) .cd-timeline-content.bounce-in{-webkit-animation:cd-bounce-2-inverse .6s;animation:cd-bounce-2-inverse .6s}
+}
+</style>
+
+<div class="panel admin-panel">
+    <div class="panel-head"><strong><span class="icon-clock-o"></span>&nbsp;坐标拾取系统帮助文档</strong></div>
+    <div class="body-content">
+<section id="cd-timeline" class="cd-container">
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-picture">1</div>
+        <div class="cd-timeline-content">
+            <h2>进入坐标拾取系统</h2>
+            <p>首先，需要在【添加考勤规则】的页面中，点击[经纬度帮助]项中的<u>点击获取</u>链接</p>
+            <img style="width:100%;" src="__PUBLIC__/Images/Admin/help_images/help_timecard_coordinate/001.png"/>
+        </div>
+    </div>
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-movie">2</div>
+
+        <div class="cd-timeline-content">
+            <h2>检索坐标</h2>
+            <p>然后再新窗口中的页面中选择地址进行检索</p>
+            <img style="width:100%;" src="__PUBLIC__/Images/Admin/help_images/help_timecard_coordinate/002.png"/>
+        </div>
+    </div>
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-picture">3</div>
+        <div class="cd-timeline-content">
+            <h2>调整位置获取坐标</h2>
+            <p>再然后再地图上调整大头针的位置[再确定的位置点击鼠标即可],然后复制确定后的坐标点位置</p>
+            <img style="width:100%;" src="__PUBLIC__/Images/Admin/help_images/help_timecard_coordinate/003.png"/>
+        </div>
+    </div>
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-movie">4</div>
+
+        <div class="cd-timeline-content">
+            <h2>填入对应位置</h2>
+            <p>最后，切换回系统内部的输入框页面，将坐标值填入对应的输入框中即可。</p>
+            <img style="width:100%;" src="__PUBLIC__/Images/Admin/help_images/help_timecard_coordinate/004.png"/>
+        </div>
+    </div>
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-picture">End</div>
+        <div class="cd-timeline-content">
+            <h2>返回上一页</h2>
+            <p>最后，请使用系统浏览器自带的回退按钮返回上一级页面[如下图所示]</p>
+            <img style="width:100%;" src="__PUBLIC__/Images/Admin/help_images/help_timecard_coordinate/005.png"/>
+        </div>
+    </div>
+</section>
+    </div>
+</div>

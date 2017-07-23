@@ -26,7 +26,13 @@ return array(
             'timecard' => '考勤列表',
             'setting' => '考勤规则配置',
         ),
-        'child' => array(),
+        'child' => array(
+            'add_timecard' => '添加考勤规则',
+            'save_timecard' => '修改考勤规则',
+            'del_timecard' => '删除考勤规则',
+            'out_timecard' => '导出考勤规则',
+            'help_timecard_coordinate' => '经纬度坐标获取帮助',
+        ),
     ),
     'Data' => array(
         'name' => '数据分析',
@@ -98,12 +104,13 @@ return array(
             'reception_del' => '删除前台用户',
         ),
     ),
-    'Log' => array(
-        'name' => '日志管理',
-        'class' => 'icon-save',
-        'content' => array(
-            'login' => '后台登录日志',
-        ),
-        'child' => array(),
-    ),
+    // 暂时去掉日志浏览、检索功能，后期再进行添加
+    // 'Log' => array(
+    //     'name' => '日志管理',
+    //     'class' => 'icon-save',
+    //     'content' => array(
+    //         'login' => '后台登录日志',
+    //     ),
+    //     'child' => array(),
+    // ),
 );
