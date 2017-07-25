@@ -14,29 +14,42 @@ class System {
      * @return string 获取到的信息
      */
     function get_browser($Agent = '',$link = ' ') {
-        empty($Agent) && $Agent = $_SERVER['HTTP_USER_AGENT'];
-        $browseragent = ""; //浏览器 
-        $browserversion = ""; //浏览器的版本 
-        if (ereg('MSIE ([0-9].[0-9]{1,2})', $Agent, $version)) {
-            $browserversion = $version[1];
-            $browseragent = "Internet Explorer";
-        } else if (ereg('Opera/([0-9]{1,2}.[0-9]{1,2})', $Agent, $version)) {
-            $browserversion = $version[1];
-            $browseragent = "Opera";
-        } else if (ereg('Firefox/([0-9.]{1,5})', $Agent, $version)) {
-            $browserversion = $version[1];
-            $browseragent = "Firefox";
-        } else if (ereg('Chrome/([0-9.]{1,5})', $Agent, $version)) {
-            $browserversion = $version[1];
-            $browseragent = "Chrome";
-        } else if (ereg('Safari/([0-9.]{1,3})', $Agent, $version)) {
-            $browseragent = "Safari";
-            $browserversion = "";
-        } else {
-            $browserversion = "";
-            $browseragent = "Unknown";
+        empty($sys) && $sys = $_SERVER['HTTP_USER_AGENT'];
+        $sys = $_SERVER['HTTP_USER_AGENT'];  //获取用户代理字符串
+        if (stripos($sys, "Firefox/") > 0) {
+            preg_match("/Firefox\/([^;)]+)+/i", $sys, $b);
+            $exp[0] = "Firefox";
+            $exp[1] = $b[1];  //获取火狐浏览器的版本号
+        } elseif (stripos($sys, "Maxthon") > 0) {
+            preg_match("/Maxthon\/([\d\.]+)/", $sys, $aoyou);
+            $exp[0] = "傲游";
+            $exp[1] = $aoyou[1];
+        } elseif (stripos($sys, "MSIE") > 0) {
+            preg_match("/MSIE\s+([^;)]+)+/i", $sys, $ie);
+            $exp[0] = "IE";
+            $exp[1] = $ie[1];  //获取IE的版本号
+        } elseif (stripos($sys, "OPR") > 0) {
+            preg_match("/OPR\/([\d\.]+)/", $sys, $opera);
+            $exp[0] = "Opera";
+            $exp[1] = $opera[1];  
+        } elseif(stripos($sys, "Edge") > 0) {
+            //win10 Edge浏览器 添加了chrome内核标记 在判断Chrome之前匹配
+            preg_match("/Edge\/([\d\.]+)/", $sys, $Edge);
+            $exp[0] = "Edge";
+            $exp[1] = $Edge[1];
+        } elseif (stripos($sys, "Chrome") > 0) {
+            preg_match("/Chrome\/([\d\.]+)/", $sys, $google);
+            $exp[0] = "Chrome";
+            $exp[1] = $google[1];  //获取google chrome的版本号
+        } elseif(stripos($sys,'rv:')>0 && stripos($sys,'Gecko')>0){
+            preg_match("/rv:([\d\.]+)/", $sys, $IE);
+            $exp[0] = "IE";
+            $exp[1] = $IE[1];
+        }else {
+            $exp[0] = "Unknown";
+            $exp[1] = ""; 
         }
-        return rtrim($browseragent . $link . $browserversion,'.');
+        return $exp[0].$link.$exp[1];
     }
 
     /**
@@ -46,58 +59,68 @@ class System {
      */
     function get_system($Agent = '') {
         empty($Agent) && $Agent = $_SERVER['HTTP_USER_AGENT'];
-        $browserplatform == '';
-        if (eregi('win', $Agent) && eregi('nt 6.1', $Agent)) {
-            $browserplatform = "Windows 7";
-        } elseif (eregi('win', $Agent) && ereg('32', $Agent)) {
-            $browserplatform = "Windows 32";
-        } elseif (eregi('win', $Agent) && eregi('nt 6.0', $Agent)) {
-            $browserplatform = "Windows Vista";
-        } elseif (eregi('win', $Agent) && eregi('nt 5.1', $Agent)) {
-            $browserplatform = "Windows XP";
-        } elseif (eregi('win', $Agent) && eregi('nt 5.0', $Agent)) {
-            $browserplatform = "Windows 2000";
-        } elseif (eregi('win', $Agent) && eregi('nt', $Agent)) {
-            $browserplatform = "Windows NT";
-        } elseif (eregi('win', $Agent) && strpos($Agent, '95')) {
-            $browserplatform = "Windows 95";
-        } elseif (eregi('win 9x', $Agent) && strpos($Agent, '4.90')) {
-            $browserplatform = "Windows ME";
-        } elseif (eregi('win', $Agent) && ereg('98', $Agent)) {
-            $browserplatform = "Windows 98";
-        } elseif (eregi('Mac OS', $Agent)) {
-            $browserplatform = "Mac OS";
-        } elseif (eregi('linux', $Agent)) {
-            $browserplatform = "Linux";
-        } elseif (eregi('unix', $Agent)) {
-            $browserplatform = "Unix";
-        } elseif (eregi('sun', $Agent) && eregi('os', $Agent)) {
-            $browserplatform = "SunOS";
-        } elseif (eregi('ibm', $Agent) && eregi('os', $Agent)) {
-            $browserplatform = "IBM OS/2";
-        } elseif (eregi('Mac', $Agent) && eregi('PC', $Agent)) {
-            $browserplatform = "Macintosh";
-        } elseif (eregi('PowerPC', $Agent)) {
-            $browserplatform = "PowerPC";
-        } elseif (eregi('AIX', $Agent)) {
-            $browserplatform = "AIX";
-        } elseif (eregi('HPUX', $Agent)) {
-            $browserplatform = "HPUX";
-        } elseif (eregi('NetBSD', $Agent)) {
-            $browserplatform = "NetBSD";
-        } elseif (eregi('BSD', $Agent)) {
-            $browserplatform = "BSD";
-        } elseif (ereg('OSF1', $Agent)) {
-            $browserplatform = "OSF1";
-        } elseif (ereg('IRIX', $Agent)) {
-            $browserplatform = "IRIX";
-        } elseif (eregi('FreeBSD', $Agent)) {
-            $browserplatform = "FreeBSD";
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        $os = false;
+        if (preg_match('/win/i', $agent) && strpos($agent, '95')) {
+            $os = 'Windows 95';
+        } else if (preg_match('/win 9x/i', $agent) && strpos($agent, '4.90')) {
+            $os = 'Windows ME';
+        } else if (preg_match('/win/i', $agent) && preg_match('/98/i', $agent)) {
+            $os = 'Windows 98';
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt 6.0/i', $agent)) {
+            $os = 'Windows Vista';
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt 6.1/i', $agent)) {
+            $os = 'Windows 7';
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt 6.2/i', $agent)) {
+            $os = 'Windows 8';
+        } else if(preg_match('/win/i', $agent) && preg_match('/nt 10.0/i', $agent)) {
+            $os = 'Windows 10';#添加win10判断
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt 5.1/i', $agent)) {
+            $os = 'Windows XP';
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt 5/i', $agent)) {
+            $os = 'Windows 2000';
+        } else if (preg_match('/win/i', $agent) && preg_match('/nt/i', $agent)) {
+            $os = 'Windows NT';
+        } else if (preg_match('/win/i', $agent) && preg_match('/32/i', $agent)) {
+            $os = 'Windows 32';
+        } else if (preg_match('/linux/i', $agent)) {
+            $os = 'Linux';
+        } else if (preg_match('/unix/i', $agent)) {
+            $os = 'Unix';
+        } else if (preg_match('/sun/i', $agent) && preg_match('/os/i', $agent)) {
+            $os = 'SunOS';
+        } else if (preg_match('/ibm/i', $agent) && preg_match('/os/i', $agent)) {
+            $os = 'IBM OS/2';
+        } else if (preg_match('/Mac/i', $agent) && preg_match('/PC/i', $agent)) {
+            $os = 'Macintosh';
+        } else if (preg_match('/PowerPC/i', $agent)) {
+            $os = 'PowerPC';
+        } else if (preg_match('/AIX/i', $agent)) {
+            $os = 'AIX';
+        } else if (preg_match('/HPUX/i', $agent)) {
+            $os = 'HPUX';
+        } else if (preg_match('/NetBSD/i', $agent)) {
+            $os = 'NetBSD';
+        } else if (preg_match('/BSD/i', $agent)) {
+            $os = 'BSD';
+        } else if (preg_match('/OSF1/i', $agent)) {
+            $os = 'OSF1';
+        } else if (preg_match('/IRIX/i', $agent)) {
+            $os = 'IRIX';
+        } else if (preg_match('/FreeBSD/i', $agent)) {
+            $os = 'FreeBSD';
+        } else if (preg_match('/teleport/i', $agent)) {
+            $os = 'teleport';
+        } else if (preg_match('/flashget/i', $agent)) {
+            $os = 'flashget';
+        } else if (preg_match('/webzip/i', $agent)) {
+            $os = 'webzip';
+        } else if (preg_match('/offline/i', $agent)) {
+            $os = 'offline';
+        } else {
+            $os = 'Unknown';
         }
-        if ($browserplatform == '') {
-            $browserplatform = "Unknown";
-        }
-        return $browserplatform;
+        return $os;
     }
 
 }
