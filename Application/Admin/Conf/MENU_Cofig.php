@@ -104,6 +104,27 @@ return array(
             'reception_del' => '删除前台用户',
         ),
     ),
+    // 以后也要删除掉的接口管理模块，用来后期自动生成接口文档所用
+    'Document' => array(
+        'name' => '文档管理',
+        'class' => 'icon-briefcase',
+        'content' => array(
+            'apis' => '接口文档',
+            'parameter' => '参数类型',
+        ),
+        'child' => array(
+            'add_apis' => '新建项目',
+            'save_apis' => '更新项目',
+            'del_apis' => '删除项目',
+            'list_apis' => '项目下的接口',
+            'save_list_apis' => '更新接口',
+            'del_list_apis' => '删除接口',
+            'add_list_apis' => '添加接口',
+            'add_parameter' => '添加参数类型',
+            'save_parameter' => '更新参数类型',
+            'del_parameter' => '删除参数类型',
+        ),
+    ),
     // 暂时去掉日志浏览、检索功能，后期再进行添加
     // 'Log' => array(
     //     'name' => '日志管理',
