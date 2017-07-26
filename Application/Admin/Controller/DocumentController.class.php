@@ -79,6 +79,15 @@ class DocumentController extends CommonController {
         return $this->error('添加失败');
     }
     
+    /**
+     * 参数类型接口,该操作管理有接口的参数类型信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-26 23:24:19
+     */
     public function parameterAction(){
         $project = new ProjectParameterTypeModel();
         $where = array(
@@ -98,5 +107,103 @@ class DocumentController extends CommonController {
             'list' => $list,
             'page' => $page->show(),
         ))->display();
+    }
+    
+    /**
+     * 添加参数名称的操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-26 23:38:34
+     */
+    public function add_parameterAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $project = new ProjectParameterTypeModel();
+        if($project->create_info(I('post.'))){
+            return $this->success('添加成功',U('parameter'));
+        }
+        return $this->error('添加失败');
+    }
+    
+    /**
+     * 修改参数类型的操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-26 23:38:34
+     */
+    public function save_parameterAction(){
+        $project = new ProjectParameterTypeModel();
+        $info = $project->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(!I('post.')){
+            $this->assign('l_info',$info);
+            return $this->display('add_parameter');
+        }
+        if($project->update_info(I('get.id'),$info,I('post.'))){
+            return $this->success('修改成功',U('parameter'));
+        }
+        return $this->error('修改失败');
+    }
+    
+    /**
+     * 删除参数类型操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 00:38:56
+     */
+    public function del_parameterAction(){
+        $project = new ProjectParameterTypeModel();
+        if($project->delete_info(I('get.id'))){
+            return $this->success('删除成功',U('parameter'));
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改项目信息操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 00:42:13
+     */
+    public function save_apisAction(){
+        $project = new ProjectModel();
+        $info = $project->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(!I('post.')){
+            $this->assign('l_info',$info);
+            return $this->display('add_apis');
+        }
+        if($project->update_info(I('get.id'),$info,I('post.'))){
+            return $this->success('修改成功',U('apis'));
+        }
+        return $this->error('修改失败');
+    }
+    
+    /**
+     * 删除参数类型操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 00:38:56
+     */
+    public function del_apisAction(){
+        $project = new ProjectModel();
+        if($project->delete_info(I('get.id'))){
+            return $this->success('删除成功',U('apis'));
+        }
+        return $this->error('删除失败');
     }
 }

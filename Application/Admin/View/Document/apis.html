@@ -8,7 +8,7 @@
                     <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
                     <input type="text" placeholder="项目名称/公司/团队名称" name="keywords" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
                 </li>
-                <li>建立时间：</li>
+                <li>添加时间：</li>
                 <li>
                     <input type="text" name="times_end" value="<?php echo I('get.times_end')?I('get.times_end'):date('Y-m-d ~ Y-m-d'); ?>" class="input" >
                 </li>
@@ -27,7 +27,7 @@
             <th>项目名称</th>
             <th>团队名称</th>
             <th width="15%">添加时间</th>
-            <th width="15%">操作</th>
+            <th width="25%">操作</th>
         </tr>
         <foreach name="list" item="v">
             <tr>
