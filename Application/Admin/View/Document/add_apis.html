@@ -1,0 +1,78 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-briefcase"></span>&nbsp;<?php if(!empty($l_info)){echo '修改';}else{echo '增加';} ?>项目</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>项目名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.name}" name="name" data-validate="required:请输入项目名称" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>项目编写目的</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.md}" name="md" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>名词解释</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.desc}" name="desc" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>公司/团队名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.com_name}" name="com_name" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>项目接口前缀</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.fix}" name="fix" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参与人员</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.author}" name="author" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>文档编写人员</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.doc_author}" name="doc_author" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
