@@ -75,4 +75,63 @@ class ProjectApiModel extends \Common\Model\AllModel{
         }
         return FALSE;
     }
+    
+    /**
+     * 修改接口基本信息
+     * 
+     * @param number $id
+     * @param array $post
+     * @param array $old
+     * @return boolean 是否更新成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 20:46:20
+     */
+    public function update_info($id = 1,$post = array(),$old_info = array()){
+        if($id <= 0){
+            return FALSE;
+        }
+        if(!isset($post['version'])){
+            return FALSE;
+        }
+        $old = array();
+        $new = array();
+        foreach($post as $k => $v){
+            if($k == 'out_type'){
+                $v = implode(',', $v);
+            }
+            if($k != 'version'){
+                if($v != $old_info[$k]){
+                    $old[$k] = $old_info[$k];
+                    $new[$k] = $v;
+                }
+            }
+        }
+        if($post['version'] == 'version_smail'){
+            // 更新小版本
+            $old['version_smail'] = $old_info['version_smail'];
+            $new['version_smail'] = $old_info['version_smail'] + 1;
+        } else if($post['version'] == 'version_smail'){
+            // 更新中版本
+            $old['version_smail'] = $old_info['version_smail'];
+            $old['version_middle'] = $old_info['version_middle'];
+            $new['version_middle'] = $old_info['version_middle'] + 1;
+            $new['version_smail'] = 0;
+        } else {
+            // 更新大版本
+            $old['version_smail'] = $old_info['version_smail'];
+            $old['version_big'] = $old_info['version_big'];
+            $old['version_middle'] = $old_info['version_middle'];
+            $new['version_big'] = $old_info['version_big'] + 1;
+            $new['version_middle'] = 0;
+            $new['version_smail'] = 0;
+        }
+        if($this->where(array('id'=>$id,'status'=>array('neq',98)))->save($new)){
+            $log = new LogModel();
+            $log->update_log('project_api', $id, $new, $old);
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

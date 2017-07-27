@@ -1,0 +1,190 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-briefcase"></span>&nbsp;<?php if(!empty($l_info)){echo '修改';}else{echo '添加';} ?>接口</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>所属项目</label>
+                </div>
+                <div class="field">
+                    {$p_info.name}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>接口名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="a_name" value="{$a_info.a_name}" data-validate="required:请输入接口名称" />
+                    <div class="tips">v {$a_info.version_big}.{$a_info.version_middle}.{$a_info.version_smail}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>接口相对路径</label>
+                </div>
+                <div class="field">
+                    <input type="text" value="{$a_info.href}" class="input w50" name="href" />
+                    <div class="tips">接口前缀：{$p_info.fix}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>接口描述</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="desc" value="{$a_info.desc}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>请求方式</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button<?php if($a_info['in_type'] == 1){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="in_type" value="1"  type="radio"<?php if($a_info['in_type'] == 1){echo ' checked';} ?>>GET方式
+                        </label>
+                        <label class="button<?php if($a_info['in_type'] == 2){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="in_type" value="2"  type="radio"<?php if($a_info['in_type'] == 2){echo ' checked';} ?>>POST方式
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>迭代版本</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="version" value="version_big" type="radio">大版本
+                        </label>
+                        <label class="button"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="version" value="version_middle" type="radio">中版本
+                        </label>
+                        <label class="button active"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="version" value="version_smail" checked type="radio">小版本
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>返回数据方式</label><?php $temp = explode(',',$a_info['out_type']); ?>
+                </div>
+                <div class="field">
+                    <input type="checkbox" name="out_type[]" value="1"<?php if(in_array(1,$temp)){echo ' checked';} ?>>JSON
+                    <input type="checkbox" name="out_type[]" value="2"<?php if(in_array(2,$temp)){echo ' checked';} ?>>XML
+                    <input type="checkbox" name="out_type[]" value="3"<?php if(in_array(3,$temp)){echo ' checked';} ?>>JSONP
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>请求参数</label>
+                </div>
+                <div class="field">
+                    <label class="button" id="type_in_add"><span class="icon-plus icon"></span>添加</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <table class="table table-hover text-center">
+                        <tr>
+                            <th style="width:20%">参数名称</th>
+                            <th style="width:20%">中文名称</th>
+                            <th style="width:10%">最大长度</th>
+                            <th style="width:10%">参数类型</th>
+                            <th style="width:10%">是否必传</th>
+                            <th style="width:10%">备注说明</th>
+                            <th style="width:20%">操作</th>
+                        </tr>
+                        <foreach name='in_par' item='v'>
+                            <tr>
+                                <td>{$v.name}</td>
+                                <td>{$v.desc}</td>
+                                <td>{$v.max_length}</td>
+                                <td><?php echo $in_type[$v['c_type']]; ?></td>
+                                <td>
+                                    <?php echo $v['is_must'] == 1?'必填':'选填'; ?>
+                                </td>
+                                <td>{$v.msg}</td>
+                                <td>
+                                    <div class="button-group">
+                                        <a class="button border-main" href="{:U('save_apis',array('id'=>$v['id']))}">修改</a> 
+                                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('del_apis',array('id'=>$v['id']))}')">删除</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </foreach>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>返回参数</label>
+                </div>
+                <div class="field">
+                    <label class="button" id="type_out_add"><span class="icon-plus icon"></span>添加</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <table class="table table-hover text-center">
+                        <tr>
+                            <th style="width:20%">参数名称</th>
+                            <th style="width:20%">中文名称</th>
+                            <th style="width:10%">最大长度</th>
+                            <th style="width:10%">参数类型</th>
+                            <th style="width:10%">是否必传</th>
+                            <th style="width:10%">备注说明</th>
+                            <th style="width:20%">操作</th>
+                        </tr>
+                        <foreach name='out_par' item='v'>
+                            <tr>
+                                <td>{$v.name}</td>
+                                <td>{$v.desc}</td>
+                                <td>{$v.max_length}</td>
+                                <td><?php echo $out_type[$v['c_type']]; ?></td>
+                                <td>
+                                    <?php echo $v['is_must'] == 1?'必填':'选填'; ?>
+                                </td>
+                                <td>{$v.msg}</td>
+                                <td>
+                                    <div class="button-group">
+                                        <a class="button border-main" href="{:U('save_apis',array('id'=>$v['id']))}">修改</a> 
+                                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('del_apis',array('id'=>$v['id']))}')">删除</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </foreach>
+                    </table>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function del(url) {
+        if (confirm("您确定要删除吗?")) {
+            window.location = url;
+        }
+    }
+</script>

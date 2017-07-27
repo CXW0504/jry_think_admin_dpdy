@@ -267,7 +267,7 @@ class DocumentController extends CommonController {
             return $this->error('系统错误');
         }
         $par = new ProjectApiParameterModel();
-        $success = $par->update_info($pro_info['id'],I('post.type_in'),I('post.type_out'));
+        $success = $par->update_info($api_id,I('post.type_in'),I('post.type_out'));
         if(!$success){
             return $this->success('系统内部出现部分错误',U('list_apis',array('id',$pro_info['id'])));
         }
@@ -291,8 +291,47 @@ class DocumentController extends CommonController {
         return $this->error('删除失败');
     }
     
+    /**
+     * 修改接口信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 20:42:06
+     */
     public function save_list_apisAction(){
-        dump(I('get.'));
-        exit;
+        $project = new ProjectApiModel();
+        $a_info = $project->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(I('post.')){
+            if($project->update_info(I('get.id'),I('post.'),$a_info)){
+                return $this->success('更新成功',U('list_apis',array('id'=>$a_info['p_id'])));
+            }
+            return $this->error('更新失败');
+        }
+        $project_p = new ProjectModel();
+        $p_info = $project_p->where(array('id'=>$a_info['p_id'],'status'=>array('neq',98)))->find();
+        $parameter = new ProjectApiParameterModel();
+        $in_par = $parameter->where(array(
+            'a_id'=>$a_info['id'],
+            'status'=>array('neq',98),
+            'type' => 1
+        )) -> select();
+        $out_par = $parameter->where(array(
+            'a_id'=>$a_info['id'],
+            'status'=>array('neq',98),
+            'type' => 2
+        )) -> select();
+        $parameter_type = new ProjectParameterTypeModel();
+        $in_type = $parameter_type->get_type(1);
+        $out_type = $parameter_type->get_type(2);
+        return $this->assign(array(
+            'a_info' => $a_info,
+            'p_info' => $p_info,
+            'in_par' => $in_par,
+            'out_par' => $out_par,
+            'in_type' => $in_type,
+            'out_type' => $out_type,
+        ))->display();
     }
 }
