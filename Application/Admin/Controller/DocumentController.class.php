@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Admin\Model\ProjectModel;
 use Think\Page;
 use Admin\Model\ProjectParameterTypeModel;
+use Admin\Model\ProjectApiModel;
 
 /**
  * 网站文档管理操作控制器
@@ -205,5 +206,54 @@ class DocumentController extends CommonController {
             return $this->success('删除成功',U('apis'));
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 获取接口列表操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 13:47:00
+     */
+    public function list_apisAction(){
+        $project = new ProjectApiModel();
+        $where = array(
+            'a_name|desc'=>array('like','%'.I('get.keywords').'%'),
+            'p_id' => I('get.id',0,'intval')
+        );
+        $count = $project->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $project->where($where)->getList($page->firstRow, $page->listRows);
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加接口信息操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 13:47:10
+     */
+    public function add_list_apisAction(){
+        $project = new ProjectModel();
+        $pro_info = $project->where(array('id'=>I('get.p_id'),'status'=>array('neq',98)))->find();
+        if(!I('post.')){
+            $this->assign('p_info',$pro_info);
+            return $this->display();
+        }
     }
 }
