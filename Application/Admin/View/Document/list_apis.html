@@ -5,8 +5,9 @@
             <ul class="search" style="padding-left:10px;">
                 <li> <a class="button border-main" href="{:U('add_list_apis',array('p_id'=>I('get.id')))}"> 添加接口</a> </li>
                 <li>
+                    <input type="hidden" name='id' value="{:I('get.id')}"/>
                     <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
-                    <input type="text" placeholder="接口名称/描述" name="keywords" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
+                    <input type="text" placeholder="接口名称/路径/描述" name="keywords" class="input" value="{:I('get.keywords')}" style="width:200px; line-height:17px;display:inline-block" />
                 </li>
                 <li>
                     <input type="submit" class="button border-main" value="搜索"/>
@@ -36,7 +37,7 @@
                 <td>
                     <div class="button-group">
                         <a class="button border-main" href="{:U('save_list_apis',array('id'=>$v['id']))}">修改</a> 
-                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('del_list_apis',array('id'=>$v['id']))}')">删除</a>
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('del_list_apis',array('id'=>$v['id'],'p_id'=>I('get.id')))}')">删除</a>
                     </div>
                 </td>
             </tr>

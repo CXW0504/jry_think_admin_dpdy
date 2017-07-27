@@ -15,7 +15,7 @@
                     <label>接口名称</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" value="{$l_info.a_name}" name="a_name" data-validate="required:请输入接口名称" />
+                    <input type="text" class="input w50" name="a_name" data-validate="required:请输入接口名称" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     <label>接口相对路径</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" value="{$l_info.href}" name="href" />
+                    <input type="text" class="input w50" name="href" />
                     <div class="tips">接口前缀：{$p_info.fix}</div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <label>接口描述</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" value="{$l_info.desc}" name="desc" />
+                    <input type="text" class="input w50" name="desc" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -43,13 +43,13 @@
                 </div>
                 <div class="field">
                     <div class="button-group radio">
-                        <label class="button<?php if($l_info['in_type'] == 1){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
-                            <input name="in_type" value="1"  type="radio"<?php if(empty($l_info['in_type']) || $l_info['type'] == 1){echo ' checked';} ?>>GET方式
+                        <label class="button active"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="in_type" value="1"  type="radio" checked>GET方式
                         </label>
-                        <label class="button<?php if($l_info['in_type'] == 2){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
-                            <input name="in_type" value="2"  type="radio"<?php if($l_info['in_type'] == 2){echo ' checked';} ?>>POST方式
+                        <label class="button"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="in_type" value="2"  type="radio">POST方式
                         </label>
-                    </div>       
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -68,8 +68,8 @@
                     <label>请求参数</label>
                 </div>
                 <div class="field">
-                    <label class="button"><span class="icon-plus icon"></span>添加</label>
-                    <label class="button"><span class="icon-minus icon"></span>删减</label>
+                    <label class="button" id="type_in_add"><span class="icon-plus icon"></span>添加</label>
+                    <label class="button" id="type_in_del"><span class="icon-minus icon"></span>删减</label>
                 </div>
             </div>
             <div class="form-group">
@@ -79,21 +79,32 @@
                 <div class="field">
                     <table class="table table-hover text-center">
                         <tr>
-                            <th>参数名称</th>
-                            <th>中文名称</th>
-                            <th>最大长度</th>
-                            <th>参数类型</th>
-                            <th>是否必传</th>
-                            <th>备注说明</th>
+                            <th style="width:16%">参数名称</th>
+                            <th style="width:16%">中文名称</th>
+                            <th style="width:16%">最大长度</th>
+                            <th style="width:16%">参数类型</th>
+                            <th style="width:16%">是否必传</th>
+                            <th style="width:16%">备注说明</th>
                         </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>desc</td>
-                            <td>max_length</td>
-                            <td>c_type</td>
-                            <td>is_must</td>
-                            <td>msg</td>
-                        </tr>
+                        <tbody class="type_in">
+                            <tr>
+                                <td><input type="text" class="input" value="" name="type_in[name][in_id]" /></td>
+                                <td><input type="text" class="input" value="" name="type_in[desc][in_id]" /></td>
+                                <td><input type="text" class="input" value="" name="type_in[max_length][in_id]" /></td>
+                                <td>
+                                    <select class="input" name="type_in[c_type][in_id]">
+                                        <foreach name='type_in' item='v'>
+                                            <option value="{$v.id}">{$v.name} ( {$v.desc} )</option>
+                                        </foreach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label><input name="type_in[is_must][in_id]" type="radio" value="1" />必填 </label>
+                                    <label><input name="type_in[is_must][in_id]" type="radio" checked value="2" />选填 </label>
+                                </td>
+                                <td><input type="text" class="input" value="" name="type_in[msg][in_id]" /></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -102,8 +113,8 @@
                     <label>返回参数</label>
                 </div>
                 <div class="field">
-                    <label class="button"><span class="icon-plus icon"></span>添加</label>
-                    <label class="button"><span class="icon-minus icon"></span>删减</label>
+                    <label class="button" id="type_out_add"><span class="icon-plus icon"></span>添加</label>
+                    <label class="button" id="type_out_del"><span class="icon-minus icon"></span>删减</label>
                 </div>
             </div>
             <div class="form-group">
@@ -113,21 +124,32 @@
                 <div class="field">
                     <table class="table table-hover text-center">
                         <tr>
-                            <th>参数名称</th>
-                            <th>中文名称</th>
-                            <th>最大长度</th>
-                            <th>参数类型</th>
-                            <th>是否必传</th>
-                            <th>备注说明</th>
+                            <th style="width:16%">参数名称</th>
+                            <th style="width:16%">中文名称</th>
+                            <th style="width:16%">最大长度</th>
+                            <th style="width:16%">参数类型</th>
+                            <th style="width:16%">是否必传</th>
+                            <th style="width:16%">备注说明</th>
                         </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>desc</td>
-                            <td>max_length</td>
-                            <td>c_type</td>
-                            <td>is_must</td>
-                            <td>msg</td>
-                        </tr>
+                        <tbody class="type_out">
+                            <tr>
+                                <td><input type="text" class="input" value="" name="type_out[name][out_id]" /></td>
+                                <td><input type="text" class="input" value="" name="type_out[desc][out_id]" /></td>
+                                <td><input type="text" class="input" value="" name="type_out[max_length][out_id]" /></td>
+                                <td>
+                                    <select class="input" name="type_out[c_type][out_id]">
+                                        <foreach name='type_out' item='v'>
+                                            <option value="{$v.id}">{$v.name} ( {$v.desc} )</option>
+                                        </foreach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label><input name="type_out[is_must][out_id]" type="radio" value="1" />必填 </label>
+                                    <label><input name="type_out[is_must][out_id]" type="radio" checked value="2" />选填 </label>
+                                </td>
+                                <td><input type="text" class="input" value="" name="type_out[msg][out_id]" /></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -142,3 +164,27 @@
         </form>
     </div>
 </div>
+<script>
+    $(function(){
+        var type_in = $('.type_in').html();
+        var type_in_id = 1;
+        var type_out = $('.type_out').html();
+        var type_out_id = 1;
+        $('#type_in_add').click(function(){
+            $('.type_in').append(type_in.replace(/in_id/g,type_in_id));
+            type_in_id = type_in_id + 1;
+        });
+        $('#type_in_del').click(function(){
+            $('.type_in tr').eq(-1).remove();
+            type_in_id = type_in_id - 1;
+        });
+        $('#type_out_add').click(function(){
+            $('.type_out').append(type_out.replace(/out_id/g,type_out_id));
+            type_out_id = type_out_id + 1;
+        });
+        $('#type_out_del').click(function(){
+            $('.type_out tr').eq(-1).remove();
+            type_out_id = type_out_id - 1;
+        });
+    })
+</script>

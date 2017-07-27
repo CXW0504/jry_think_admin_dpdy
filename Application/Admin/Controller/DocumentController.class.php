@@ -5,6 +5,7 @@ use Admin\Model\ProjectModel;
 use Think\Page;
 use Admin\Model\ProjectParameterTypeModel;
 use Admin\Model\ProjectApiModel;
+use Admin\Model\ProjectApiParameterModel;
 
 /**
  * 网站文档管理操作控制器
@@ -220,7 +221,7 @@ class DocumentController extends CommonController {
     public function list_apisAction(){
         $project = new ProjectApiModel();
         $where = array(
-            'a_name|desc'=>array('like','%'.I('get.keywords').'%'),
+            'a_name|desc|href'=>array('like','%'.I('get.keywords').'%'),
             'p_id' => I('get.id',0,'intval')
         );
         $count = $project->where($where)->getCount();
@@ -252,8 +253,46 @@ class DocumentController extends CommonController {
         $project = new ProjectModel();
         $pro_info = $project->where(array('id'=>I('get.p_id'),'status'=>array('neq',98)))->find();
         if(!I('post.')){
-            $this->assign('p_info',$pro_info);
+            $_pt = new ProjectParameterTypeModel();
+            $this->assign(array(
+                'type_in' => $_pt->where(array('type'=>1))->getList(0, 100),
+                'type_out' => $_pt->where(array('type'=>2))->getList(0, 100),
+                'p_info' => $pro_info,
+            ));
             return $this->display();
         }
+        $api = new ProjectApiModel();
+        $api_id = $api->create_info($pro_info['id'],I('post.a_name'),I('post.href'),I('post.desc'),I('post.in_type'),I('post.out_type'));
+        if(!$api_id){
+            return $this->error('系统错误');
+        }
+        $par = new ProjectApiParameterModel();
+        $success = $par->update_info($pro_info['id'],I('post.type_in'),I('post.type_out'));
+        if(!$success){
+            return $this->success('系统内部出现部分错误',U('list_apis',array('id',$pro_info['id'])));
+        }
+        return $this->success('添加完成',U('list_apis',array('id'=>$pro_info['id'])));
+    }
+    
+    /**
+     * 删除接口操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 19:48:51
+     */
+    public function del_list_apisAction(){
+        $project = new ProjectApiModel();
+        if($project->delete_info(I('get.id'))){
+            return $this->success('删除成功',U('list_apis',array('id'=>I('get.p_id'))));
+        }
+        return $this->error('删除失败');
+    }
+    
+    public function save_list_apisAction(){
+        dump(I('get.'));
+        exit;
     }
 }
