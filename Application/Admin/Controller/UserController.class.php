@@ -149,6 +149,7 @@ class UserController extends CommonController{
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
     	$page->setConfig('header','');
+    	$page->setPageHtml('top_html','<div class="pagination" style="margin:0;"><ul>%PAGE_CONTENT_HTML%</ul></div>');
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');

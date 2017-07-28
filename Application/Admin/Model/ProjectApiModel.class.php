@@ -112,7 +112,7 @@ class ProjectApiModel extends \Common\Model\AllModel{
             // 更新小版本
             $old['version_smail'] = $old_info['version_smail'];
             $new['version_smail'] = $old_info['version_smail'] + 1;
-        } else if($post['version'] == 'version_smail'){
+        } else if($post['version'] == 'version_middle'){
             // 更新中版本
             $old['version_smail'] = $old_info['version_smail'];
             $old['version_middle'] = $old_info['version_middle'];

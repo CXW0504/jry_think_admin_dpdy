@@ -196,4 +196,106 @@ class ProjectApiParameterModel extends \Common\Model\AllModel{
         }
         return FALSE;
     }
+    
+    /**
+     * 添加接口中的参数
+     * 
+     * @param number $a_id
+     * @param number $type
+     * @param string $name
+     * @param string $desc
+     * @param number $max_length
+     * @param number $c_type
+     * @param number $is_must
+     * @param string $msg
+     * @return boolean 是否添加成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-28 17:18:21
+     */
+    public function create_info($a_id = 0,$type = 1,$name = '',$desc = '',$max_length = '',$c_type = '',$is_must = '',$msg = ''){
+        // 接口编号不能小于0
+        if($a_id <= 0){
+            return FALSE;
+        }
+        // 接口类型只能是1和2
+        if($type > 2 || $type < 1){
+            return FALSE;
+        }
+        $success = $this->add(array(
+            'a_id' => intval($a_id),
+            'type' => intval($type),
+            'name' => trim($name),
+            'desc' => trim($desc),
+            'max_length' => intval($max_length),
+            'c_type' => intval($c_type),
+            'is_must' => intval($is_must),
+            'msg' => trim($msg),
+            'ad_time' => NOW_TIME,
+        ));
+        if($success){
+            $log = new LogModel();
+            $log->create_log('project_api_parameter', $success);
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    /**
+     * 修改接口参数信息
+     * 
+     * @param array $post 用户传入的修改后的参数
+     * @param array $info 用户接口参数原来的值
+     * @return boolean是否修改成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-28 17:47:48
+     */
+    public function save_info($post = array(),$info = array()){
+        if(empty($post)){
+            return FALSE;
+        }
+        if(empty($post['name'])){
+            return FALSE;
+        }
+        $old_arr = array();
+        $new_arr = array();
+        foreach($post as $k => $v){
+            if($info[$k] != $v){
+                $old_arr[$k] = $info[$k];
+                $new_arr[$k] = $v;
+            }
+        }
+        if(empty($new_arr)){
+            return FALSE;
+        }
+        if($this->where(array('id'=>$info['id']))->save($new_arr)){
+            $log = new LogModel();
+            $log->update_log('project_api_parameter', $info['id'], $new_arr, $old_arr);
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    /**
+     * 批量删除操作
+     * 
+     * @param number $id 接口编号
+     * @return boolean
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-27 19:36:09
+     */
+    public function del_info($id = 0){
+        $success = $this->setDelete($id);
+        if($success){
+            $log = new LogModel();
+            $log->delete_log('project_api_parameter', $id);
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

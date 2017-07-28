@@ -1,0 +1,101 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-briefcase"></span>&nbsp;<?php if(!empty($l_info)){echo '修改';}else{echo '添加';} ?>接口参数</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>参数类型</label>
+                </div>
+                <div class="field">
+                    <?php if(I('get.type') == 1){echo '请求参数';}else{echo '返回参数';} ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                </div>
+                <div class="field" style="color:red">
+                    备注：参数的变动不会更新接口版本，所以如果有参数变动了，修改完参数请再进行更新一下接口版本。
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参数名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.name}" name="name" data-validate="required:请输入参数名称" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参数中文名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.desc}" name="desc" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参数类型</label>
+                </div>
+                <div class="field">
+                    <select class="input w50" name="c_type">
+                        <foreach name='c_type' item='v' key='k'>
+                            <option value="{$k}">{$v}</option>
+                        </foreach>
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参数最大长度</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.max_length}" name="max_length" data-validate="number:请输入正确的大于0的整数"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>是否是必传参数</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button<?php if($l_info['is_must'] == '1'){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>          	
+                            <input name="is_must" value="1"  type="radio"<?php if($l_info['is_must'] == '1'){echo ' checked';} ?>>必传
+                        </label>
+                        <label class="button<?php if($l_info['is_must'] != '1'){echo ' active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="is_must" value="2"  type="radio"<?php if($l_info['is_must'] != '1'){echo ' checked';} ?>>选传
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>参数备注</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.msg}" name="msg" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        <?php if($l_info['c_type']){
+            echo '$("select[name=c_type]").val('.$l_info['c_type'].');';
+        } ?>
+    });
+</script>

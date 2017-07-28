@@ -46,6 +46,7 @@ class DocumentController extends CommonController {
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
     	$page->setConfig('header','');
+    	$page->setPageHtml('top_html','<div class="pagination" style="margin:0;"><ul>%PAGE_CONTENT_HTML%</ul></div>');
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
@@ -333,5 +334,69 @@ class DocumentController extends CommonController {
             'in_type' => $in_type,
             'out_type' => $out_type,
         ))->display();
+    }
+    
+    /**
+     * 添加接口参数
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-28 16:49:50
+     */
+    public function add_project_parameterAction(){
+        if(!I('post.')){
+            $canshu = new ProjectParameterTypeModel();
+            $this->assign('c_type',$canshu->get_type(I('get.type')));
+            return $this->display();
+        }
+        $apis = new ProjectApiParameterModel();
+        if($apis->create_info(I('get.a_id'), I('get.type'), I('post.name'), I('post.desc'), I('post.max_length'), I('post.c_type'), I('post.is_must'), I('post.msg'))){
+            return $this->success('添加成功',U('save_list_apis',array('id'=>I('get.a_id'))));
+        }
+        return $this->error('系统错误');
+    }
+    
+    /**
+     * 修改接口参数信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-28 17:49:51
+     */
+    public function save_project_parameterAction(){
+        $apis = new ProjectApiParameterModel();
+        $info = $apis->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(!I('post.')){
+            $canshu = new ProjectParameterTypeModel();
+            $this->assign('c_type',$canshu->get_type(I('get.type')));
+            $this->assign('l_info',$info);
+            return $this->display('add_project_parameter');
+        }
+        if($apis->save_info(I('post.'),$info)){
+            return $this->success('修改成功',U('save_list_apis',array('id'=>$info['a_id'])));
+        }
+        return $this->error('参数无变化或系统错误');
+    }
+    
+    
+    /**
+     * 删除接口参数
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-28 18:04:09
+     */
+    public function del_project_parameterAction(){
+        $apis = new ProjectApiParameterModel();
+        if($apis->del_info(I('get.id'))){
+            return $this->success('删除成功',U('save_list_apis',array('id'=>I('get.type'))));
+        }
+        return $this->error('删除失败');
     }
 }

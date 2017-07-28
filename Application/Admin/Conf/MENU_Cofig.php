@@ -123,6 +123,9 @@ return array(
             'add_parameter' => '添加参数类型',
             'save_parameter' => '更新参数类型',
             'del_parameter' => '删除参数类型',
+            'add_project_parameter' => '添加接口参数',
+            'save_project_parameter' => '修改接口参数',
+            'del_project_parameter' => '删除接口参数',
         ),
     ),
     // 暂时去掉日志浏览、检索功能，后期再进行添加
