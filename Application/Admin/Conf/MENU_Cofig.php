@@ -35,10 +35,12 @@ return array(
         ),
     ),
     'Data' => array(
-        'name' => '数据分析',
+        'name' => '数据管理',
         'class' => 'icon-bar-chart-o',
         'content' => array(
-            'analysis' => '数据分析',
+            'analysis' => '订单数据分析',
+            'mcch_data_list' => 'mcch财务计算器',
+            'other_data_list' => 'other费用计算器',
         ),
         'child' => array(),
     ),
@@ -46,7 +48,7 @@ return array(
         'name' => '系统配置',
         'class' => 'icon-cogs',
         'content' => array(
-//            'banner_list' => '广告管理',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'banner_list' => '广告管理',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'department_list' => '通讯录部门管理',
             'directories_user_list' => '通讯录管理',
             'loan_mold_list' => '抵押顺位管理',
@@ -55,9 +57,9 @@ return array(
             'loan_insurance_list' => '抵押权人管理',
         ),
         'child' => array(
-//            'banner_add' => '添加广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
-//            'banner_save' => '修改广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
-//            'banner_del' => '删除广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'banner_add' => '添加广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'banner_save' => '修改广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'banner_del' => '删除广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'department_add' => '添加通讯录部门',
             'department_save' => '修改通讯录部门',
             'department_del' => '删除通讯录部门',
@@ -106,7 +108,7 @@ return array(
     ),
     // 以后也要删除掉的接口管理模块，用来后期自动生成接口文档所用
     'Document' => array(
-        'name' => '文档管理',
+        'name' => '文档常量',
         'class' => 'icon-briefcase',
         'content' => array(
             'apis' => '接口文档',
@@ -129,12 +131,12 @@ return array(
         ),
     ),
     // 暂时去掉日志浏览、检索功能，后期再进行添加
-    // 'Log' => array(
-    //     'name' => '日志管理',
-    //     'class' => 'icon-save',
-    //     'content' => array(
-    //         'login' => '后台登录日志',
-    //     ),
-    //     'child' => array(),
-    // ),
+     'Log' => array(
+         'name' => '日志管理',
+         'class' => 'icon-save',
+         'content' => array(
+             'login' => '后台登录日志',
+         ),
+         'child' => array(),
+     ),
 );
