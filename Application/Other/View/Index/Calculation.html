@@ -1,0 +1,202 @@
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="bs-docs-section">
+            <h1 id="forms" class="page-header">费用计算工具<span style="font-size:10px;"><a href="javascript:history.go(-1)">点击返回上一页</a></span></h1>
+            <h2 id="forms-example">确认信息</h2>
+            <div class="bs-example" data-example-id="basic-forms">
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">客户姓名</label>
+                    <div class="col-sm-4">
+                        {$post.uname}
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">贷款金额</label>
+                    <div class="col-sm-4">
+                        {$post.money|number_format=###} 元
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">放款时间</label>
+                    <div class="col-sm-4">
+                        {$post.starttime}
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">贷款类型</label>
+                    <div class="col-sm-4">
+                        {$loan_type[$post['loan_type']]}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">借款期限</label>
+                    <div class="col-sm-4">
+                        {$post.month} 月
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">渠道信息</label>
+                    <div class="col-sm-4">
+                        {$loan_channel[$post['loan_channel']]}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">终端点位</label>
+                    <div class="col-sm-4">
+                        {$post.loan_rate} %
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">渠道收费</label>
+                    <div class="col-sm-4">
+                        {$loan_charge[$post['loan_charge']]}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">抵押数量</label>
+                    <div class="col-sm-4">
+                        {$post.loan_number} 套
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">计算时间</label>
+                    <div class="col-sm-4">
+                        {:date('Y-m-d H:i:s')}
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <h2 id="forms-example">前期收费</h2>
+            <div class="bs-example" data-example-id="basic-forms">
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">评估费用</label>
+                    <div class="col-sm-4">
+                        {$qianqi.pinggu|number_format=###} 元
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">保险费用</label>
+                    <div class="col-sm-4">
+                        {$qianqi.baoxian|number_format=###} 元
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">公正费用</label>
+                    <div class="col-sm-4">
+                        {$qianqi.gongzheng|number_format=###} 元
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">委托费用</label>
+                    <div class="col-sm-4">
+                        {$qianqi.weituo|number_format=###} 元
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">证件费用</label>
+                    <div class="col-sm-4">
+                        {$qianqi.zhengjian|number_format=###} 元
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">公正总计</label>
+                    <div class="col-sm-5">
+                        {$qianqi.gongzheng_all|number_format=###} 元&nbsp;&nbsp;&nbsp;&nbsp;<b>备注：</b>该值为公证费+委托费+证件公证费所统计
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">抵押登记</label>
+                    <div class="col-sm-4">
+                        {$qianqi.diya|number_format=###} 元
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">我方服务费</label>
+                    <div class="col-sm-4">
+                        {$qianqi.my_service|number_format=###} 元
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">渠道服务费</label>
+                    <div class="col-sm-4">
+                        {$qianqi.s_service|number_format=###} 元
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">共计服务费</label>
+                    <div class="col-sm-4">
+                        {$qianqi.all_service|number_format=###} 元&nbsp;&nbsp;&nbsp;&nbsp;<b>备注：</b>该值为我方服务费+渠道服务费
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 control-label no-padding-right">我方利息</label>
+                    <div class="col-sm-4">
+                        {$qianqi.my_loan|number_format=###} 元/月
+                    </div>
+                    <label class="col-sm-1"></label>
+                    <label class="col-sm-1">渠道利息</label>
+                    <div class="col-sm-4">
+                        {$qianqi.s_loan|number_format=###} 元/月
+                    </div>
+                </div>
+                <hr/>
+                <h2 id="forms-example">还款计划表</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>还款时间</th>
+                        <th>应还本金</th>
+                        <th>应还利息总额</th>
+                        <th>我方利息</th>
+                        <th>渠道利息</th>
+                        <th>还款总额</th>
+                    </tr>
+                    <foreach name="list_data" item="v" key="k">
+                        <tr>
+                            <td>{$k + 1}</td>
+                            <td>{$v.start}</td>
+                            <td>{$v.money|number_format=###} 元</td>
+                            <td>{$v.all_loan|number_format=###} 元</td>
+                            <td>{$v.my_loan|number_format=###} 元</td>
+                            <td>{$v.s_loan|number_format=###} 元</td>
+                            <td>{$v.all|number_format=###} 元</td>
+                        </tr>
+                    </foreach>
+                </table>
+                <hr/>
+                <h2 id="forms-example">检查工具</h2>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label no-padding-right">我方抵押登记</label>
+                    <div class="col-sm-4">
+                        80元/套
+                    </div>
+                    <label class="col-sm-2">我方评估费</label>
+                    <div class="col-sm-4">
+                        200元
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label no-padding-right">我方抵委托费</label>
+                    <div class="col-sm-4">
+                        1000元/套
+                    </div>
+                    <label class="col-sm-2">我方证件公正费</label>
+                    <div class="col-sm-4">
+                        800元/套
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label no-padding-right">我方保险费费率</label>
+                    <div class="col-sm-4">
+                        0.03%
+                    </div>
+                    <label class="col-sm-2">我方公正费费率</label>
+                    <div class="col-sm-4">
+                        0.3%
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label no-padding-right">我方服务费费率</label>
+                    <div class="col-sm-4">
+                        0.1% / 月
+                    </div>
+                    <label class="col-sm-2">我方利率</label>
+                    <div class="col-sm-4">
+                        0.85%[一抵]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1%[二抵]
+                    </div>
+                </div>
+                <h2 style="height:100px;width:100%;"></h2>
+            </div>
+        </div>
+    </div>
+</div>

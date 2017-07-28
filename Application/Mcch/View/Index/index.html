@@ -1,0 +1,104 @@
+<table class="table">
+    <form method="post">
+        <caption>请填写下列基本信息</caption>
+        <tbody>
+            <tr>
+                <td>借款金额</td>
+                <td><input type="text" name="money" class="form-control" placeholder="借款金额 单位：元"></td>
+            </tr>
+            <tr>
+                <td>起息日</td>
+                <td><input type="text" name="date" class="form-control" value="{:date('Y-m-d')}" id="birthday"></td>
+            </tr>
+            <tr>
+                <td>抵押类型</td>
+                <td>
+                    <select name="type_loan" class="form-control">
+                        <option value="1">一抵</option>
+                        <option value="2">二抵</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>类型</td>
+                <td>
+                    <select name="type" class="form-control">
+                        <option value="1">五矿</option>
+                        <option value="2">中信</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>档位</td>
+                <td>
+                    <select name="month" class="form-control">
+                        <option value="2">2个月</option>
+                        <option value="3">3个月</option>
+                        <option value="6">6个月</option>
+                        <option value="12">12个月</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>调整结束日</td>
+                <td>
+                    <input type="text" name="end_date" class="form-control" value="{:date('Y-m-10',strtotime('+2 month'))}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p class="text-muted">
+                        备注：因系统生成时间不够准确，请您仔细核对结束日期后再点击提交按钮
+                    </p>
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td> </td>
+                <td><input type="submit" class="btn btn-primary" value="点击提交"></td>
+            </tr>
+            </tr>
+        </tbody>
+    </form>
+</table>
+<script type="text/javascript">
+    /**
+     * 获取结束日期并填写到页面上
+     * @returns null
+     */
+    function ajaxSave(){
+        var date = $('#birthday').val();
+        $.get("{:U('Index/getDate')}",{
+            time:date,
+            type_loan:$('select[name=type_loan]').val(),
+            type:$('select[name=type]').val(),
+            month:$('select[name=month]').val()
+        },function(d){
+            $('input[name=end_date]').val(d)
+        });
+        return null;
+    }
+    $(function () {
+        // 日期选择插件
+        $('#birthday').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        },
+        function (start, end, label) {
+            // 选择完日期后自动将信息填写到页面上
+            ajaxSave();
+        });
+        // 如果输入有变化自动将新的信息填写到页面上
+        $('input').change(function(){
+            ajaxSave();
+        });
+        // 如果选择有变化自动将新的信息填写到页面上
+        $('select').change(function () {
+            ajaxSave();
+        });
+    })
+</script>

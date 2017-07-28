@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{$__a_icon__}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">{/*在手机端的缩放比例*/}
+    <meta name="format-detection" content="telephone=no">{/*手机号码不被显示为拨号链接*/}
+    <meta charset="utf-8"><meta name="author" content="{$__a_author__}">
+    <meta name="keywords" content="{$__a_key__}">
+    <meta name="description" content="{$__a_describe__}">
+    <meta name="revised" content="{$__a_version__}">
+    <title>{$__a_title__}{:C('DEFAULT_TITLE_FOOTER',null,' - 小鱼入水')}</title>
+    <foreach name='__a__css__' item='v'>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/{$v}.css" />
+    </foreach>
+    <foreach name='__a_js__' item='v'>
+        <script type="text/javascript" src="__PUBLIC__/{$v}.js"></script>
+    </foreach>
+<style>
+    .footer-wap{width:100%;height:20px;background:#ccc;text-align:center;color:#FF6B4A;clear:both;position: fixed;bottom: 0px;}
+</style>
+</head>
+<body>
+    {__CONTENT__}
+    <div class="footer-wap">
+        Powered by xiaoyutab <a href="http://www.miibeian.gov.cn" target="_blank" >京ICP备15040708号</a> <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260492529'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260492529' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</body>
+<foreach name='__a__css_footer__' item='v'>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/{$v}.css" />
+</foreach>
+<foreach name='__a_js_footer__' item='v'>
+    <script type="text/javascript" src="__PUBLIC__/{$v}.js"></script>
+</foreach>
+</html>

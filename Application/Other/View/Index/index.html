@@ -1,0 +1,93 @@
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="bs-docs-section">
+            <h1 id="forms" class="page-header"><a class="anchorjs-link " href="#forms" aria-label="Anchor link for: forms" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>费用计算工具</h1>
+            <h2 id="forms-example"><a class="anchorjs-link " href="#forms-example" aria-label="Anchor link for: forms example" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>基本内容</h2>
+            <div class="bs-example" data-example-id="basic-forms">
+                <form method="post" action="{:U('Calculation')}">
+                    <div class="form-group row">
+                        <label class="col-sm-1 control-label no-padding-right">客户姓名</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="uname" class="form-control">
+                        </div>
+                        <label class="col-sm-1"></label>
+                        <label class="col-sm-1">贷款金额</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="money" class="form-control">
+                        </div>
+                        <label class="col-sm-1">元</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1">放款时间</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="starttime" id="birthday" class="form-control active" value="{:date('Y-m-05')}">
+                        </div>
+                        <label class="col-sm-7 text-danger">*该时间为开始计算利息的时间</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 control-label no-padding-right">贷款类型</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="loan_type">
+                                <option value="1">一抵</option>
+                                <option value="2">二抵</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1"></label>
+                        <label class="col-sm-1">贷款期限</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="month" value="1" class="form-control">
+                        </div>
+                        <label class="col-sm-1">月</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 control-label no-padding-right">是否有渠道</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="loan_channel">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1"></label>
+                        <label class="col-sm-1">抵押数量</label>
+                        <div class="col-sm-4">
+                            <input type="text" value="1" name="loan_number" class="form-control">
+                        </div>
+                        <label class="col-sm-1">套</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 control-label no-padding-right">渠道收费</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="loan_charge">
+                                <option value="1">服务费形式一次性收取</option>
+                                <option value="2">利息形式按月支付</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1"></label>
+                        <label class="col-sm-1">终端点位</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="loan_rate" value="1.1" class="form-control">
+                        </div>
+                        <label class="col-sm-1">%</label>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-success">点击计算</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#birthday').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            locale : {
+                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            }
+        },
+        function (start, end, label) {
+        });
+    });
+</script>

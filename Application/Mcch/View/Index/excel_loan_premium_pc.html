@@ -1,0 +1,79 @@
+<table class="table">
+	<caption>请确认下列基本信息是否正确</caption>
+	<tbody>
+		<tr>
+			<td style="width:25%;">借款金额</td>
+			<td>{$form.money|number_format=###} 元</td>
+			<td>起息日</td>
+			<td>{$form.date}</td>
+		</tr>
+		<tr>
+			<td>抵押类型</td>
+			<td>{$type_loan[$form['type_loan']]}</td>
+			<td>类型</td>
+			<td>{$type[$form['type']]}</td>
+		</tr>
+		<tr>
+			<td>档位</td>
+			<td>{$form.month}个月</td>
+			<td>结束日</td>
+			<td>{$form.end_date}</td>
+		</tr>
+	</tbody>
+</table>
+<table class="table">
+	<caption>以下为计算结果信息</caption>
+	<tbody>
+		<tr>
+			<td style="width:25%;">服务费</td>
+			<td>{$service_money} 元(含抵押登记费用)</td>
+			<td>保费</td>
+			<td>{$premium} 元</td>
+		</tr>
+		<tr>
+			<td>共计计息天数</td>
+			<td>{$all_loan_days} 天</td>
+			<td>利息总计</td>
+			<td>{$all_loan_money} 元</td>
+		</tr>
+		<tr>
+			<td>年利率</td>
+			<td>{$lilv[$form['month']]} %</td>
+			<td>备注</td>
+			<td>此表数据仅供参考</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td><a href="" class="btn btn-primary">点击重新计算</a></td>
+			<td><a href="{:U('index/pcIndexExcel',array('id'=>$id))}" class="btn btn-primary">导出还款计划表</a></td>
+			<td> </td>
+		</tr>
+	</tbody>
+</table>
+<table class="table">
+	<caption>以下为还款计划表</caption>
+	<tr>
+		<th>期数</th>
+		<th>开始时间</th>
+		<th>截止时间</th>
+		<th>计息天数</th>
+		<th>月份</th>
+		<th>还款日期</th>
+		<th>支付利息</th>
+		<th>支付本金</th>
+		<th>应还金额</th>
+	</tr>
+	<foreach name="service_date" item="v" key="k">
+		<tr>
+			<td>{$k+1}</td>
+			<td>{$v.start_times}</td>
+			<td>{$v.end_times}</td>
+			<td>{$v.pay_days} 天</td>
+			<td>{:date('m',strtotime('-1 month',strtotime($v['pay_times'])))}月份</td>
+			<td>{$v.pay_times}</td>
+			<td>{$v.pay_interest_on_a_loan|number_format=###,2} 元</td>
+			<td>{$v.pay_myself|number_format=###,2} 元</td>
+			<td><?php echo number_format($v['pay_interest_on_a_loan'] + $v['pay_myself'],2); ?> 元</td>
+		</tr>
+	</foreach>
+</table>
