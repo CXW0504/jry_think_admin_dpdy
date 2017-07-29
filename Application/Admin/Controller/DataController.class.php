@@ -67,7 +67,7 @@ class DataController extends CommonController {
     public function mcch_data_list_deleteAction(){
         $work = new WorkMcchFinancialModel();
         if($work->delete_financial(I('get.id'))){
-            return $this->success('删除成功');
+            return $this->success('删除成功',array('mcch_data_list'));
         }
         return $this->error('删除失败');
     }
