@@ -40,6 +40,10 @@ class CommonController extends \Common\Controller\PublicController {
                 // 如果用户有权限访问该模块
                 return $this;
             } else {
+                // 如果是超级管理员则直接放行
+                if($info['group_id'] == 0){
+                    return $this;
+                }
                 return $this->error('抱歉，您没有权限进行此操作',U('Index/hello'));
             }
         }

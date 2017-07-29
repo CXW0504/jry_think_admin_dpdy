@@ -42,7 +42,10 @@ return array(
             'mcch_data_list' => 'mcch财务计算器',
             'other_data_list' => 'other费用计算器',
         ),
-        'child' => array(),
+        'child' => array(
+            'mcch_data_list_download' => '导出mcch财务计算器还款计划表',
+            'mcch_data_list_delete' => '删除mcch财务计算器',
+        ),
     ),
     'System' => array(
         'name' => '系统配置',

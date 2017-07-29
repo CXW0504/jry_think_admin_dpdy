@@ -3,24 +3,9 @@
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
             <form method="get" >
-                <li> <a class="button border-main" href="{:U('directories_user_add')}"> 添加人员</a> </li>
-                <li>搜索：</li>
-                <li>
-                    <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
-                    <input type="text" placeholder="用户姓名/手机" name="keywords" class="input" value="{:I('get.keywords')}" style="line-height:17px;display:inline-block" />
-                </li>
-                <li>所属部门：</li>
-                <li>
-                    <select name="dep_id" class="form-control">
-                        <option value="-1">全部</option>
-                        <option value="0">无部门</option>
-                        <foreach name='group_list' item='v' key="k">
-                            <option value="{$k}" <?php if($k == $_GET['dep_id']){echo 'selected';} ?>>{$v}</option>
-                        </foreach>
-                    </select>
-                </li>
                 <li>添加时间：</li>
                 <li>
+                    <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
                     <input type="text" name="times_end" value="{:I('get.times_end')}" class="input" >
                 </li>
                 <li>
@@ -35,33 +20,31 @@
     <table class="table table-hover text-center">
         <tr>
             <th width="100" style="text-align:left; padding-left:20px;">ID</th>
-            <th>工号</th>
-            <th>头像</th>
-            <th>用户姓名</th>
-            <th>用户手机</th>
-            <th>用户电话</th>
-            <th>用户邮箱</th>
-            <th>所在部门</th>
-            <th>用户职位</th>
+            <th>借款金额</th>
+            <th>起息时间</th>
+            <th>抵押类型</th>
+            <th>借款类型</th>
+            <th>借款期限</th>
+            <th>结束时间</th>
+            <th>数据来源</th>
             <th width="15%">添加时间</th>
             <th width="15%">操作</th>
         </tr>
         <foreach name="g_list" item="v">
             <tr>
-                <td style="text-align:left; padding-left:20px;">{$v.id}</td>
-                <td>{$v.job_no}</td>
-                <td><img src="<?php if(!empty($v['avatar'])): ?>__PUBLIC__/Upload/{$v.avatar}<?php else: ?>__PUBLIC__/Images/Admin/y.jpg<?php endif; ?>" style="width:50px;"/></td>
-                <td>{$v.name}</td>
-                <td>{$v.phone|phont_view_type=$v['phone_type'],###}</td>
-                <td>{$v.tel}</td>
-                <td>{$v.email}</td>
-                <td>{$v.dep_id_name}</td>
-                <td>{$v.position}</td>
+                <td>{$v.id}</td>
+                <td><?php echo number_format($v['money'] / 10000,2); ?>万元</td>
+                <td>{$v.st_time|date="Y-m-d",###}</td>
+                <td><?php echo $v['type_loan'] == '1'?'一抵':'二抵'; ?></td>
+                <td><?php echo $v['type'] == '1'?'五矿':'中信'; ?></td>
+                <td>{$v.month} 月</td>
+                <td>{$v.end_time|date="Y-m-d",###}</td>
+                <td><?php echo $v['from_type'] == '1'?'PC页面':'WAP页面'; ?></td>
                 <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
                 <td>
                     <div class="button-group">
-                        <a class="button border-main" href="{:U('directories_user_save',array('id'=>$v['id']))}">修改</a> 
-                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('directories_user_del',array('id'=>$v['id']))}')">删除</a>
+                        <a class="button border-main" href="{:U('mcch_data_list_download',array('id'=>$v['id']))}">导出</a> 
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('mcch_data_list_delete',array('id'=>$v['id']))}')">删除</a>
                     </div>
                 </td>
             </tr>
@@ -92,7 +75,7 @@
                 daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
                 monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ]
             },
-            opens : 'left',    // 日期选择框的弹出位置
+            opens : 'right',    // 日期选择框的弹出位置
             separator : ' ~ '
         });
     })
