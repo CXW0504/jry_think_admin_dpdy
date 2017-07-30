@@ -39,7 +39,7 @@ class DocController extends PublicController {
             echo '404 . Not Found';
             exit;
         }
-        $info['logo'] = $info['logo']?$info['logo']:'./icon.png';
+        $info['logo'] = $info['logo']?$info['logo']:'/icon.png';
         $config = $project->get_error_config(I('get.id',0,'intval'));
         // 获取应用列表
         $apis = new ProjectApiModel();
