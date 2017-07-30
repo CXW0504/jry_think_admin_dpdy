@@ -6,6 +6,7 @@ use Think\Page;
 use Admin\Model\ProjectParameterTypeModel;
 use Admin\Model\ProjectApiModel;
 use Admin\Model\ProjectApiParameterModel;
+use Org\Office\Word\PHPWord;
 
 /**
  * 网站文档管理操作控制器
@@ -398,5 +399,117 @@ class DocumentController extends CommonController {
             return $this->success('删除成功',U('save_list_apis',array('id'=>I('get.type'))));
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 接口文档导出操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-30 14:05:46
+     */
+    public function list_apis_downloadAction(){
+        $project = new ProjectModel();
+        $info = $project->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(empty($info)){
+            return $this->error('系统错误');
+        }
+        $week = array('日','一','二','三','四','五','六');
+        return $this->exec_word(array(
+            'title' => $info['name'],// 项目名称
+            'author' => $info['doc_author'],// 文档编写人员
+            'com_author' => $info['author'],// 项目参与人员
+            'version' => 'v 1.0.0-'.date('Y-m-d').'_alpha',// 测试版
+//            'version' => 'v 1.0.0-'.date('Y-m-d').'_Beta',// 正式版
+//            'version' => 'v 1.0.0-'.date('Y-m-d').'_Release',// 发行版
+            'create_date' => date('Y年m月d日 星期'.$week[date('w')]),
+            'copy' => $info['com_name'],
+        ));
+    }
+    
+    /**
+     * 生成Word文档并提供下载
+     * 
+     * @param array $data 接口文档中的数据
+     * @return NULL
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-30 14:20:58
+     */
+    private function exec_word($data = array()){
+        // 创建doc对象
+        $PHPWord = new PHPWord();
+        // 获取文档属性
+        $properties = $PHPWord->getProperties();
+        // 设置文档的作者
+        $properties->setCreator('于茂敬');
+        // 所属公司
+        $properties->setCompany('个人');
+        // 文档标题
+        $properties->setTitle('API接口文档');
+        // 以下就是Word的正文内容了
+        // ---------------------------------
+        // 设置文档默认字体
+        $PHPWord->setDefaultFontName('微软雅黑');
+        // 设置文档默认字体大小，单位px
+        $PHPWord->setDefaultFontSize(12);
+        // 添加一个页面并设置相关属性
+        $section = $PHPWord->createSection();
+        // 获取页脚属性，可以使用$footer->xxx来进行设置相关信息
+        $footer = $section->createFooter();
+        $footer->addPreserveText('{PAGE} / {NUMPAGES}',array(
+            'italic' => true,// 使用斜体
+            'color' => 'c4c4c4',// 灰色字体
+        ),array(
+            'align' => 'center',
+        ));
+        // 第一页------------------------
+        $section->addTextBreak(10);
+        $section->addText($data['title'], array(
+            'size'=>40, // 字体大小
+            'bold'=>true,// 粗体
+            'underline' => \PHPWord_Style_Font::UNDERLINE_DASH,// 下划线
+        ),array(
+            'align' => 'center',
+        ));
+        $section->addTextBreak(20);
+        // 添加表格
+        $table = $section->addTable();
+        // 为表格添加一行
+        $table->addRow(30);
+        $table_style = array(
+            'borderTopSize' => 1,
+            'borderLeftSize' => 1,
+            'borderRightSize' => 1,
+            'borderBottomSize' => 1,
+            'valign' => 'center'
+        );
+        $table->addCell(null,$table_style)->addText('文档版本');
+        $table->addCell(null,$table_style)->addText($data['version']);
+        $table->addRow(30);
+        $table->addCell(null,$table_style)->addText('创建日期');
+        $table->addCell(null,$table_style)->addText($data['create_date']);
+        $table->addRow(30);
+        $table->addCell(null,$table_style)->addText('参与人员');
+        $table->addCell(null,$table_style)->addText($data['com_author']);
+        $table->addRow(30);
+        $table->addCell(null,$table_style)->addText('文档作者');
+        $table->addCell(null,$table_style)->addText($data['author']);
+        $table->addRow(30);
+        $table->addCell(null,$table_style)->addText('版权所有');
+        $table->addCell(null,$table_style)->addText($data['copy']);
+        // 以下为存储Word数据和导出下载的代码
+        $objWriter = \PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
+        $temp_runtime = 'Public/Runtime/temp_run.doc';
+        $objWriter->save($temp_runtime);
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="helloWorld.docx"');  
+        header('Content-Transfer-Encoding: binary');  
+        // load the file to send:  
+        readfile($temp_runtime);
+        return NULL;
     }
 }

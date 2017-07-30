@@ -19,6 +19,51 @@ use Admin\Model\FileModel;
  * @adtime 2017-07-12 17:17:47
  */
 class SystemController extends CommonController {
+    
+    /**
+     * 清除缓存功能
+     *      作用为清除本网站全部的缓存、日志
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-30 17:42:33
+     */
+    public function refresh_allAction(){
+        // 删除缓存
+        $this->deldir(RUNTIME_PATH);
+        return $this->success('缓存清除成功,正在跳回首页',U('Index/hello'),5);
+    }
+    
+    /**
+     * 循环删除文件操作
+     *      仅删除文件,不删除文件夹[该操作会输出删除的每一个文件]
+     * 
+     * @param string $dir 要删除的文件夹
+     * @return boolean
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-07-30 17:43:18
+     */
+    private function deldir($dir = '') {
+        if(empty($dir)){
+            return FALSE;
+        }
+        $dh = opendir($dir);
+        while ($file = readdir($dh)) {
+            if ($file != "." && $file != "..") {
+                $fullpath = $dir . "/" . $file;
+                if (!is_dir($fullpath)) {
+                    echo $fullpath.'<br/>';
+                    unlink($fullpath);
+                } else {
+                    $this->deldir($fullpath);
+                }
+            }
+        }
+    }
 
     /**
      * 通讯录部门管理

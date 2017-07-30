@@ -60,6 +60,7 @@ return array(
             'loan_insurance_list' => '抵押权人管理',
         ),
         'child' => array(
+            'refresh_all' => '清除本网站全部缓存',
             'banner_add' => '添加广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'banner_save' => '修改广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
             'banner_del' => '删除广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
@@ -121,7 +122,8 @@ return array(
             'add_apis' => '新建项目',
             'save_apis' => '更新项目',
             'del_apis' => '删除项目',
-            'list_apis' => '项目下的接口',
+            'list_apis' => '项目接口列表',
+            'list_apis_download' => '导出项目接口',
             'save_list_apis' => '更新接口',
             'del_list_apis' => '删除接口',
             'add_list_apis' => '添加接口',

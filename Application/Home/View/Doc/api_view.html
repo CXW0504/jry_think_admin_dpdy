@@ -1,0 +1,152 @@
+<div id="docsapiContent" class="clearfix">
+    <div id="docs_api_main">
+        <div class="api_data">
+            <div class="api_data_img png_bg">
+                <img src="{$project.logo}" style="width:100%;height:100%;">
+            </div>
+            <div class="api_data_info">
+                <h2><strong>{$project.name}</strong></h2>
+                <p class="doc_api_decsP" style="color:#999;" title="{$project.remarks}">
+                    {$project.md}
+                </p>
+                <div id="api_arguments" class="clearfix">
+                    <div class="doc_arguments">
+                        <p><b>数据ID：</b><font color="#777">{$project.id}</font></p>
+                        <p><b>接口状态：</b><font color="#88c773"><span style="color:#88c773; ">正常</span></font></p>
+                        <p><b>所属团队：</b><font color="#03c5ff">{$project.com_name}</font></p>
+                    </div>
+                    <div class="doc_arguments">
+                        <p><b>文档编写人员：</b><font color="#777">{$project.doc_author}</font></p>
+                        <p><b>项目参与人员：</b><font color="#03c5ff">{$project.author}</font></p>
+                        <p><b>接口前缀：</b><font color="#88c773">{$project.fix}</font></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="docs_api_tab">
+            <ul class="tabul clearfix">
+                <li id="apilists" class="active">API</li>
+                <li id="errorcode">错误码参照</li>
+            </ul>
+        </div>
+        <div class="tabDiv">
+            <!--api-->
+            <div style="padding-left: 0;" class="docs_api_show clearfix">
+                <ul class="das_left"><?php $api_id = I('get.api_id')?I('get.api_id'):$api_list[0]['id']; ?>
+                    <foreach name='api_list' item="v" key='k'>
+                        <li<?php if($v['id'] == $api_id){echo ' class="clearfix"';} ?>>
+                            <a  href="{:U('/Home/Doc/api_view',array(
+                                'id'=>I('get.id'),
+                                'api_id'=>$v['id']))}" title="{$v.a_name}"
+                                <?php if($v['id'] == $api_id){echo ' class="selected"';} ?>
+                            ><?php echo count($api_list) - $k; ?>. {$v.a_name}</a>
+                        </li><?php
+                            if($v['id'] == $api_id){
+                                $api_info = $v;
+                            }
+                        ?>
+                    </foreach>
+                </ul>
+                <div class="das_right">
+                    <div class="simpleline"><strong>接口地址：</strong><span class="url">{$api_info.href}</span></div>
+                    <div class="simpleline"><strong>返回格式：</strong><span><?php 
+                        $out = explode(',',$api_info['out_type']);
+                        foreach($out as $k => $v){
+                            $out[$k] = $request[$v];
+                        }
+                        echo implode(' , ',$out);
+                    ?></span></div>
+                    <div class="simpleline"><strong>请求方式：</strong><span><?php echo $https[$api_info['in_type']]; ?></span></div>
+                    <div class="simpleline"><strong>接口描述：</strong><font>{$api_info.desc}</font></div>
+                    <div class="simpleline"><strong>接口版本：</strong><font>V{$api_info.version_big}.{$api_info.version_middle}.{$api_info.version_smail}</font></div>
+                    <div class="simpleline simpleTable">
+                        <strong>请求参数说明：</strong>
+                        <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="title">
+                                <th>名称</th>
+                                <th>中文名称</th>
+                                <th>最大长度</th>
+                                <th>参数类型</th>
+                                <th>参数描述</th>
+                                <th>是否必传</th>
+                                <th>备注说明</th>
+                            </tr>
+                            <foreach name='list_1' item='v'>
+                                <tr>
+                                    <td>{$v.name}</td>
+                                    <td>{$v.desc}</td>
+                                    <td>{$v.max_length}</td>
+                                    <td title="{$type_1[$v['c_type']]['msg']}">{$type_1[$v['c_type']]['name']}</td>
+                                    <td title="{$type_1[$v['c_type']]['msg']}">{$type_1[$v['c_type']]['desc']}</td>
+                                    <td><?php if($v['is_must'] == 1){echo '必填';}else{echo '选填';} ?></td>
+                                    <td>{$v.msg}</td>
+                                </tr>
+                            </foreach>
+                        </table>
+                    </div>
+                    <div class="simpleline simpleTable">
+                        <strong>返回参数说明：</strong>
+                        <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="title">
+                                <th>名称</th>
+                                <th>中文名称</th>
+                                <th>最大长度</th>
+                                <th>参数类型</th>
+                                <th>参数描述</th>
+                                <th>是否必传</th>
+                                <th>备注说明</th>
+                            </tr>
+                            <foreach name='list_2' item='v'>
+                                <tr>
+                                    <td>{$v.name}</td>
+                                    <td>{$v.desc}</td>
+                                    <td>{$v.max_length}</td>
+                                    <td title="{$type_2[$v['c_type']]['msg']}">{$type_2[$v['c_type']]['name']}</td>
+                                    <td title="{$type_2[$v['c_type']]['msg']}">{$type_2[$v['c_type']]['desc']}</td>
+                                    <td><?php if($v['is_must'] == 1){echo '必填';}else{echo '选填';} ?></td>
+                                    <td>{$v.msg}</td>
+                                </tr>
+                            </foreach>
+                        </table>
+                    </div>
+                    <div class="simpleline"><strong>添加时间：</strong><span class="url">{$api_info.ad_time|date="Y-m-d H:i:s",###}</span></div>
+                </div>
+            </div>
+            <div class="docs_api_show">
+                <div class="simpleline simpleTable">
+                    <b>系统级错误码参照：</b>
+                    <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th width="200">错误码</th>
+                            <th>说明</th>
+                        </tr>
+                        <foreach name='error_code' item='v' key='k'>
+                            <tr>
+                                <td class="url">{$k}</td>
+                                <td class="text">{$v}</td>
+                            </tr>
+                        </foreach>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        tabs(".tabul", "active", ".tabDiv");
+    })
+    function tabs(tabTit, on, tabCon) {
+        $(tabCon).each(function () {
+            $(this).children().eq(0).show();
+        });
+        $(tabTit).each(function () {
+            $(this).children().eq(0).addClass(on);
+        });
+        $(tabTit).children().click(function () {
+            $(this).addClass(on).siblings().removeClass(on);
+            var index = $(tabTit).children().index(this);
+            $(tabCon).children().eq(index).show().siblings().hide();
+        });
+    }
+</script>
