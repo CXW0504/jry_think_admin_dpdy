@@ -1,0 +1,112 @@
+<div class="panel admin-panel" id="listform">
+    <div class="panel-head" id="add"><strong><span class="icon-save"></span>&nbsp;登录日志详情信息&nbsp;&nbsp;&nbsp;<a href="javascript:history.go(-1)">返回上一页面</a></strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户名</label>
+                </div>
+                <div class="field">
+                    {$l_info.user.username}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户电话</label>
+                </div>
+                <div class="field">
+                    {$l_info.user.phone}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户邮箱</label>
+                </div>
+                <div class="field">
+                    {$l_info.user.email}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>添加该用户的时间</label>
+                </div>
+                <div class="field">
+                    {$l_info.user.ad_time|date="Y-m-d H:i:s",###}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户性别</label>
+                </div>
+                <div class="field">
+                    {$l_info.user_info.sex|user_sex=###}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录用户生日</label>
+                </div>
+                <div class="field">
+                    {$l_info.user_info.birthdy}
+                </div>
+            </div>
+        </form>
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>用户系统</label>
+                </div>
+                <div class="field">
+                    {$l_info.system}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>用户浏览器</label>
+                </div>
+                <div class="field">
+                    {$l_info.browser}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录地址</label>
+                </div>
+                <div class="field">
+                    {$l_info.ip_city}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录时间</label>
+                </div>
+                <div class="field">
+                    {$l_info.ad_time|date="Y-m-d H:i:s",###}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录详情</label>
+                </div>
+                <div class="field">
+                    {$l_info.user_agent}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>登录IP</label>
+                </div>
+                <div class="field">
+                    {$l_info.ad_ip}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .field{line-height:34px;}
+    .form-x{width:45%;float:left;padding-left:3%}
+    .form-x .form-group .label{width:15%}
+    .form-x .form-group .label:first-child{border-right:1px solid #ccc;}
+    .form-x .form-group .field{padding-left:8px;}
+</style>
