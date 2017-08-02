@@ -123,7 +123,6 @@ return array(
             'save_apis' => '更新项目',
             'del_apis' => '删除项目',
             'list_apis' => '项目接口列表',
-            'list_apis_download' => '导出项目接口',
             'save_list_apis' => '更新接口',
             'del_list_apis' => '删除接口',
             'add_list_apis' => '添加接口',
@@ -141,7 +140,10 @@ return array(
          'class' => 'icon-save',
          'content' => array(
              'login' => '后台登录日志',
+             'log_out' => '后台退出日志',
          ),
-         'child' => array(),
+         'child' => array(
+             'view_log_info_login' => '后台日志详情查看',
+         ),
      ),
 );

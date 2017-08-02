@@ -24,7 +24,7 @@ class LogController extends CommonController{
      * @adtime 2017-08-01 18:02:40
      */
     public function loginAction(){
-        $where = array();
+        $where = array('user_type' => 1);// 设置只检索登录日志
         $log = new UserLogModel();
         $user = new User_allModel();
         if(I('get.keywords')){
@@ -43,13 +43,13 @@ class LogController extends CommonController{
             if(empty($ids)){
                 $ids = array(0);
             }
-            $where = array(
+            $where[] = array(
                 'uid' => array('in',$ids),
                 'ip_city|ad_ip' => array('like',$wheres,'OR'),
                 '_logic' => 'or',
             );
         }
-        $count = $log->where($where)->cache(TRUE)->getCount();
+        $count = $log->where($where)->getCount();
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -57,7 +57,7 @@ class LogController extends CommonController{
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $list = $log->where($where)->cache(TRUE)->getList($page->firstRow, $page->listRows);
+        $list = $log->where($where)->getList($page->firstRow, $page->listRows);
         foreach($list as $k => $v){
             $list[$k]['user_info'] = $user->where(array('id'=>$v['uid']))->find();
         }
@@ -65,8 +65,8 @@ class LogController extends CommonController{
             'count' => $count,
             'list' => $list,
             'page' => $page->show(),
+            'title' => '登录日志',
         ))->display();
-        return $this->display();
     }
     
     /**
@@ -87,5 +87,51 @@ class LogController extends CommonController{
         $info['user_info'] = $user_info->where(array('id'=>$info['user']['id']))->find();
         $this->assign('l_info',$info);
         return $this->display();
+    }
+    
+    public function log_outAction(){
+        $where = array('user_type' => 4);// 设置只检索登录日志
+        $log = new UserLogModel();
+        $user = new User_allModel();
+        if(I('get.keywords')){
+            $ids = array();
+            $wheres = array();
+            foreach(explode(' ', I('get.keywords')) as $v){
+                $wheres[] = '%'.$v.'%';
+            }
+            $select = $user->where(array(
+                'username|phone|email' => array('like',$wheres,'OR'),
+            ))->select();
+            foreach($select as $v){
+                $ids[] = $v['id'];
+            }
+            // 如果没查询出来该用户，讲用户设置为0，防止出现SQL错误
+            if(empty($ids)){
+                $ids = array(0);
+            }
+            $where[] = array(
+                'uid' => array('in',$ids),
+                'ip_city|ad_ip' => array('like',$wheres,'OR'),
+                '_logic' => 'or',
+            );
+        }
+        $count = $log->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $log->where($where)->getList($page->firstRow, $page->listRows);
+        foreach($list as $k => $v){
+            $list[$k]['user_info'] = $user->where(array('id'=>$v['uid']))->find();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+            'title' => '退出日志',
+        ))->display('login');
     }
 }
