@@ -72,3 +72,59 @@ function phont_view_type($type = 1, $phone = '') {
             break;
     }
 }
+
+/**
+ * 获取某个时间的周时间段
+ * 
+ * @param string $times strtotime的时间参数
+ * @return array 获取到的时间段区间。[0]开始时间[1]结束时间
+ * @author xiaoyutab<xiaoyutab@qq.com>
+ * @version v1.0.0
+ * @copyright (c) 2017, xiaoyutab
+ * @adtime 2017-08-03 11:05:10
+ */
+function get_week_time($times = 'now'){
+    $tiems = strtotime($times);
+    return array(
+        date('Y-m-d',strtotime(date('Y-m-d', $tiems))-date('w',strtotime(date('Y-m-d', $tiems))) * 86400),
+        date('Y-m-d',strtotime(date('Y-m-d', $tiems))+ ( 6 - date('w',strtotime(date('Y-m-d', $tiems)))) * 86400)
+    );
+}
+
+/**
+ * 关键词突出显示
+ * 
+ * @param string $get 要搜索的关键词，如果是多个可以用空格分开
+ * @param string $finds 从哪里面开始替换
+ * @param string $color 突出的背景色RPG的16进制值
+ * @return string 替换后的字符串
+ * @version v1.0.0
+ * @copyright (c) 2017, xiaoyutab
+ * @author xiaoyutab<xiaoyutab@qq.com>
+ * @adtime 2017-08-01 19:21:41
+ */
+function replace_keywords($get = '',$finds = '',$color = '0f3'){
+    $ext = explode(' ', $get);
+    foreach ($ext as $v){
+        $finds = str_replace($v, '<span style="background:#'.$color.'">'.$v.'</span>', $finds);
+    }
+    return $finds;
+}
+
+/**
+ * 获取用户性别
+ * 
+ * @param number $sex 用户性别信息
+ * @return string 获取到的性别信息
+ * @version v1.0.0
+ * @copyright (c) 2017, xiaoyutab
+ * @author xiaoyutab<xiaoyutab@qq.com>
+ * @adtime 2017-08-01 19:21:45
+ */
+function user_sex($sex = 0){
+    $arr = array('保密','男','女');
+    if(empty($arr[$sex])){
+        return $arr[0];
+    }
+    return $arr[$sex];
+}
