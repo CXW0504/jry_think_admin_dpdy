@@ -9,6 +9,8 @@ use Admin\Model\LoanInsuranceModel;
 use Think\Page;
 use Admin\Model\BannerModel;
 use Admin\Model\FileModel;
+use Admin\Model\UserOfficeModel;
+use Admin\Model\UserSchoolModel;
 
 /**
  * 系统管理模块控制器
@@ -763,5 +765,176 @@ class SystemController extends CommonController {
             return $this->success('更新成功',U('banner_list'));
         }
         return $this->error('修改失败，可能未更改条目信息');
+    }
+    
+    /**
+     * 用户职位管理详情
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 11:24:55
+     */
+    public function user_officeAction(){
+        $user_office = new UserOfficeModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array('office_name' => array('like',$wheres,'OR'));
+        $count = $user_office->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $user_office->where($where)->getList($page->firstRow, $page->listRows,FALSE,'`fid` ASC,`ad_time` DESC,`id` DESC');
+        foreach($list as $k => $v){
+            $fids = $user_office->where(array('id'=>$v['fid']))->cache(TRUE)->find();
+            $list[$k]['fid_name'] = $fids['office_name']?$fids['office_name']:'--';
+            $list[$k]['count_office'] = $user_office->where(array('fid'=>$v['id']))->getCount();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加用户职位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 12:39:32
+     */
+    public function user_office_addAction(){
+        $user_office = new UserOfficeModel();
+        if(!I('post.')){
+            $user_office_list = $user_office->get_user_office_list();
+            $this->assign('user_office_list',$user_office_list);
+            return $this->display();
+        }
+        if($user_office->create_user_office_data(I('post.fid'),I('post.office_name'))){
+            return $this->success('添加成功',U('user_office'));
+        }
+        return $this->error('添加失败');
+    }
+    
+    /**
+     * 删除用户职位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 12:51:45
+     */
+    public function user_office_delAction(){
+        $user_office = new UserOfficeModel();
+        $id = I('get.id');
+        if($id < 0){
+            return $this->error('参数错误');
+        }
+        if($user_office->where(array('fid'=>$id))->getCount() > 0){
+            return $this->error('该职位下子职位不为空');
+        }
+        if($user_office->delete_user_office(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改用户职位操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 13:19:32
+     */
+    public function user_office_saveAction(){
+        $user_office = new UserOfficeModel();
+        if(!I('post.')){
+            $user_office_info = $user_office->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+            if(empty($user_office_info)){
+                return $this->error('参数错误');
+            }
+            $list = $user_office->get_user_office_list($fid);
+            unset($list[I('get.id')]);
+            $this->assign('user_office_list',$list)->assign('u_info',$user_office_info);
+            return $this->display();
+        }
+        if($user_office->save_user_office(I('get.id'),I('post.fid'),I('post.office_name'))){
+            return $this->success('更新成功',U('user_office'));
+        }
+        return $this->error('更新失败');
+    }
+    
+    /**
+     * 用户大学学校管理详情
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 13:53:28
+     */
+    public function user_schoolAction(){
+        $user_office = new UserSchoolModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'fid' => 0,
+            'name' => array('like',$wheres,'OR')
+        );
+        $count = $user_office->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $user_office->where($where)->getList($page->firstRow, $page->listRows);
+        foreach($list as $k => $v){
+            $fids = $user_office->where(array('id'=>$v['fid']))->cache(TRUE)->find();
+            $list[$k]['fid_name'] = $fids['office_name']?$fids['office_name']:'--';
+            $list[$k]['count_office'] = $user_office->where(array('fid'=>$v['id']))->getCount();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加用户学区信息
+     *      添加学校所在的省市
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 14:00:57
+     */
+    public function user_school_addAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $user_school = new UserSchoolModel();
+        if($user_school->create_user_office_data(I('post.office_name'))){
+            return $this->success('添加成功',U('user_school'));
+        }
+        return $this->error('添加失败');
     }
 }

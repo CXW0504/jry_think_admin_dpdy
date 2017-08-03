@@ -1,0 +1,56 @@
+<div class="panel admin-panel" id="listform">
+    <div class="panel-head"><strong class="icon-cogs"> 大学地区管理(省)</strong> </div>
+    <div class="padding border-bottom">
+        <ul class="search" style="padding-left:10px;">
+            <li> <a class="button border-main" href="{:U('user_school_add')}"> 添加省市</a> </li>
+            <li>搜索：</li>
+            <li>
+                <form method="get" >
+                    <input type="hidden" name='s' value="<?php echo MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;?>"/>
+                    <input type="text" placeholder="请输入省市名称" name="keywords" class="input" value="{:I('get.keywords')}" style="width:250px; line-height:17px;display:inline-block" />
+                    <input type="submit" class="button border-main icon-search" value="搜索"/>
+                </form>
+            </li>
+            <li>
+                <i>共查询出了 （{$count}） 条</i>
+            </li>
+        </ul>
+    </div>
+    <table class="table table-hover text-center">
+        <tr>
+            <th width="100" style="text-align:left; padding-left:20px;">ID</th>
+            <th>省市名称</th>
+            <th>大学数量</th>
+            <th width="15%">添加时间</th>
+            <th width="20%">操作</th>
+        </tr>
+        <foreach name="list" item="v">
+            <tr>
+                <td style="text-align:left; padding-left:20px;">{$v.id}</td>
+                <td>{$v.name|replace_keywords=I('get.keywords'),###}</td>
+                <td>{$v.count_office}</td>
+                <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
+                <td>
+                    <div class="button-group">
+                        <a class="button border-main" href="{:U('user_school_save',array('id'=>$v['id']))}">修改</a> 
+                        <a class="button border-green" href="{:U('user_school_list',array('id'=>$v['id']))}">大学列表</a>
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('user_school_del',array('id'=>$v['id']))}')">删除</a>
+                    </div>
+                </td>
+            </tr>
+        </foreach>
+        <tr>
+            <td colspan="7"><div class="pagelist"> 
+                    {$page}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    function del(url) {
+        if (confirm("您确定要删除吗?")) {
+            window.location = url;
+        }
+    }
+</script>

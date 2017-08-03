@@ -102,5 +102,4 @@ class DataController extends CommonController {
         );
         $this->exportExcel($xlsName, $xlsCell, $xlsData);
     }
-
 }

@@ -58,6 +58,8 @@ return array(
             'loan_customer_marriage_list' => '借款人婚姻情况管理',
             'loan_hous_type_list' => '房产类型管理',
             'loan_insurance_list' => '抵押权人管理',
+            'user_office' => '用户职位管理',
+            'user_school' => '用户大学管理',
         ),
         'child' => array(
             'refresh_all' => '清除本网站全部缓存',
@@ -82,6 +84,13 @@ return array(
             'loan_insurance_add' => '添加抵押权人',
             'loan_insurance_save' => '修改抵押权人',
             'loan_insurance_del' => '删除抵押权人',
+            'user_office_add' => '添加用户职位',
+            'user_office_save' => '修改用户职位',
+            'user_office_del' => '删除用户职位',
+            'user_school_add' => '添加用户大学省市',
+            'user_school_save' => '修改用户大学省市',
+            'user_school_del' => '删除用户大学省市',
+            'user_school_list' => '省市内的大学列表',
         ),
     ),
     'User' => array(
