@@ -906,8 +906,6 @@ class SystemController extends CommonController {
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         $list = $user_office->where($where)->getList($page->firstRow, $page->listRows);
         foreach($list as $k => $v){
-            $fids = $user_office->where(array('id'=>$v['fid']))->cache(TRUE)->find();
-            $list[$k]['fid_name'] = $fids['office_name']?$fids['office_name']:'--';
             $list[$k]['count_office'] = $user_office->where(array('fid'=>$v['id']))->getCount();
         }
         return $this->assign(array(
@@ -936,5 +934,160 @@ class SystemController extends CommonController {
             return $this->success('添加成功',U('user_school'));
         }
         return $this->error('添加失败');
+    }
+    
+    /**
+     * 修改用户学校地区操作
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 19:01:04
+     */
+    public function user_school_saveAction(){
+        $user_school = new UserSchoolModel();
+        if(!I('post.')){
+            $user_school_info = $user_school->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+            if(empty($user_school_info)){
+                return $this->error('参数错误');
+            }
+            $this->assign('u_info',$user_school_info);
+            return $this->display();
+        }
+        if($user_school->save_user_school_city(I('get.id'),I('post.office_name'))){
+            return $this->success('更新成功',U('user_school'));
+        }
+        return $this->error('更新失败');
+    }
+    
+    /**
+     * 删除用户学校地区信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 19:08:59
+     */
+    public function user_school_delAction(){
+        $user_school = new UserSchoolModel();
+        $id = I('get.id');
+        if($id < 0){
+            return $this->error('参数错误');
+        }
+        if($user_school->delete_user_school_city(I('get.id'))){
+            return $this->success('删除成功');
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 用户大学学校列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-03 19:12:59
+     */
+    public function user_school_listAction(){
+        $user_office = new UserSchoolModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'fid' => I('get.id',1,'intval'),
+            'name' => array('like',$wheres,'OR')
+        );
+        $count = $user_office->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $user_office->where($where)->getList($page->firstRow, $page->listRows);
+        $f_city_name = $user_office->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'city_name' => $f_city_name['name'],
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加本校区的学校信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-04 14:13:17
+     */
+    public function user_school_list_addAction(){
+        $user_school = new UserSchoolModel();
+        if(I('post.')){
+            if($user_school->create_user_school_name(I('get.fid'),I('post.name'))){
+                return $this->success('添加成功',U('user_school_list',array('id'=>I('get.fid'))));
+            }
+            return $this->error('添加失败');
+        }
+        $info = $user_school->where(array('id'=>I('get.fid')))->find();
+        if(empty($info)){
+            return $this->error('参数错误');
+        }
+        return $this->assign('city_name',$info['name'])->display();
+    }
+    
+    /**
+     * 修改用户学校信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-04 15:52:24
+     */
+    public function user_school_list_saveAction(){
+        $user_school = new UserSchoolModel();
+        $info = $user_school->where(array('id'=>I('get.fid')))->find();
+        $s_info = $user_school->where(array('id'=>I('get.id')))->find();
+        if(empty($info) || empty($s_info)){
+            return $this->error('参数错误');
+        }
+        if(I('post.')){
+            if($user_school->update_user_school_name(I('get.id'),I('post.name'))){
+                return $this->success('更新成功',U('user_school_list',array('id'=>I('get.fid'))));
+            }
+            return $this->error('更新失败');
+        }
+        return $this->assign('city_name',$info['name'])
+                ->assign('school_name',$s_info['name'])
+                ->display('user_school_list_add');
+    }
+    
+    /**
+     * 删除用户学校信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-04 15:52:32
+     */
+    public function user_school_list_delAction(){
+        $user_school = new UserSchoolModel();
+        $id = I('get.id');
+        if($id < 0){
+            return $this->error('参数错误');
+        }
+        if($user_school->delete_user_school_city(I('get.id'))){
+            return $this->success('删除成功',U('user_school_list',array('id'=>I('get.fid'))));
+        }
+        return $this->error('删除失败');
     }
 }

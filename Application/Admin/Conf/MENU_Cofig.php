@@ -91,6 +91,9 @@ return array(
             'user_school_save' => '修改用户大学省市',
             'user_school_del' => '删除用户大学省市',
             'user_school_list' => '省市内的大学列表',
+            'user_school_list_add' => '添加省市内的大学',
+            'user_school_list_save' => '修改省市内的大学',
+            'user_school_list_del' => '删除省市内的大学',
         ),
     ),
     'User' => array(
