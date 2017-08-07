@@ -107,6 +107,15 @@ function replace_keywords($get = '',$finds = '',$color = '0f3'){
     $ext = explode(' ', $get);
     foreach ($ext as $v){
         $finds = str_replace($v, '<span style="background:#'.$color.'">'.$v.'</span>', $finds);
+        // 判断，如果传入的get参数是数字而且是带-的区间数字，则匹配需要替换的数字是否在这个区间内
+        if(intval($v) > 0){
+            $lists = explode('-', $v);
+            if(count($lists) > 1){
+                if($finds >= $lists[0] && end($lists) > $finds){
+                    $finds = '<span style="background:#'.$color.'">'.$finds.'</span>';
+                }
+            }
+        }
     }
     return $finds;
 }
