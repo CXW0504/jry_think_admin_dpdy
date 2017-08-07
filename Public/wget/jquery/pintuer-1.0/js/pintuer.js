@@ -133,7 +133,7 @@ $(function(){
 			case "double":return /^[-\+]?\d+(\.\d+)?$/.test($pintu);break;
 			case "plusdouble":return /^[+]?\d+(\.\d+)?$/.test($pintu);break;
 			case "english":return /^[A-Za-z]+$/.test($pintu);break;
-			case "username":return /^[a-z]\w{3,}$/i.test($pintu);break;
+			case "username":return /^[a-zA-Z]+[a-zA-Z0-9]\w{2,}$/i.test($pintu);break;
 			case "mobile":return /^((\(\d{3}\))|(\d{3}\-))?13[0-9]\d{8}?$|15[89]\d{8}?$|170\d{8}?$|147\d{8}?$/.test($pintu);break;
 			case "phone":return /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/.test($pintu);break;
 			case "tel":return /^((\(\d{3}\))|(\d{3}\-))?13[0-9]\d{8}?$|15[89]\d{8}?$|170\d{8}?$|147\d{8}?$/.test($pintu) || /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/.test($pintu);break;

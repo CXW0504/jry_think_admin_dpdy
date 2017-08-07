@@ -2,45 +2,45 @@
 
 // 菜单列表
 return array(
-    'Loan' => array(
-        'name' => '订单管理',
-        'class' => 'icon-file',
-        'content' => array(
-            'distribution' => '分配订单',
-            'handle' => '处理中订单',
-            'pending' => '待处理订单',
-            'complete' => '审核完成订单',
-            'file' => '已完成订单',
-            'termination' => '已终止订单',
-        ),
-        'child' => array(
-            'distribution_add' => '发起新任务',
-            'distribution_view' => '查看任务',
-            'distribution_update' => '修改任务',
-        ),
-    ),
-    'Word' => array(
-        'name' => '考勤管理',
-        'class' => 'icon-clock-o',
-        'content' => array(
-            'timecard' => '考勤列表',
-            'setting' => '考勤规则配置',
-        ),
-        'child' => array(
-            'add_timecard' => '添加考勤规则',
-            'save_timecard' => '修改考勤规则',
-            'del_timecard' => '删除考勤规则',
-            'out_timecard' => '导出考勤规则',
-            'help_timecard_coordinate' => '经纬度坐标获取帮助',
-        ),
-    ),
+//    'Loan' => array(
+//        'name' => '订单管理',
+//        'class' => 'icon-file',
+//        'content' => array(
+//            'distribution' => '分配订单',
+//            'handle' => '处理中订单',
+//            'pending' => '待处理订单',
+//            'complete' => '审核完成订单',
+//            'file' => '已完成订单',
+//            'termination' => '已终止订单',
+//        ),
+//        'child' => array(
+//            'distribution_add' => '发起新任务',
+//            'distribution_view' => '查看任务',
+//            'distribution_update' => '修改任务',
+//        ),
+//    ),
+//    'Word' => array(
+//        'name' => '考勤管理',
+//        'class' => 'icon-clock-o',
+//        'content' => array(
+//            'timecard' => '考勤列表',
+//            'setting' => '考勤规则配置',
+//        ),
+//        'child' => array(
+//            'add_timecard' => '添加考勤规则',
+//            'save_timecard' => '修改考勤规则',
+//            'del_timecard' => '删除考勤规则',
+//            'out_timecard' => '导出考勤规则',
+//            'help_timecard_coordinate' => '经纬度坐标获取帮助',
+//        ),
+//    ),
     'Data' => array(
         'name' => '数据管理',
         'class' => 'icon-bar-chart-o',
         'content' => array(
-            'analysis' => '订单数据分析',
+//            'analysis' => '订单数据分析',
             'mcch_data_list' => 'mcch财务计算器',
-            'other_data_list' => 'other费用计算器',
+//            'other_data_list' => 'other费用计算器',
         ),
         'child' => array(
             'mcch_data_list_download' => '导出mcch财务计算器还款计划表',
@@ -129,6 +129,7 @@ return array(
         'content' => array(
             'apis' => '接口文档',
             'parameter' => '参数类型',
+            'article_type' => '文章栏目列表',
         ),
         'child' => array(
             'add_apis' => '新建项目',
@@ -144,6 +145,10 @@ return array(
             'add_project_parameter' => '添加接口参数',
             'save_project_parameter' => '修改接口参数',
             'del_project_parameter' => '删除接口参数',
+            'project_error_code' => '错误代码列表',
+            'project_error_code_add' => '添加错误代码',
+            'project_error_code_save' => '修改错误代码',
+            'project_error_code_del' => '删除错误代码',
         ),
     ),
     // 暂时去掉日志浏览、检索功能，后期再进行添加
