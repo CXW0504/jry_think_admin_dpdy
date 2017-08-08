@@ -7,6 +7,7 @@ use Home\Model\ProjectModel;
 use Home\Model\ProjectApiModel;
 use Home\Model\ProjectApiParameterModel;
 use Home\Model\ProjectParameterTypeModel;
+use Home\Model\ProjectErrorCodeModel;
 
 /**
  * 文档控制器模型
@@ -40,7 +41,8 @@ class DocController extends PublicController {
             exit;
         }
         $info['logo'] = $info['logo']?$info['logo']:'./icon.png';
-        $config = $project->get_error_config(I('get.id',0,'intval'));
+        $err_code = new ProjectErrorCodeModel();
+        $error_code = $err_code->get_error_code_list(I('get.id',0,'intval'));
         // 获取应用列表
         $apis = new ProjectApiModel();
         $list = $apis->where(array('p_id'=>I('get.id',0,'intval')))->getList(0,9999);
@@ -63,7 +65,7 @@ class DocController extends PublicController {
         $ProjectParameterType_2 = $ProjectParameterTypeModel->get_type(2);
         $this->assign(array(
             'project' => $info,
-            'error_code' => $config,
+            'error_code' => $error_code,
             'api_list' => $list,
             'https' => array(1=>'GET',2=>'POST'),
             'request' => array(1=>'JSON','XML','JSONP'),
