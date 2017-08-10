@@ -50,8 +50,8 @@ function pass($password = '', $rand_code = 'http://xiaoyutab.cn') {
  * @adtime 2017-07-14 12:51:45
  */
 function phont_view_type($type = 1, $phone = '') {
-    if(strlen($phone) != 11){
-        $phone = substr($phone,-11);
+    if (strlen($phone) != 11) {
+        $phone = substr($phone, -11);
     }
     switch ($type) {
         case 1:
@@ -64,11 +64,11 @@ function phont_view_type($type = 1, $phone = '') {
             break;
         case 4:
             // 只显示后四位
-            return '*******'.substr($phone, -4);
+            return '*******' . substr($phone, -4);
             break;
         default:
             // 中间隐藏
-            return substr($phone,0,3).'****'.substr($phone,-4);
+            return substr($phone, 0, 3) . '****' . substr($phone, -4);
             break;
     }
 }
@@ -83,11 +83,11 @@ function phont_view_type($type = 1, $phone = '') {
  * @copyright (c) 2017, xiaoyutab
  * @adtime 2017-08-03 11:05:10
  */
-function get_week_time($times = 'now'){
+function get_week_time($times = 'now') {
     $tiems = strtotime($times);
     return array(
-        date('Y-m-d',strtotime(date('Y-m-d', $tiems))-date('w',strtotime(date('Y-m-d', $tiems))) * 86400),
-        date('Y-m-d',strtotime(date('Y-m-d', $tiems))+ ( 6 - date('w',strtotime(date('Y-m-d', $tiems)))) * 86400)
+        date('Y-m-d', strtotime(date('Y-m-d', $tiems)) - date('w', strtotime(date('Y-m-d', $tiems))) * 86400),
+        date('Y-m-d', strtotime(date('Y-m-d', $tiems)) + ( 6 - date('w', strtotime(date('Y-m-d', $tiems)))) * 86400)
     );
 }
 
@@ -103,16 +103,16 @@ function get_week_time($times = 'now'){
  * @author xiaoyutab<xiaoyutab@qq.com>
  * @adtime 2017-08-01 19:21:41
  */
-function replace_keywords($get = '',$finds = '',$color = '0f3'){
+function replace_keywords($get = '', $finds = '', $color = '0f3') {
     $ext = explode(' ', $get);
-    foreach ($ext as $v){
-        $finds = str_replace($v, '<span style="background:#'.$color.'">'.$v.'</span>', $finds);
+    foreach ($ext as $v) {
+        $finds = str_replace($v, '<span style="background:#' . $color . '">' . $v . '</span>', $finds);
         // 判断，如果传入的get参数是数字而且是带-的区间数字，则匹配需要替换的数字是否在这个区间内
-        if(intval($v) > 0){
+        if (intval($v) > 0) {
             $lists = explode('-', $v);
-            if(count($lists) > 1){
-                if($finds >= $lists[0] && end($lists) > $finds){
-                    $finds = '<span style="background:#'.$color.'">'.$finds.'</span>';
+            if (count($lists) > 1) {
+                if ($finds >= $lists[0] && end($lists) > $finds) {
+                    $finds = '<span style="background:#' . $color . '">' . $finds . '</span>';
                 }
             }
         }
@@ -130,10 +130,27 @@ function replace_keywords($get = '',$finds = '',$color = '0f3'){
  * @author xiaoyutab<xiaoyutab@qq.com>
  * @adtime 2017-08-01 19:21:45
  */
-function user_sex($sex = 0){
-    $arr = array('保密','男','女');
-    if(empty($arr[$sex])){
+function user_sex($sex = 0) {
+    $arr = array('保密', '男', '女');
+    if (empty($arr[$sex])) {
         return $arr[0];
     }
     return $arr[$sex];
+}
+
+/**
+ * 文件大小单位转换GB MB KB  
+ * 
+ * @param number $size 文件大小信息
+ * @return string 转换后的大小信息
+ * @version v1.0.0
+ * @copyright (c) 2017, xiaoyutab
+ * @author xiaoyutab<xiaoyutab@qq.com>
+ * @adtime 2017-08-01 19:21:45
+ */
+function size_conversion($size = 0) {
+    $units = array(' B', ' KB', ' MB', ' GB', ' TB');
+    for ($i = 0; $size >= 1024 && $i < 4; $i++)
+        $size /= 1024;
+    return round($size, 2) . $units[$i];
 }

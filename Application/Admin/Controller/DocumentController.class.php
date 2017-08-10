@@ -8,6 +8,8 @@ use Admin\Model\ProjectApiModel;
 use Admin\Model\ProjectApiParameterModel;
 use Org\Office\Word\PHPWord;
 use Admin\Model\ProjectErrorCodeModel;
+use Admin\Model\TagModel;
+use Admin\Model\FileModel;
 
 /**
  * 网站文档管理操作控制器
@@ -499,5 +501,163 @@ class DocumentController extends CommonController {
             return $this->success('删除成功',U('project_error_code',array('id'=>I('get.pid'))));
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 标签列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-09 14:28:11
+     */
+    public function tag_listAction(){
+        $tag = new TagModel();
+        $where = array();
+        if(I('get.keywords')){
+            $lists = explode(' ', I('get.keywords'));
+            $where_s = array();
+            foreach($lists as $v){
+                $where_s[] = '%'.$v.'%';
+            }
+            $where['name'] = array('like',$where_s,'or');
+        }
+        $count = $tag->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $tag->where($where)->getList($page->firstRow, $page->listRows);
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'type_list' => array(1=>'文章','小说','新闻','图片','评论','用户','附件'),
+            'open_type' => array(1=>'隐藏','显示'),
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加标签信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-09 14:33:26
+     */
+    public function tag_addAction(){
+        if(!I('post.')){
+            $this->assign('type_list',array(1=>'文章','小说','新闻','图片','评论','用户','附件'));
+            return $this->display();
+        }
+        $apis = new TagModel();
+        if($apis->create_info(I('post.name'), I('post.open_type'), I('post.type'))){
+            return $this->success('添加成功',U('tag_list'));
+        }
+        return $this->error('系统错误');
+    }
+    
+    
+    /**
+     * 删除标签信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-10 18:14:11
+     */
+    public function tag_delAction(){
+        $tag = new TagModel();
+        if($tag->delete_info(I('get.id'))){
+            return $this->success('删除成功',U('tag_list'));
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改标签信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-10 18:17:15
+     */
+    public function tag_saveAction(){
+        $tag = new TagModel();
+        $info = $tag->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        if(!I('post.')){
+            return $this->assign(array(
+                't_info' => $info,
+                'type_list' => array(1=>'文章','小说','新闻','图片','评论','用户','附件'),
+                'open_type' => array(1=>'隐藏','显示'),
+            ))->display();
+        }
+        if($tag->save_info(I('post.'),$info)){
+            return $this->success('修改成功',U('tag_list'));
+        }
+        return $this->error('参数无变化或系统错误');
+    }
+    
+    /**
+     * 图片列表信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-10 18:26:01
+     */
+    public function images_listAction(){
+        $this->wget('viewer');
+        $file = new FileModel();
+        $where = array();
+        if(I('get.size_min')){
+            $where[] = array('size'=>array('egt',I('get.size_min',0,'intval') * 1024));
+        }
+        if(I('get.size_max')){
+            $where[] = array('size'=>array('elt',I('get.size_max',0,'intval') * 1024));
+        }
+        $count = $file->where($where)->getCount();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $file->where($where)->getList($page->firstRow, $page->listRows);
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加图片信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-10 18:26:01
+     */
+    public function images_addAction(){
+        if($_FILES['file']['name']){
+            $file = new FileModel();
+            $fid = $file->upload_file();
+            if($fid){
+                return $this->success('添加成功',U('images_list'));
+            }
+            return $this->error('系统错误');
+        }
+        return $this->display();
     }
 }

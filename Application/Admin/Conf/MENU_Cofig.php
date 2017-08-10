@@ -129,7 +129,8 @@ return array(
         'content' => array(
             'apis' => '接口文档',
             'parameter' => '参数类型',
-            'article_type' => '文章栏目列表',
+            'tag_list' => '标签列表',
+            'images_list' => '图片列表',
         ),
         'child' => array(
             'add_apis' => '新建项目',
@@ -149,6 +150,10 @@ return array(
             'project_error_code_add' => '添加错误代码',
             'project_error_code_save' => '修改错误代码',
             'project_error_code_del' => '删除错误代码',
+            'tag_add' => '添加标签',
+            'tag_save' => '修改标签',
+            'tag_del' => '删除标签',
+            'images_add' => '添加图片',
         ),
     ),
     // 暂时去掉日志浏览、检索功能，后期再进行添加
