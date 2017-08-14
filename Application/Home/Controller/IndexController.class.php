@@ -168,4 +168,45 @@ class IndexController extends \Common\Controller\PublicController{
         // load the file to send:  
         readfile($temp_runtime);
     }
+    
+    /**
+     * 导出PDF文件
+     */
+    public function getPdfAction(){
+        define('K_PATH_IMAGES', './');
+        $pdf = new \Org\Office\PDF\tcpdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetCreator('xiaoyutab.cn');
+        $pdf->SetAuthor('于茂敬');
+
+        // 设置页眉和页脚信息 
+        $pdf->SetHeaderData('icon.png', 10, 'xiaoyutab.cn', '始终相信Linux系统可以解决网络上99%的问题',  
+              array(0,64,255), array(0,64,128));
+        $pdf->setFooterData(array(0,64,0), array(0,64,128)); 
+
+        // 设置页眉和页脚字体 
+        $pdf->setHeaderFont(Array('cid0ct', '', '10')); 
+        $pdf->setFooterFont(Array('helvetica', '', '8')); 
+
+        // 设置默认等宽字体 
+        $pdf->SetDefaultMonospacedFont('courier'); 
+
+        // 设置间距 
+        $pdf->SetMargins(15, 27, 15); 
+        $pdf->SetHeaderMargin(5); 
+        $pdf->SetFooterMargin(10); 
+        // 设置分页 
+        $pdf->SetAutoPageBreak(TRUE, 25); 
+        // set image scale factor 
+        $pdf->setImageScale(1.25); 
+        // set default font subsetting mode 
+        $pdf->setFontSubsetting(true); 
+        //设置字体 
+        $pdf->SetFont('stsongstdlight', '', 14); 
+        $pdf->AddPage(); 
+        $pdf->Write(0,'欢迎来到 xiaoyutab.cn','', false, 'L', true, 0, false, false, 0); 
+        $pdf->Write(0,'欢迎来到 xiaoyutab.cn','', FALSE, 'L', true, 0, false, false, 0); 
+        $pdf->Write(0,'欢迎来到 xiaoyutab.cn','', false, 'L', true, 0, false, false, 0); 
+        //输出PDF
+        $pdf->Output('测试.pdf', 'I');
+    }
 }
