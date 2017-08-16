@@ -8,6 +8,7 @@ use Home\Model\ProjectApiModel;
 use Home\Model\ProjectApiParameterModel;
 use Home\Model\ProjectParameterTypeModel;
 use Home\Model\ProjectErrorCodeModel;
+use Home\Model\FileLinkModel;
 
 /**
  * 文档控制器模型
@@ -40,7 +41,8 @@ class DocController extends PublicController {
             echo '404 . Not Found';
             exit;
         }
-        $info['logo'] = $info['logo']?$info['logo']:'./icon.png';
+        $file_link = new FileLinkModel();
+        $info['logo'] = $file_link->get_file_info($info['id'], 'project', TRUE);
         $err_code = new ProjectErrorCodeModel();
         $error_code = $err_code->get_error_code_list(I('get.id',0,'intval'));
         // 获取应用列表

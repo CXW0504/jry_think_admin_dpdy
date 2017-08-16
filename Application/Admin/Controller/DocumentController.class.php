@@ -10,6 +10,7 @@ use Org\Office\Word\PHPWord;
 use Admin\Model\ProjectErrorCodeModel;
 use Admin\Model\TagModel;
 use Admin\Model\FileModel;
+use Admin\Model\FileLinkModel;
 
 /**
  * 网站文档管理操作控制器
@@ -80,7 +81,14 @@ class DocumentController extends CommonController {
             return $this->display();
         }
         $project = new ProjectModel();
-        if($project->create_info(I('post.'))){
+        $file = new FileModel();
+        $fid = $file->upload_file('file');
+        if($fid || $project->create_info(I('post.'))){
+            if($fid){
+                $p_id = $project->getLastInsID();// 获取项目编号
+                $file_link = new FileLinkModel();
+                $file_link->create_link($fid,$p_id,'project');
+            }
             return $this->success('添加成功',U('apis'));
         }
         return $this->error('添加失败');
@@ -186,12 +194,20 @@ class DocumentController extends CommonController {
      */
     public function save_apisAction(){
         $project = new ProjectModel();
+        $file_link = new FileLinkModel();
         $info = $project->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+        $info['images'] = $file_link->get_file_info($info['id'],'project',true);
         if(!I('post.')){
             $this->assign('l_info',$info);
             return $this->display('add_apis');
         }
-        if($project->update_info(I('get.id'),$info,I('post.'))){
+        $file = new FileModel();
+        $fid = $file->upload_file('file');
+        if($fid){
+            $p_id = $project->getLastInsID();// 获取项目编号
+            $file_link->create_link($fid,$info['id'],'project',true);
+        }
+        if($fid || $project->update_info(I('get.id'),$info,I('post.'))){
             return $this->success('修改成功',U('apis'));
         }
         return $this->error('修改失败');
