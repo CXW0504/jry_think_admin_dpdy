@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Model;
+use Admin\Model\UserLogModel;
 
 class UserModel extends \Common\Model\PdoModel {
 
@@ -153,22 +154,14 @@ class UserModel extends \Common\Model\PdoModel {
      * 
      * @return array
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.3
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 16:23:13
      */
     public function set_user_login_log() {
+        $log = new UserLogModel();
         $info = $this->get_user_info();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $ip = get_client_ip();
-        $temp_ip = new \Org\User\IpCity();
-        $city = $temp_ip->getCity($ip);
-        $sys = new \Org\User\System();
-        $brow = $sys->get_browser($user_agent, ',');
-        $system = $sys->get_system($user_agent);
-        $city || $city = '本地测试';
-        $sql = "INSERT INTO `dpdy_user_log` (`user_type`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) VALUE(1,?,UNIX_TIMESTAMP(),?,?,?,?,?)";
-        return $this->query($sql, array($info['id'], $ip, $brow, $system, $user_agent, $city));
+        return $log->set_log(1,'user',$info['id']);
     }
 
     /**
@@ -176,22 +169,14 @@ class UserModel extends \Common\Model\PdoModel {
      * 
      * @return array
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.3
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-06 16:23:13
      */
     public function set_user_logout_log() {
+        $log = new UserLogModel();
         $info = $this->get_user_info();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $ip = get_client_ip();
-        $temp_ip = new \Org\User\IpCity();
-        $city = $temp_ip->getCity($ip);
-        $sys = new \Org\User\System();
-        $brow = $sys->get_browser($user_agent, ',');
-        $system = $sys->get_system($user_agent);
-        $city || $city = '本地测试';
-        $sql = "INSERT INTO `dpdy_user_log` (`user_type`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) VALUE(4,?,UNIX_TIMESTAMP(),?,?,?,?,?)";
-        return $this->query($sql, array($info['id'], $ip, $brow, $system, $user_agent, $city));
+        return $log->set_log(4,'user',$info['id']);
     }
 
     /**
@@ -205,17 +190,8 @@ class UserModel extends \Common\Model\PdoModel {
      * @adtime 2017-07-09 14:53:24
      */
     public function set_user_insert_log($uid = 1) {
-        $info = $this->get_user_info();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $ip = get_client_ip();
-        $temp_ip = new \Org\User\IpCity();
-        $city = $temp_ip->getCity($ip);
-        $sys = new \Org\User\System();
-        $brow = $sys->get_browser($user_agent, ',');
-        $system = $sys->get_system($user_agent);
-        $city || $city = '本地测试';
-        $sql = "INSERT INTO `dpdy_user_log` (`user_type`,`old_key`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) VALUE(4,?,?,UNIX_TIMESTAMP(),?,?,?,?,?)";
-        return $this->query($sql, array($uid,$info['id'], $ip, $brow, $system, $user_agent, $city));
+        $log = new UserLogModel();
+        return $log->set_log(2,'user',$uid);
     }
 
     /**
@@ -435,17 +411,9 @@ class UserModel extends \Common\Model\PdoModel {
      * @adtime 2017-07-09 14:53:24
      */
     public function set_user_password_log($uid = 1) {
+        $log = new UserLogModel();
         $info = $this->get_user_info();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $ip = get_client_ip();
-        $temp_ip = new \Org\User\IpCity();
-        $city = $temp_ip->getCity($ip);
-        $sys = new \Org\User\System();
-        $brow = $sys->get_browser($user_agent, ',');
-        $system = $sys->get_system($user_agent);
-        $city || $city = '本地测试';
-        $sql = "INSERT INTO `dpdy_user_log` (`user_type`,`old_key`,`uid`,`ad_time`,`ad_ip`,`browser`,`system`,`user_agent`,`ip_city`) VALUE(5,?,?,UNIX_TIMESTAMP(),?,?,?,?,?)";
-        return $this->query($sql, array($uid,$info['id'], $ip, $brow, $system, $user_agent, $city));
+        return $log->set_log(5,'user',$uid);
     }
     
     /**

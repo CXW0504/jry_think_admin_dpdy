@@ -4,6 +4,7 @@ namespace Admin\Model;
 use Org\User\IpCity;
 use Org\User\System;
 use Admin\Model\UserModel;
+use Admin\Model\LogInfoModel;
 
 class LogModel extends \Common\Model\AllModel{
     /**
@@ -123,24 +124,25 @@ class LogModel extends \Common\Model\AllModel{
         }
         // 获取用户id
         $user = new UserModel();
+        $log_info = new LogInfoModel();
         $info = $user->get_user_info();
         $arr['uid'] = $info['id'];
         // 获取用户的HTTP_USER_AGENT标识
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $arr['user_agent'] = $user_agent;
+        $arr['user_agent'] = $log_info->get_id($user_agent);
         // 获取用户的IP地址及城市
         $ip = get_client_ip();
         $temp_ip = new \Org\User\IpCity();
         $city = $temp_ip->getCity($ip);
         $city || $city = '本地测试';
-        $arr['ad_ip'] = $ip;
-        $arr['ip_city'] = $city;
+        $arr['ad_ip'] = $log_info->get_id($ip);
+        $arr['ip_city'] = $log_info->get_id($city);
         // 获取用户的系统及浏览器版本信息
         $sys = new \Org\User\System();
         $brow = $sys->get_browser($user_agent, ',');
         $system = $sys->get_system($user_agent);
-        $arr['browser'] = $brow;
-        $arr['system'] = $system;
+        $arr['browser'] = $log_info->get_id($brow);
+        $arr['system'] = $log_info->get_id($system);
         $arr['ad_time'] = NOW_TIME;
         return $this->add($arr);
     }
