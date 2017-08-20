@@ -41,11 +41,15 @@ class System {
             preg_match("/Chrome\/([\d\.]+)/", $sys, $google);
             $exp[0] = "Chrome";
             $exp[1] = $google[1];  //获取google chrome的版本号
+        } elseif (stripos($sys, "Safari") > 0) {
+            preg_match("/Safari\/([\d\.]+)/", $sys, $safari);
+            $exp[0] = "Safari";
+            $exp[1] = $safari[1];  //获取Safari的版本号
         } elseif(stripos($sys,'rv:')>0 && stripos($sys,'Gecko')>0){
             preg_match("/rv:([\d\.]+)/", $sys, $IE);
             $exp[0] = "IE";
             $exp[1] = $IE[1];
-        }else {
+        } else {
             $exp[0] = "Unknown";
             $exp[1] = ""; 
         }
