@@ -1,3 +1,4 @@
+<?php $icons = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg>'; ?>
 <div class="panel admin-panel">
     <div class="panel-head" id="add"><strong><span class="icon-briefcase"></span>&nbsp;修改标签信息</strong></div>
     <div class="body-content">
@@ -18,7 +19,7 @@
                 <div class="field">
                     <div class="button-group radio">
                         <foreach name="open_type" item="v" key="k">
-                            <label class="button <?php if($k == $t_info['open_type']){echo 'active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <label class="button <?php if($k == $t_info['open_type']){echo 'active';} ?>"><span class="icon">{$icons}</span>
                                 <input name="open_type" value="{$k}"  type="radio" <?php if($k == $t_info['open_type']){echo 'checked';} ?>>{$v}
                             </label>
                         </foreach>
@@ -32,7 +33,7 @@
                 <div class="field">
                     <div class="button-group radio">
                         <foreach name="type_list" item="v" key="k">
-                            <label class="button <?php if($k == $t_info['type']){echo 'active';} ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <label class="button <?php if($k == $t_info['type']){echo 'active';} ?>"><span class="icon">{$icons}</span>
                                 <input name="type" value="{$k}"  type="radio" <?php if($k == $t_info['type']){echo 'checked';} ?>>{$v}
                             </label>
                         </foreach>
