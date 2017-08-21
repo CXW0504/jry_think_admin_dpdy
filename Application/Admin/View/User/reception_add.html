@@ -22,7 +22,7 @@
                     <label>登录用户名</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" value="{$g_info.username}" readonly="true" name="username" data-validate="required:登录用户名不能为空,username:登录用户名格式不正确" />
+                    <input type="text" class="input w50" value="{$g_info.username}" name="username" data-validate="required:登录用户名不能为空,username:登录用户名格式不正确" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                         <label class="button <?php if($g_info['type'] == '2'): ?> active<?php endif; ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
                             <input name="type" value="2"  type="radio" <?php if($g_info['type'] == '2'): ?> checked="checked"<?php endif; ?>>调评专员
                         </label>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div class="form-group">
