@@ -97,16 +97,22 @@ function get_week_time($times = 'now') {
  * @param string $get 要搜索的关键词，如果是多个可以用空格分开
  * @param string $finds 从哪里面开始替换
  * @param string $color 突出的背景色RPG的16进制值
+ * @param string $eng 是否以贪婪模式替换[不区分大小写]
  * @return string 替换后的字符串
- * @version v1.0.0
+ * @version v1.0.1
  * @copyright (c) 2017, xiaoyutab
  * @author xiaoyutab<xiaoyutab@qq.com>
  * @adtime 2017-08-01 19:21:41
  */
-function replace_keywords($get = '', $finds = '', $color = '0f3') {
+function replace_keywords($get = '', $finds = '', $color = '0f3',$eng = false) {
     $ext = explode(' ', $get);
     foreach ($ext as $v) {
         $finds = str_replace($v, '<span style="background:#' . $color . '">' . $v . '</span>', $finds);
+        if($eng){
+            // 将V转换成大写字母再次替换一遍
+            $v = strtoupper($v);
+            $finds = str_replace($v, '<span style="background:#' . $color . '">' . $v . '</span>', $finds);
+        }
         // 判断，如果传入的get参数是数字而且是带-的区间数字，则匹配需要替换的数字是否在这个区间内
         if (intval($v) > 0) {
             $lists = explode('-', $v);

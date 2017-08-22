@@ -60,6 +60,7 @@ return array(
             'loan_insurance_list' => '抵押权人管理',
             'user_office' => '用户职位管理',
             'user_school' => '用户大学管理',
+            'user_city' => '省市区管理',
         ),
         'child' => array(
             'refresh_all' => '清除本网站全部缓存',
@@ -94,6 +95,19 @@ return array(
             'user_school_list_add' => '添加省市内的大学',
             'user_school_list_save' => '修改省市内的大学',
             'user_school_list_del' => '删除省市内的大学',
+            'user_city_add' => '添加省级单位',
+            'user_city_save' => '修改省级单位',
+            'user_city_del' => '删除省级单位',
+            
+            'user_city_shi_add' => '添加市级单位',
+            'user_city_shi_save' => '修改市级单位',
+            'user_city_shi_del' => '删除市级单位',
+            'user_city_shi_list' => '市级单位列表',
+            
+            'user_city_qu_add' => '添加区级单位',
+            'user_city_qu_save' => '修改区级单位',
+            'user_city_qu_del' => '删除区级单位',
+            'user_city_qu_list' => '区级单位列表',
         ),
     ),
     'User' => array(

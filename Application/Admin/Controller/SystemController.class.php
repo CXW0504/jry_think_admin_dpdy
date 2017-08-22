@@ -11,6 +11,7 @@ use Admin\Model\BannerModel;
 use Admin\Model\FileModel;
 use Admin\Model\UserOfficeModel;
 use Admin\Model\UserSchoolModel;
+use Admin\Model\UserCityModel;
 
 /**
  * 系统管理模块控制器
@@ -1089,5 +1090,75 @@ class SystemController extends CommonController {
             return $this->success('删除成功',U('user_school_list',array('id'=>I('get.fid'))));
         }
         return $this->error('删除失败');
+    }
+    
+    /**
+     * 省级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-22 11:08:55
+     */
+    public function user_cityAction(){
+        $city = new UserCityModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'name|code|abbreviation' => array('like',$wheres,'OR'),
+            'id' => array('lt',100),
+            'commend' => array('neq',2)
+        );
+        $count = $city->where($where)->count();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $city->where($where)->limit($page->firstRow, $page->listRows)->order('`id` ASC')->select();
+        foreach ($list as $k => $v){
+            $where = array();
+            $where['id'] = array(array('gt',$v['id'] * 100),array('lt',$v['id'] * 100 + 100));
+            $where['commend'] = array('neq',2);
+            $list[$k]['child_count'] = $city->where($where)->count();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加省级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-22 11:09:22
+     */
+    public function user_city_addAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            if($city->create_user_city($post)){
+                return $this->success('添加成功',U('user_city'));
+            }
+            return $this->error('添加失败');
+        }
+        $list = $city->where(array('id' => array('lt',100),'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            $ids[] = $v['id'];
+        }
+        $this->assign('ids', implode(',', $ids));
+        return $this->display();
     }
 }

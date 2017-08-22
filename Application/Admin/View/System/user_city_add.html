@@ -1,0 +1,68 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;添加省级地区信息</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">
+            <div class="form-group">
+                <div class="label">
+                    <label>省市编号</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" data-occupy="{$ids}:该数字已被占用({$ids})" name="id" data-max='99:数字最大值为99' data-min='10:数字最小值为10' data-validate="required:编号不能为空,number:该输入框仅允许输入数字" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group" style="padding-left:100px;">备注：省市编号为身份证开头前两位</div>
+            <div class="form-group">
+                <div class="label">
+                    <label>省市名称</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="name" data-validate="required:省市名称不能为空" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>省市拼音</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="speel"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>省市简拼</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" name="abbreviation"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>是否是直辖市</label>
+                </div>
+                <div class="field">
+                    <div class="button-group radio">
+                        <label class="button active">
+                            <span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="commend" value="0" type="radio" checked="checked">不是直辖市
+                        </label>
+                        <label class="button"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <input name="commend" value="1"  type="radio" >是直辖市
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
