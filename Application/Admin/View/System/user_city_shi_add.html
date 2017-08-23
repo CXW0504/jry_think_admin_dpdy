@@ -1,5 +1,5 @@
 <div class="panel admin-panel">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;添加省级地区信息</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;添加市级地区信息</strong></div>
     <div class="body-content">
         <form method="post" class="form-x" action="">
             <div class="form-group">
@@ -7,7 +7,7 @@
                     <label>省市编号</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" data-occupy="{$ids}:该数字已被占用({$ids})" name="id" data-max='99:数字最大值为99' data-min='10:数字最小值为10' data-validate="required:编号不能为空,number:该输入框仅允许输入数字" />
+                    <input type="text" class="input w50" value="{:I('get.id')}" data-occupy="{$ids}:该数字已被占用({$ids})" name="id" data-max='99:数字最大值为99' data-min='10:数字最小值为10' data-validate="required:编号不能为空,number:该输入框仅允许输入数字" />
                     <div class="tips"></div>
                 </div>
             </div>

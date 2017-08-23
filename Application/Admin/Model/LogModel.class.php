@@ -39,13 +39,20 @@ class LogModel extends \Common\Model\AllModel{
      * @param array $old 变更字段前的旧的值【关联数组】
      * @return number 是否添加成功
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.0
+     * @version v1.0.1
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-13 10:47:48
      */
     public function update_log($user_name = '',$id = 0,$save = array(),$old = array()){
         $save = $this->_englist_import($save);
         $old = $this->_englist_import($old);
+        foreach($old as $k => $v){
+            if($v == $save[$k]){
+                // 如果重复就删除掉相同的值
+                unset($old[$k]);
+                unset($save[$k]);
+            }
+        }
         $arr = array(
             'user_type' => 3,
             'user_name' => $user_name,
@@ -96,6 +103,34 @@ class LogModel extends \Common\Model\AllModel{
             $arr[$k] = str_replace(',', '|', $v);
         }
         return $arr;
+    }
+    
+    /**
+     * 删除数据库日志
+     *      真实删除，非逻辑删除
+     * 
+     * @param string $tab_name 删除数据的表名
+     * @param array $data 删除的数据信息
+     * @return boolean 是否删除成功
+     *      真实删除记录值中，new_val为空，old_key为0，user_type为4
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-23 15:41:05
+     */
+    public function delete_log_actual($tab_name = '',$data = array()){
+        if(empty($tab_name)){
+            return FALSE;
+        }
+        $arr = array(
+            'user_type' => 4,
+            'user_name' => $tab_name,
+            'old_key' => 0,
+            'tab_key' => implode(',', array_keys($data)),
+            'old_val' => implode(',', $data),
+            'new_val' => implode(',', array()),
+        );
+        return $this->_create_date($arr);
     }
 
     /**

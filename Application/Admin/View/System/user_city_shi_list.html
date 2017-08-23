@@ -1,8 +1,8 @@
 <div class="panel admin-panel" id="listform">
-    <div class="panel-head"><strong class="icon-cogs"> {$city_name} 地区管理</strong> </div>
+    <div class="panel-head"><strong class="icon-cogs"> 市级地区管理</strong> </div>
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <li> <a class="button border-main" href="{:U('user_city_add',array('fid'=>I('get.id')))}"> 添加省级单位</a> </li>
+            <li> <a class="button border-main" href="{:U('user_city_shi_add',array('id'=>I('get.id')))}"> 添加市级单位</a> </li>
             <li>搜索：</li>
             <li>
                 <form method="get" >
@@ -23,7 +23,7 @@
             <th>地区编码</th>
             <th>地区名称</th>
             <th>地区简拼</th>
-            <th>下属市数量</th>
+            <th>下属区数量</th>
             <th width="20%">操作</th>
         </tr>
         <foreach name="list" item="v">
@@ -35,9 +35,9 @@
                 <td>{$v.child_count}</td>
                 <td>
                     <div class="button-group">
-                        <a class="button border-main" href="{:U('user_city_save',array('fid'=>I('get.id'),'id'=>$v['id']))}">修改</a> 
-                        <a class="button border-main" href="{:U('user_city_shi_list',array('id'=>$v['id']))}">市列表</a>
-                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('user_city_del',array('fid'=>I('get.id'),'id'=>$v['id']))}')">删除</a>
+                        <a class="button border-main" href="{:U('user_city_shi_save',array('fid'=>I('get.id'),'id'=>$v['id']))}">修改</a> 
+                        <a class="button border-main" href="{:U('user_city_qu_list',array('id'=>$v['id']))}">区列表</a>
+                        <a class="button border-red" href="javascript:void(0)" onclick="return del('{:U('user_city_shi_del',array('fid'=>I('get.id'),'id'=>$v['id']))}')">删除</a>
                     </div>
                 </td>
             </tr>

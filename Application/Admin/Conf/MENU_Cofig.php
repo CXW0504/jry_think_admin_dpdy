@@ -64,9 +64,9 @@ return array(
         ),
         'child' => array(
             'refresh_all' => '清除本网站全部缓存',
-            'banner_add' => '添加广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
-            'banner_save' => '修改广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
-            'banner_del' => '删除广告',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'banner_add' => '添加广告',
+            'banner_save' => '修改广告',
+            'banner_del' => '删除广告',
             'department_add' => '添加通讯录部门',
             'department_save' => '修改通讯录部门',
             'department_del' => '删除通讯录部门',

@@ -1148,12 +1148,172 @@ class SystemController extends CommonController {
         if(I('post.')){
             $post = I('post.');
             $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            $post['commend'] = 0;
             if($city->create_user_city($post)){
                 return $this->success('添加成功',U('user_city'));
             }
             return $this->error('添加失败');
         }
         $list = $city->where(array('id' => array('lt',100),'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            $ids[] = $v['id'];
+        }
+        $this->assign('ids', implode(',', $ids));
+        return $this->display();
+    }
+    
+    /**
+     * 修改省级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-23 15:22:05
+     */
+    public function user_city_saveAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            $post['commend'] = 0;
+            if($city->save_user_city(I('get.id'),$post)){
+                return $this->success('修改成功',U('user_city'));
+            }
+            return $this->error('修改失败');
+        }
+        $list = $city->where(array('id' => array('lt',100),'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            if(I('get.id') != $v['id']){
+                $ids[] = $v['id'];
+            } else {
+                $this->assign('g_info',$v);
+            }
+        }
+        $this->assign('ids', implode(',', $ids));
+        return $this->display();
+    }
+    
+    /**
+     * 删除省级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-23 15:22:05
+     */
+    public function user_city_delAction(){
+        $city = new UserCityModel();
+        $id = I('get.id');
+        if($city->delete_user_city($id)){
+            return $this->success('删除成功',U('user_city'));
+        }
+        dump($city->getLastSql());
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 市级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-23 16:36:02
+     */
+    public function user_city_shi_listAction(){
+        $city = new UserCityModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'name|code|abbreviation' => array('like',$wheres,'OR'),
+            'id' => array(array('gt',I('get.id')*100),array('lt',I('get.id')*100 + 100)),
+            'commend' => array('neq',2)
+        );
+        $count = $city->where($where)->count();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $city->where($where)->limit($page->firstRow, $page->listRows)->order('`id` ASC')->select();
+        foreach ($list as $k => $v){
+            $where = array();
+            $where['id'] = array(array('gt',$v['id'] * 100),array('lt',$v['id'] * 100 + 100));
+            $where['commend'] = array('neq',2);
+            $list[$k]['child_count'] = $city->where($where)->count();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 区/县级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-23 16:36:02
+     */
+    public function user_city_qu_listAction(){
+        $city = new UserCityModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'name|code|abbreviation' => array('like',$wheres,'OR'),
+            'id' => array(array('gt',I('get.id')*100),array('lt',I('get.id')*100 + 100)),
+            'commend' => array('neq',2)
+        );
+        $count = $city->where($where)->count();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $city->where($where)->limit($page->firstRow, $page->listRows)->order('`id` ASC')->select();
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加市级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-22 11:09:22
+     */
+    public function user_city_shi_addAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            $post['commend'] = 0;
+            if($city->create_user_city($post)){
+                return $this->success('添加成功',U('user_city'));
+            }
+            return $this->error('添加失败');
+        }
+        $list = $city->where(array('id' => array(array('gt',I('get.id')*100),array('lt',I('get.id')*100 + 100)),'commend' => array('neq',2)))->select();
         $ids = array();
         foreach($list as $v){
             $ids[] = $v['id'];
