@@ -1,5 +1,5 @@
 <div class="panel admin-panel">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;添加市级地区信息</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>&nbsp;修改市级地区信息</strong></div>
     <div class="body-content">
         <form method="post" class="form-x" action="">
             <div class="form-group">
@@ -7,7 +7,7 @@
                     <label>省市编号</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" value="{:I('get.id')}" data-occupy="{$ids}:该数字已被占用({$ids})" name="id" data-max='<?php echo $_GET['id'] * 100 + 100 - 1; ?>:数字最大值为<?php echo $_GET['id'] * 100 + 100 - 1; ?>' data-min='<?php echo $_GET['id'] * 100; ?>:数字最小值为<?php echo $_GET['id'] * 100; ?>' data-validate="required:编号不能为空,number:该输入框仅允许输入数字" />
+                    <input type="text" class="input w50" value="{:I('get.id')}" data-occupy="{$ids}:该数字已被占用({$ids})" name="id" data-max='<?php echo $_GET['fid'] * 100 + 100 - 1; ?>:数字最大值为<?php echo $_GET['fid'] * 100 + 100 - 1; ?>' data-min='<?php echo $_GET['fid'] * 100; ?>:数字最小值为<?php echo $_GET['fid'] * 100; ?>' data-validate="required:编号不能为空,number:该输入框仅允许输入数字" />
                     <div class="tips"></div>
                 </div>
             </div>
@@ -17,16 +17,17 @@
                     <label>省市名称</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="name" data-validate="required:省市名称不能为空" />
+                    <input type="text" class="input w50" name="name" data-validate="required:省市名称不能为空" value="{$g_info.name}"/>
                     <div class="tips"></div>
                 </div>
             </div>
+            <div class="form-group" style="padding-left:100px;">备注：所属省为{$g_info.parent.name}</div>
             <div class="form-group">
                 <div class="label">
                     <label>省市拼音</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="speel"/>
+                    <input type="text" class="input w50" value="{$g_info.speel}" name="speel"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -35,7 +36,7 @@
                     <label>省市简拼</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="abbreviation"/>
+                    <input type="text" class="input w50" value="{$g_info.abbreviation}" name="abbreviation"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -45,12 +46,12 @@
                 </div>
                 <div class="field">
                     <div class="button-group radio">
-                        <label class="button active">
+                        <label class="button <?php if($g_info['commend'] == 0){echo 'active';} ?>">
                             <span class="icon icon-dot-circle-o"></span>
-                            <input name="commend" value="0" type="radio" checked="checked">否
+                            <input name="commend" value="0" type="radio" <?php if($g_info['commend'] == 0){echo 'checked="checked"';} ?>>否
                         </label>
-                        <label class="button"><span class="icon icon-dot-circle-o"></span>
-                            <input name="commend" value="1"  type="radio">是
+                        <label class="button <?php if($g_info['commend'] == 1){echo 'active';} ?>"><span class="icon icon-dot-circle-o"></span>
+                            <input name="commend" value="1"  type="radio" <?php if($g_info['commend'] == 1){echo 'checked="checked"';} ?>>是
                         </label>
                     </div>       
                 </div>

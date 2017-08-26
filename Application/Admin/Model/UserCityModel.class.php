@@ -75,6 +75,14 @@ class UserCityModel extends \Common\Model\AllModel{
             return FALSE;
         }
         $info = $this->where(array('id'=>$id))->find();
+        // 检测，如果下面有子城市列表将不允许删除
+        $child_count = $this->where(array(
+            'id' => array(array('gt',$id * 100),array('lt',$id * 100 + 100)),
+            'commend' => array('neq',2)
+        ))->count();
+        if($child_count > 0){
+            return FALSE;
+        }
         if($this->where(array('id'=>$id))->delete()){
             $log = new LogModel();
             $log->delete_log_actual('user_city',$info);

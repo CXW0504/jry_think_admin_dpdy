@@ -1211,7 +1211,6 @@ class SystemController extends CommonController {
         if($city->delete_user_city($id)){
             return $this->success('删除成功',U('user_city'));
         }
-        dump($city->getLastSql());
         return $this->error('删除失败');
     }
     
@@ -1307,9 +1306,8 @@ class SystemController extends CommonController {
         if(I('post.')){
             $post = I('post.');
             $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
-            $post['commend'] = 0;
             if($city->create_user_city($post)){
-                return $this->success('添加成功',U('user_city'));
+                return $this->success('添加成功',U('user_city_shi_list',array('id'=>I('get.id'))));
             }
             return $this->error('添加失败');
         }
@@ -1320,5 +1318,145 @@ class SystemController extends CommonController {
         }
         $this->assign('ids', implode(',', $ids));
         return $this->display();
+    }
+    
+    /**
+     * 删除市级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-26 19:38:24
+     */
+    public function user_city_shi_delAction(){
+        $city = new UserCityModel();
+        $id = I('get.id');
+        if($city->delete_user_city($id)){
+            return $this->success('删除成功',
+                U('user_city_shi_list',array('id'=>intval($id / 100)))
+            );
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 修改市级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-26 19:38:30
+     */
+    public function user_city_shi_saveAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            if($city->save_user_city(I('get.id'),$post)){
+                return $this->success('修改成功',U('user_city_shi_list',array('id'=>I('get.fid'))));
+            }
+            return $this->error('修改失败');
+        }
+        $id = I('get.fid',0,'intval');
+        $list = $city->where(array(
+            'id' => array(array('gt',$id * 100),array('lt',$id * 100 + 100 - 1)),
+            'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            if(I('get.id') != $v['id']){
+                $ids[] = $v['id'];
+            }
+        }
+        $g_info = $city->where(array('id'=>I('get.id')))->find();
+        $g_info['parent'] = $city->where(array('id'=>I('get.fid')))->find();
+        $this->assign('ids', implode(',', $ids))->assign('g_info',$g_info);
+        return $this->display();
+    }
+    
+    /**
+     * 添加区县级单位列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-26 19:55:57
+     */
+    public function user_city_qu_addAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            $post['commend'] = 0;
+            if($city->create_user_city($post)){
+                return $this->success('添加成功',U('user_city_qu_list',array('id'=>I('get.id'))));
+            }
+            return $this->error('添加失败');
+        }
+        $list = $city->where(array('id' => array(array('gt',I('get.id')*100),array('lt',I('get.id')*100 + 100)),'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            $ids[] = $v['id'];
+        }
+        $this->assign('ids', implode(',', $ids));
+        return $this->display();
+    }
+    
+    /**
+     * 修改区县级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-26 20:07:56
+     */
+    public function user_city_qu_saveAction(){
+        $city = new UserCityModel();
+        if(I('post.')){
+            $post = I('post.');
+            $post['code'] = str_pad($post['id'],6,0,STR_PAD_RIGHT);
+            if($city->save_user_city(I('get.id'),$post)){
+                return $this->success('修改成功',U('user_city_qu_list',array('id'=>I('get.fid'))));
+            }
+            return $this->error('修改失败');
+        }
+        $id = I('get.fid',0,'intval');
+        $list = $city->where(array(
+            'id' => array(array('gt',$id * 100),array('lt',$id * 100 + 100 - 1)),
+            'commend' => array('neq',2)))->select();
+        $ids = array();
+        foreach($list as $v){
+            if(I('get.id') != $v['id']){
+                $ids[] = $v['id'];
+            }
+        }
+        $g_info = $city->where(array('id'=>I('get.id')))->find();
+        $g_info['parent'] = $city->where(array('id'=>I('get.fid')))->find();
+        $g_info['parent_parent'] = $city->where(array('id'=>intval(I('get.fid') / 100)))->find();
+        $this->assign('ids', implode(',', $ids))->assign('g_info',$g_info);
+        return $this->display();
+    }
+    
+    /**
+     * 删除区县级单位信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-26 20:14:03
+     */
+    public function user_city_qu_delAction(){
+        $city = new UserCityModel();
+        $id = I('get.id');
+        if($city->delete_user_city($id)){
+            return $this->success('删除成功',
+                U('user_city_shi_list',array('id'=>intval($id / 100)))
+            );
+        }
+        return $this->error('删除失败');
     }
 }
