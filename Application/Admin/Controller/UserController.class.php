@@ -139,12 +139,11 @@ class UserController extends CommonController{
      * @adtime 2017-07-09 11:56:30
      */
     public function user_listAction(){
-        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $group = new UserGroupModel();
         $list = $group->getList(0, 100);
         $this->assign('group_list',$list);
         $user = new UserModel();
-        $count = $user->get_count(I('get.keywords',''),I('get.group_id',-1,'intval'),I('get.times',''),I('get.times_end',''));
+        $count = $user->get_count(I('get.keywords',''),I('get.group_id',-1,'intval'));
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -153,8 +152,7 @@ class UserController extends CommonController{
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        $times = explode(' ~ ', I('get.times_end'));
-        $list = $user->get_list(I('get.keywords',''),I('get.group_id',-1,'intval'),$times[0],$times[1],$page->firstRow, $page->listRows);
+        $list = $user->get_list(I('get.keywords',''),I('get.group_id',-1,'intval'),$page->firstRow, $page->listRows);
         return $this->assign(array(
             'count' => $count,
             'list' => $list,
@@ -351,8 +349,9 @@ class UserController extends CommonController{
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         $list = $user->where($where)->getList($page->firstRow, $page->listRows);
+        $user_type = array(1=>'抵押专员','调评专员','普通用户');
         foreach($list as $k => $v){
-            $list[$k]['type_name'] = $v['type'] == '1'?'抵押专员':'调评专员';
+            $list[$k]['type_name'] = $user_type[$v['type']]?$user_type[$v['type']]:$user_type[3];
             $info = $user_group->get_info($v['group_id']);
             $list[$k]['group_id_name'] = $info['name']?$info['name']:'--';
             $list[$k]['phone_view'] = phont_view_type(3, $v['phone']);

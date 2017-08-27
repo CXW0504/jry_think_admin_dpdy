@@ -32,21 +32,15 @@ class DocumentController extends CommonController {
      * @adtime 2017-07-25 17:54:45
      */
     public function apisAction(){
-        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $project = new ProjectModel();
-        $times = explode(' ~ ', I('get.times_end'));
-        $where = array(
-            'name|com_name'=>array('like','%'.I('get.keywords').'%'),
-            'ad_time' => array(
-                array('gt',strtotime($times[0].' 00:00:01')),
-                array('lt',strtotime($times[1].' 23:59:59'))
-            )
-        );
-        if(I('get.times_end')){
-            $count = $project->where($where)->getCount();
-        } else {
-            $count = $project->getCount();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
         }
+        $where = array(
+            'name|com_name'=>array('like',$wheres,'OR'),
+        );
+        $count = $project->where($where)->getCount();
         $page = new Page($count, 10);
     	$page->setConfig('prev','上一页');
     	$page->setConfig('next','下一页');
@@ -55,11 +49,7 @@ class DocumentController extends CommonController {
     	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
-        if(I('get.times_end')){
-            $list = $project->where($where)->getList($page->firstRow, $page->listRows);
-        } else {
-            $list = $project->getList($page->firstRow, $page->listRows);
-        }
+        $list = $project->where($where)->getList($page->firstRow, $page->listRows);
         return $this->assign(array(
             'count' => $count,
             'list' => $list,
@@ -105,8 +95,12 @@ class DocumentController extends CommonController {
      */
     public function parameterAction(){
         $project = new ProjectParameterTypeModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
         $where = array(
-            'name|desc'=>array('like','%'.I('get.keywords').'%'),
+            'name|desc'=>array('like',$wheres,'OR'),
         );
         $count = $project->where($where)->getCount();
         $page = new Page($count, 10);

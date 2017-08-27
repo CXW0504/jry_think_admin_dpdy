@@ -69,11 +69,15 @@
                 <div class="field">
                     <div class="button-group radio">
                         <label class="button <?php if($g_info['type'] == '1'): ?> active<?php endif; ?>">
-                            <span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                            <span class="icon icon-dot-circle-o"></span>
                             <input name="type" value="1" type="radio" <?php if($g_info['type'] == '1'): ?> checked="checked"<?php endif; ?>>抵押专员
                         </label>
-                        <label class="button <?php if($g_info['type'] == '2'): ?> active<?php endif; ?>"><span class="icon"><?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1499580661794" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8102" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M512 1012.394667A500.394667 500.394667 0 1 1 512 11.605333a500.394667 500.394667 0 0 1 0 1000.789334z m0-85.333334a415.061333 415.061333 0 1 0 0-830.122666 415.061333 415.061333 0 0 0 0 830.122666z" p-id="8103"></path><path d="M512 512m-228.864 0a228.864 228.864 0 1 0 457.728 0 228.864 228.864 0 1 0-457.728 0Z" p-id="8104"></path></svg></span>
+                        <label class="button <?php if($g_info['type'] == '2'): ?> active<?php endif; ?>"><span class="icon icon-dot-circle-o"></span>
                             <input name="type" value="2"  type="radio" <?php if($g_info['type'] == '2'): ?> checked="checked"<?php endif; ?>>调评专员
+                        </label>
+                        <label class="button <?php if($g_info['type'] == '3' || empty($g_info['type'])): ?> active<?php endif; ?>">
+                            <span class="icon icon-dot-circle-o"></span>
+                            <input name="type" value="3" type="radio" <?php if($g_info['type'] == '3' || !isset($g_info['type'])): ?> checked="checked"<?php endif; ?>>普通用户
                         </label>
                     </div>
                 </div>

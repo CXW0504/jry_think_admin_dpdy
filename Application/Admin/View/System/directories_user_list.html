@@ -11,17 +11,13 @@
                 </li>
                 <li>所属部门：</li>
                 <li>
-                    <select name="dep_id" class="form-control">
-                        <option value="-1">全部</option>
-                        <option value="0">无部门</option>
+                    <select name="dep_id" class="form-control input">
+                        <option value="-1" <?php if($_GET['dep_id'] == -1){ echo 'selected'; } ?>>全部</option>
+                        <option value="0" <?php if($_GET['dep_id'] == 0){ echo 'selected'; } ?>>无部门</option>
                         <foreach name='group_list' item='v' key="k">
                             <option value="{$k}" <?php if($k == $_GET['dep_id']){echo 'selected';} ?>>{$v}</option>
                         </foreach>
                     </select>
-                </li>
-                <li>添加时间：</li>
-                <li>
-                    <input type="text" name="times_end" value="{:I('get.times_end')}" class="input" >
                 </li>
                 <li>
                     <input type="submit" class="button border-main icon-search" value="搜索"/>
@@ -51,8 +47,8 @@
                 <td style="text-align:left; padding-left:20px;">{$v.id}</td>
                 <td>{$v.job_no}</td>
                 <td><img src="<?php if(!empty($v['avatar'])): ?>__PUBLIC__/Upload/{$v.avatar}<?php else: ?>__PUBLIC__/Images/Admin/y.jpg<?php endif; ?>" style="width:50px;"/></td>
-                <td>{$v.name}</td>
-                <td>{$v.phone|phont_view_type=$v['phone_type'],###}</td>
+                <td>{$v.name|replace_keywords=I('get.keywords'),###}</td>
+                <td>{$v.phone|replace_keywords=I('get.keywords'),###}</td>
                 <td>{$v.tel}</td>
                 <td>{$v.email}</td>
                 <td>{$v.dep_id_name}</td>

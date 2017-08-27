@@ -215,45 +215,26 @@ class UserModel extends \Common\Model\PdoModel {
      * 
      * @param string $key_words 查询的关键词
      * @param number $group_id 用户组编号
-     * @param string $times 添加时间的开始时间
-     * @param string $times_end 添加时间的结束时间
      * @return int
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.3
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-09 13:44:50
      */
-    public function get_count($key_words = '',$group_id = -1,$times = '',$times_end = ''){
+    public function get_count($key_words = '',$group_id = -1){
         $pir = C('DB_PREFIX');
         $where = " WHERE `{$pir}user`.`status` <> 98";
         $data = array();
         // 关键词判断
         if(!empty($key_words)){
-            if(strlen($key_words) == 11){
-                // 如果输入的是手机号
-                $where .= " AND `{$pir}user`.`phone` = ?";
-            } else {
-                $where .= " AND `{$pir}user`.`username` LIKE ?";
-                $key_words = '%'.$key_words.'%';
-            }
-            $data[] = $key_words;
+            $where .= " AND (`{$pir}user`.`username` LIKE ? OR `{$pir}user`.`phone` LIKE ? )";
+            $data[] = '%'.$key_words.'%';
+            $data[] = '%'.$key_words.'%';
         }
         // 权限组判断
         if($group_id >= 0){
             $where .= " AND `{$pir}user`.`group_id` = ?";
             $data[] = $group_id;
-        }
-        // 开始时间判断
-        if(!empty($times)){
-            $where .= " AND `{$pir}user`.`ad_time` >= ?";
-            $times = strtotime($times.' 00:00:00');
-            $data[] = $times;
-        }
-        // 终止时间判断
-        if(!empty($times_end)){
-            $where .= " AND `{$pir}user`.`ad_time` < ?";
-            $times_end = strtotime($times_end.' 23:59:59');
-            $data[] = $times_end;
         }
         $sql = "SELECT COUNT(*) AS `count` FROM `{$pir}user` LEFT JOIN `{$pir}user_info` ON `{$pir}user`.`id` = `{$pir}user_info`.`id` LEFT JOIN `{$pir}user_group` ON `{$pir}user`.`group_id` = `{$pir}user_group`.`id`";
         $data = $this->query($sql.$where,$data);
@@ -269,47 +250,28 @@ class UserModel extends \Common\Model\PdoModel {
      * 
      * @param string $key_words 查询的关键词
      * @param number $group_id 用户组编号
-     * @param string $times 添加时间的开始时间
-     * @param string $times_end 添加时间的结束时间
      * @param number $p0 查询条数的开始条数
      * @param number $p1 查询条数的结束条数
      * @return array 查询到的数据
      * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
+     * @version v1.0.3
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-07-09 13:46:20
      */
-    public function get_list($key_words = '',$group_id = -1,$times = '',$times_end = '',$p0 = 0,$p1 = 20){
+    public function get_list($key_words = '',$group_id = -1,$p0 = 0,$p1 = 20){
         $pir = C('DB_PREFIX');
         $where = " WHERE `{$pir}user`.`status` =99 ";
         $data = array();
         // 关键词判断
         if(!empty($key_words)){
-            if(strlen($key_words) == 11){
-                // 如果输入的是手机号
-                $where .= " AND `{$pir}user`.`phone` = ?";
-            } else {
-                $where .= " AND `{$pir}user`.`username` LIKE ?";
-                $key_words = '%'.$key_words.'%';
-            }
-            $data[] = $key_words;
+            $where .= " AND (`{$pir}user`.`username` LIKE ? OR `{$pir}user`.`phone` LIKE ? )";
+            $data[] = '%'.$key_words.'%';
+            $data[] = '%'.$key_words.'%';
         }
         // 权限组判断
         if($group_id >= 0){
             $where .= " AND `{$pir}user`.`group_id` = ?";
             $data[] = $group_id;
-        }
-        // 开始时间判断
-        if(!empty($times)){
-            $where .= " AND `{$pir}user`.`ad_time` >= ?";
-            $times = strtotime($times.' 00:00:00');
-            $data[] = $times;
-        }
-        // 终止时间判断
-        if(!empty($times_end)){
-            $where .= " AND `{$pir}user`.`ad_time` < ?";
-            $times_end = strtotime($times_end.' 23:59:59');
-            $data[] = $times_end;
         }
         $sql = "SELECT `{$pir}user`.`username`,`{$pir}user`.`group_id`,`{$pir}user`.`id`, `{$pir}user`.`phone`, `{$pir}user_info`.`birthdy`, `{$pir}user`.`ad_time`, `{$pir}user_group`.`name` FROM `{$pir}user` LEFT JOIN `{$pir}user_info` ON `{$pir}user`.`id` = `{$pir}user_info`.`id` LEFT JOIN `{$pir}user_group` ON `{$pir}user`.`group_id` = `{$pir}user_group`.`id`";
         $limit = " ORDER BY `{$pir}user`.`ad_time` DESC LIMIT ". intval($p0).','. intval($p1);

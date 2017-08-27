@@ -206,17 +206,13 @@ class SystemController extends CommonController {
      * @adtime 2017-07-14 13:22:08
      */
     public function directories_user_listAction(){
-        $times = explode(' ~ ', I('get.times_end'));
-        $this->wget('bootstrap')->wget('bootstrap-daterangepicker');
         $dir = new DirectoriesDepartmentModel();
         $user = new DirectoriesUserModel();
         $group_list = $dir->get_directories_department_list();
         $this->assign('group_list',$group_list);// 获取部门列表
         $dep_id = I('get.dep_id',-1,'intval');
         if(isset($_GET['dep_id'])){
-            $user->where(array(
-                'ad_time' => array(array('gt',strtotime($times[0].' 00:00:01')),array('lt',strtotime($times[1].' 23:59:59')))
-            ))->where(array(array(
+            $user->where(array(array(
                 'name' => array('like','%'.I('get.keywords').'%'),
                 'phone' => array('like','%'.I('get.keywords').'%'),
                 '_logic' => 'or',
@@ -235,9 +231,7 @@ class SystemController extends CommonController {
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         if(isset($_GET['dep_id'])){
-            $user->where(array(
-                'ad_time' => array(array('gt',strtotime($times[0].' 00:00:01')),array('lt',strtotime($times[1].' 23:59:59')))
-            ))->where(array(array(
+            $user->where(array(array(
                 'name' => array('like','%'.I('get.keywords').'%'),
                 'phone' => array('like','%'.I('get.keywords').'%'),
                 '_logic' => 'or',
