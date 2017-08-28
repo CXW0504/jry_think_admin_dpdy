@@ -177,6 +177,7 @@ class LogModel extends \Common\Model\AllModel{
         $brow = $sys->get_browser($user_agent, ',');
         $system = $sys->get_system($user_agent);
         $arr['browser'] = $log_info->get_id($brow);
+        $arr['user_name'] = $log_info->get_id($arr['user_name']);
         $arr['system'] = $log_info->get_id($system);
         $arr['ad_time'] = NOW_TIME;
         return $this->add($arr);

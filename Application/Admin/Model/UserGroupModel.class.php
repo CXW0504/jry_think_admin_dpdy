@@ -17,12 +17,18 @@ class UserGroupModel extends \Common\Model\AllModel {
      */
     public function create_group($name = '') {
         if (!empty($name)) {
-            return $this->add(array(
-                        'name' => $name,
-                        'content' => '',
-                        'ad_time' => NOW_TIME,
-                        'status' => 99
+            $info = $this->add(array(
+                'name' => $name,
+                'content' => '',
+                'ad_time' => NOW_TIME,
+                'status' => 99
             ));
+            if($info){
+                $log = new LogModel();
+                $log->create_log('user_group',$info);
+                return $info;
+            }
+            return false;
         }
         return false;
     }
