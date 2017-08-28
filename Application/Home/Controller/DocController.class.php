@@ -53,12 +53,12 @@ class DocController extends PublicController {
         $ProjectApiParameter_1 = $ProjectApiParameterModel->where(array(
             'a_id'=>I('get.api_id',$list[0]['id'],'intval'),
             'type' => 1
-        ))->getList(0,999);
+        ))->getList(0,999,FALSE,'`ad_time` ASC');
         // 获取返回参数
         $ProjectApiParameter_2 = $ProjectApiParameterModel->where(array(
             'a_id'=>I('get.api_id',$list[0]['id'],'intval'),
             'type' => 2
-        ))->getList(0,999);
+        ))->getList(0,999,FALSE,'`ad_time` ASC');
         // 获取数据类型
         $ProjectParameterTypeModel = new ProjectParameterTypeModel();
         // 获取请求类型列表
