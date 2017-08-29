@@ -107,6 +107,15 @@ class LogController extends CommonController{
         return $this->display();
     }
     
+    /**
+     * 退出日志列表管理
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-29 22:22:06
+     */
     public function log_outAction(){
         $where = array('user_type' => 4);// 设置只检索登录日志
         $log = new UserLogModel();
@@ -162,5 +171,110 @@ class LogController extends CommonController{
             'page' => $page->show(),
             'title' => '退出日志',
         ))->display('login');
+    }
+
+    /**
+     * 日志分类管理-顶级分类
+     * 
+     * @return void 
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-29 22:26:49
+     */
+    public function log_infoAction(){
+        $log_info = new LogInfoModel();
+        $where = array(
+            'type' => 0, // 当前操作只查询顶级分类
+        );
+        if(I('get.keywords')){
+            $wheres = array();
+            foreach(explode(' ', I('get.keywords')) as $v){
+                $wheres[] = '%'.$v.'%';
+            }
+            $where[] = array(
+                'name|value' => array('like',$wheres,'or'),
+            );
+        }
+        $count = $log_info->where($where)->getCount();
+        $page = new Page($count, 10);
+        $page->setConfig('prev','上一页');
+        $page->setConfig('next','下一页');
+        $page->setConfig('header','');
+        $page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+        $page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+        $page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $log_info->where($where)->getList($page->firstRow, $page->listRows);
+        foreach($list as $k => $v){
+            $list[$k]['child_count'] = $log_info->where(array('type' => $v['id']))->getCount();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+
+
+    /**
+     * 添加日志分类
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-29 22:45:21
+     */
+    public function log_info_addAction(){
+        if(!I('post.')){
+            return $this->display();
+        }
+        $log_info = new LogInfoModel();
+        if($log_info->get_id(I('post.name'),0)){
+            return $this->success('添加成功',U('log_info'));
+        }
+        return $this->error('添加失败');
+    }
+
+    /**
+     * 日志分类管理-顶级分类
+     * 
+     * @return void 
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-29 22:26:49
+     */
+    public function log_info_childAction(){
+        $log_info = new LogInfoModel();
+        $where = array(
+            'type' => intval(I('get.id')), // 当前操作只查询顶级分类
+        );
+        if(I('get.keywords')){
+            $wheres = array();
+            foreach(explode(' ', I('get.keywords')) as $v){
+                $wheres[] = '%'.$v.'%';
+            }
+            $where[] = array(
+                'name|value' => array('like',$wheres,'or'),
+            );
+        }
+        $count = $log_info->where($where)->getCount();
+        $page = new Page($count, 10);
+        $page->setConfig('prev','上一页');
+        $page->setConfig('next','下一页');
+        $page->setConfig('header','');
+        $page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+        $page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+        $page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $log_info->where($where)->getList($page->firstRow, $page->listRows);
+        foreach($list as $k => $v){
+            $list[$k]['child_count'] = $log_info->where(array('type' => $v['id']))->getCount();
+        }
+        return $this->assign(array(
+            'count' => $count,
+            'list' => $list,
+            'page' => $page->show(),
+        ))->display();
     }
 }

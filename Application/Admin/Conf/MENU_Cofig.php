@@ -175,11 +175,17 @@ return array(
          'name' => '日志管理',
          'class' => 'icon-save',
          'content' => array(
-             'login' => '后台登录日志',
-             'log_out' => '后台退出日志',
+            'log_info' => '后台日志分类管理',
+            'login' => '后台登录日志',
+            'log_out' => '后台退出日志',
          ),
          'child' => array(
-             'view_log_info_login' => '后台日志详情查看',
+            'view_log_info_login' => '后台日志详情查看',
+            'log_info_add' => '添加日志分类',
+            'log_info_save' => '修改日志分类',
+            'log_info_del' => '删除日志分类',
+            'log_info_child' => '查看下属日志分类',
+            'log_info_child_save' => '修改下属日志分类',
          ),
      ),
 );

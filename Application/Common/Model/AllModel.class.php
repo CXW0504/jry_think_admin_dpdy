@@ -44,7 +44,7 @@ class AllModel extends Model {
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-04-16 22:26:24
      */
-    public function getList($p0 = 0, $p1 = 20, $status = false,$order = '`ad_time` DESC') {
+    public function getList($p0 = 0, $p1 = 20, $status = false,$order = '`ad_time` DESC,`id` DESC') {
         if ($status === false)
             return $this->where(array('status' => array('neq', 98)))->order($order)->limit($p0, $p1)->select();
         return $this->where(array('status' => $status))->order($order)->limit($p0, $p1)->select();
