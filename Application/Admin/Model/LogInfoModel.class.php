@@ -71,4 +71,46 @@ class LogInfoModel extends \Common\Model\AllModel{
         }
         return $id['id'];
     }
+    
+    /**
+     * 修改日志条目信息
+     * 
+     * @param number $id 要修改的条目编号
+     * @param string $name 修改后的值
+     * @return boolean 是否修改成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.1.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-30 17:49:50
+     */
+    public function edit_info($id = 0,$name = ''){
+        if($id <= 0){
+            return FALSE;
+        }
+    	return $this->where(array('id'=>intval($id),'status'=>array('neq',98)))->save(array(
+    			'name' => $name,
+    			'value' => $name
+    	));
+    }
+    
+    /**
+     * 删除日志条目信息
+     * 
+     * @param number $id 要删除的条目编号
+     * @return boolean 是否删除成功
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.1.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-30 17:54:18
+     */
+    public function delete_info($id = 0){
+        if($id <= 0){
+            return FALSE;
+        }
+    	$count = $this->where(array('type'=>$id))->getCount();
+    	if($count > 0){
+    		return false;
+    	}
+    	return $this->setDelete($id);
+    }
 }

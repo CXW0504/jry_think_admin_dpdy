@@ -277,4 +277,44 @@ class LogController extends CommonController{
             'page' => $page->show(),
         ))->display();
     }
+
+
+    /**
+     * 修改日志分类
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-30 17:42:41
+     */
+    public function log_info_saveAction(){
+        $log_info = new LogInfoModel();
+        if(!I('post.')){
+        	$this->assign('g_info',$log_info->where(array('id'=>I('get.id'),'type'=>0,'status'=>array('neq',98)))->find());
+            return $this->display();
+        }
+        if($log_info->edit_info(I('get.id'),I('post.name'))){
+            return $this->success('修改成功',U('log_info'));
+        }
+        return $this->error('修改失败，可能为值没有变化');
+    }
+
+
+    /**
+     * 删除日志分类
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-30 17:50:39
+     */
+    public function log_info_delAction(){
+        $log_info = new LogInfoModel();
+        if($log_info->delete_info(I('get.id'))){
+            return $this->success('删除成功',U('log_info'));
+        }
+        return $this->error('删除失败，可能为其下有子分类');
+    }
 }
