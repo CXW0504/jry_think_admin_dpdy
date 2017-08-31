@@ -51,6 +51,9 @@ class LogModel extends \Common\Model\AllModel{
                 // 如果重复就删除掉相同的值
                 unset($old[$k]);
                 unset($save[$k]);
+            } else if(!isset($save[$k])){
+            	// 如果修改的值里面没有old里面的字段就直接删除掉old里面的值
+            	unset($old[$k]);
             }
         }
         $arr = array(

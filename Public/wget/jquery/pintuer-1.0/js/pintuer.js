@@ -215,9 +215,6 @@ $(function () {
             case "email":
                 return /^[^@]+@[^@]+\.[^@]+$/.test($pintu);
                 break;
-            case "url":
-                return /^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/.test($pintu);
-                break;
             case "ip":
                 return /^[\d\.]{7,15}$/.test($pintu);
                 break;

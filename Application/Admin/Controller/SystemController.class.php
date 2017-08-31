@@ -12,6 +12,7 @@ use Admin\Model\FileModel;
 use Admin\Model\UserOfficeModel;
 use Admin\Model\UserSchoolModel;
 use Admin\Model\UserCityModel;
+use Admin\Model\NoticeModel;
 
 /**
  * 系统管理模块控制器
@@ -1450,6 +1451,102 @@ class SystemController extends CommonController {
             return $this->success('删除成功',
                 U('user_city_shi_list',array('id'=>intval($id / 100)))
             );
+        }
+        return $this->error('删除失败');
+    }
+    
+    /**
+     * 公告管理列表
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-31 11:29:18
+     */
+    public function notice_listAction(){
+    	$notice = new NoticeModel();
+        $wheres = array();
+        foreach(explode(' ', I('get.keywords')) as $v){
+            $wheres[] = '%'.$v.'%';
+        }
+        $where = array(
+            'title|author' => array('like',$wheres,'OR'),
+            'status' => array('neq',98)
+        );
+        $count = $notice->where($where)->count();
+        $page = new Page($count, 10);
+    	$page->setConfig('prev','上一页');
+    	$page->setConfig('next','下一页');
+    	$page->setConfig('header','');
+    	$page->setPageHtml('normal_page_html','<a href="%PAGE_HREF%" class="tcdNumber">%PAGE_NUMBER%</a>');
+    	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
+    	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
+        $list = $notice->where($where)->getList($page->firstRow, $page->listRows);
+        return $this->assign(array(
+            'count' => $count,
+            'n_list' => $list,
+            'page' => $page->show(),
+        ))->display();
+    }
+    
+    /**
+     * 添加公告信息
+     * 
+     * @return mixed|void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-31 14:26:26
+     */
+    public function notice_addAction(){
+    	if(!I('post.')){
+    		$this->wget('ueditor');
+    		return $this->display();
+    	}
+    	$notice = new NoticeModel();
+    	if($notice->create_info(I('post.'))){
+    		return $this->success('添加成功',U('notice_list'));
+    	}
+    	return $this->error('添加失败，可能是内容中包含敏感词汇');
+    }
+    
+    /**
+     * 修改公告信息
+     * 
+     * @return mixed|void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-31 14:26:26
+     */
+    public function notice_saveAction(){
+    	$notice = new NoticeModel();
+    	if(!I('post.')){
+    		$this->assign('l_info',$notice->where(array('id'=>I('get.id',0,'intval'),'status'=>array('neq',98)))->find());
+    		$this->wget('ueditor');
+    		return $this->display('notice_add');
+    	}
+    	if($notice->update_info(I('get.id'),I('post.'))){
+    		return $this->success('修改成功',U('notice_list'));
+    	}
+    	return $this->error('修改失败，可能是内容中包含敏感词汇');
+    }
+    
+    /**
+     * 删除公告信息
+     * 
+     * @return void
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-08-31 14:53:57
+     */
+    public function notice_delAction(){
+        $notice = new NoticeModel();
+        $id = I('get.id');
+        if($notice->delete_info($id)){
+	    	return $this->success('删除成功',U('notice_list'));
         }
         return $this->error('删除失败');
     }

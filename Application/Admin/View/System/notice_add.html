@@ -1,0 +1,64 @@
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-cogs"></span>&nbsp;<?php if(!empty($l_info)){echo '修改';}else{echo '增加';} ?>公告信息</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="label">
+                    <label>公告标题</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.title}" name="title" data-validate="required:请输入Banner标题" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>公告作者</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.author}" name="author" />
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>有效天数</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input w50" value="{$l_info.effective_time}" name="effective_time" data-validate="required:请输入公告有效天数，0为永久有效，必须为整数"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>公告内容</label>
+                </div>
+                <div class="field">
+	                <script id="content" name="content" type="text/plain" style="width:700px;height:300px;">{$l_info.content|htmlspecialchars_decode=###}</script>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var ue = UE.getEditor('content',{
+        toolbars: [['source', '|',
+                    'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+                    'directionalityltr', 'directionalityrtl', 'indent', '|',
+                    'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                    'link', 'unlink', '|',
+                    'horizontal', 'date', 'time', 'spechars', '|',
+                    'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', '|',
+                    'print', 'preview', 'searchreplace', 'drafts'
+                ]]
+            });
+</script>

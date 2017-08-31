@@ -52,6 +52,7 @@ return array(
         'class' => 'icon-cogs',
         'content' => array(
             'banner_list' => '广告管理',// 该功能已完成，但是项目中的Banner其实为公告缩略图，故此处注释掉
+            'notice_list' => '公告管理',
             'department_list' => '通讯录部门管理',
             'directories_user_list' => '通讯录管理',
             'loan_mold_list' => '抵押顺位管理',
@@ -67,6 +68,9 @@ return array(
             'banner_add' => '添加广告',
             'banner_save' => '修改广告',
             'banner_del' => '删除广告',
+            'notice_add' => '添加公告',
+            'notice_save' => '修改公告',
+            'notice_del' => '删除公告',
             'department_add' => '添加通讯录部门',
             'department_save' => '修改通讯录部门',
             'department_del' => '删除通讯录部门',

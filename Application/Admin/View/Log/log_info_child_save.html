@@ -1,0 +1,46 @@
+<div class="panel admin-panel margin-top">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>添加用户信息</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" action="">
+            <div class="form-group">
+                <div class="label">
+                    <label>别名：</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input" name="name" value="{$l_info.name}" data-validate="required:请输入登录用户名" />         
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>传输匹配值：</label>
+                </div>
+                <div class="field">
+					{$l_info.value}
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>请选择所属权限组：</label>
+                </div>
+                <div class="field">
+                    <select name="type" class="form-control input">
+                        <option value="7">请选择权限组</option>
+                        <foreach name='type_list' item='v'>
+                            <option value="{$v.id}" <?php if($l_info['type'] == $v['id']){ echo 'selected'; } ?>>{$v.name}</option>
+                        </foreach>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label></label>
+                </div>
+                <div class="field">
+                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

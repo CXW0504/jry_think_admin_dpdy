@@ -269,7 +269,7 @@ class LogController extends CommonController{
         $page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         $list = $log_info->where($where)->getList($page->firstRow, $page->listRows);
         foreach($list as $k => $v){
-            $list[$k]['child_count'] = $log_info->where(array('type' => $v['id']))->getCount();
+            $list[$k]['father'] = $log_info->where(array('id' => $v['type']))->find();
         }
         return $this->assign(array(
             'count' => $count,
@@ -316,5 +316,22 @@ class LogController extends CommonController{
             return $this->success('删除成功',U('log_info'));
         }
         return $this->error('删除失败，可能为其下有子分类');
+    }
+    
+    public function log_info_child_saveAction(){
+    	$log_info = new LogInfoModel();
+    	$info = $log_info->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->find();
+    	if(!I('post.')){
+    		$this->assign('type_list',$log_info->where(array('type'=>0,'status'=>array('neq',98)))->select());
+    		$this->assign('l_info',$info);
+    		return $this->display();
+    	}
+        if($log_info->where(array('id'=>I('get.id'),'status'=>array('neq',98)))->save(array(
+        		'name' => I('post.name','','trim'),
+        		'type' => I('post.type',7,'intval')
+        ))){
+            return $this->success('修改成功',U('log_info_child',array('id'=>$info['type'])));
+        }
+        return $this->error('修改失败，可能为值没有变化');
     }
 }

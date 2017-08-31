@@ -4,7 +4,7 @@ return array(
     // 使用ueditor网页编辑器
     'ueditor' => array(
         'css' => array('wget/ueditor/1.4.3/themes/default/css/ueditor'),
-        'js' => array('wget/ueditor/1.4.3/lang/zh-cn/zh-cn', 'wget/ueditor/1.4.3/ueditor.config', 'wget/ueditor/1.4.3/ueditor.all.min'),
+        'js' => array('wget/ueditor/1.4.3/ueditor.config', 'wget/ueditor/1.4.3/ueditor.all.min','wget/ueditor/1.4.3/lang/zh-cn/zh-cn'),
     ),
     // 使用jQuery插件
     'jquery' => array(
