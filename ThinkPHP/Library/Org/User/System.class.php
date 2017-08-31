@@ -87,6 +87,8 @@ class System {
             $os = 'Windows NT';
         } else if (preg_match('/win/i', $agent) && preg_match('/32/i', $agent)) {
             $os = 'Windows 32';
+        } else if (preg_match('/Android/i', $agent)) {
+            $os = 'Android';
         } else if (preg_match('/linux/i', $agent)) {
             $os = 'Linux';
         } else if (preg_match('/unix/i', $agent)) {
