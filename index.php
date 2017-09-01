@@ -13,12 +13,12 @@ if (isset($_GET['s'])) {
     }
 }
 
-//if (!isset($_GET['s']) || empty($_GET['s'])) {
-//    if (check_wap()) {
-//        header('Location:?s=/Wap');
-//        exit;
-//    }
-//}
+if (!isset($_GET['s']) || empty($_GET['s'])) {
+   if (check_wap()) {
+       header('Location:?s=/Wap');
+       exit;
+   }
+}
 
 /**
  * 检测是否是手机登录
