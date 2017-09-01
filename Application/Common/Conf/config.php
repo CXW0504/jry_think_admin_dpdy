@@ -2,7 +2,11 @@
 /**
  * 【此文件不允许上传】
  */
-
+if(check_wap()){
+    $defaults = 'Wap';
+} else {
+    $defaults = 'Home';
+}
 return array(
 //    'HTML_CACHE_ON' => true, // 开启静态缓存
 //    'HTML_CACHE_TIME ' => -1, // 设置永久缓存
@@ -13,8 +17,11 @@ return array(
     
     // 页面需要的插件列表，需要就在此处配置，然后使用$this->wget进行引用
     'SHOW_WGET_LIST' => include_once __DIR__ . '/wget.php',
+    'MODULE_ALLOW_LIST' => array('Home','Wap','Admin','Api','Mcch','Other'), //允许访问的模块列表
+    'DEFAULT_MODULE' => $defaults,
+    'MODULE_DENY_LIST' => array('Common', 'Runtime'), // 禁止访问的模块列表
     'SHOW_PAGE_TRACE' =>FALSE, // 显示页面Trace信息
-    'URL_MODEL'  =>  3, // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
+    'URL_MODEL'  =>  2, // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
     // 0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式
     
     'ACTION_SUFFIX'         =>  'Action', // 操作方法后缀
