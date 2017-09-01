@@ -102,12 +102,10 @@ return array(
             'user_city_add' => '添加省级单位',
             'user_city_save' => '修改省级单位',
             'user_city_del' => '删除省级单位',
-            
             'user_city_shi_add' => '添加市级单位',
             'user_city_shi_save' => '修改市级单位',
             'user_city_shi_del' => '删除市级单位',
             'user_city_shi_list' => '市级单位列表',
-            
             'user_city_qu_add' => '添加区级单位',
             'user_city_qu_save' => '修改区级单位',
             'user_city_qu_del' => '删除区级单位',

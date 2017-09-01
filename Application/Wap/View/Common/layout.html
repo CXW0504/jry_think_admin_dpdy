@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{$__a_icon__}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">{/*在手机端的缩放比例*/}
+    <meta name="format-detection" content="telephone=no">{/*手机号码不被显示为拨号链接*/}
+    <meta charset="utf-8"><meta name="author" content="{$__a_author__}">
+    <meta name="keywords" content="{$__a_key__}">
+    <meta name="description" content="{$__a_describe__}">
+    <meta name="revised" content="{$__a_version__}">
+    <title>{$__a_title__}{:C('DEFAULT_TITLE_FOOTER',null,' - 本网站框架由 xiaoyutab 提供技术支持')}</title>
+    <foreach name='__a__css__' item='v'>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/{$v}.css" />
+    </foreach>
+    <foreach name='__a_js__' item='v'>
+        <script type="text/javascript" src="__PUBLIC__/{$v}.js"></script>
+    </foreach>
+<style>
+    .footer-wap{width:100%;height:20px;background:#ccc;text-align:center;color:#FF6B4A;clear:both;position: fixed;bottom: 0px;}
+</style>
+</head>
+<body>
+    {__CONTENT__}
+</body>
+<foreach name='__a__css_footer__' item='v'>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/{$v}.css" />
+</foreach>
+<foreach name='__a_js_footer__' item='v'>
+    <script type="text/javascript" src="__PUBLIC__/{$v}.js"></script>
+</foreach>
+</html>

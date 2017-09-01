@@ -1,0 +1,24 @@
+<p class="content-default" style="height: auto;width: 520px;margin: auto;text-align:center"></p>
+<script>
+$(function(){
+	var index = 0;
+	var word = "《诗经·邶风·击鼓》 \n击鼓其镗，踊跃用兵。土国城漕，我独南行。 \n从孙子仲，平陈与宋。不我以归，忧心有忡。 \n爰居爰处？爰丧其马？于以求之？于林之下。 \n死生契阔，与子成说。@执子之手，与子偕老。_ \n于嗟阔兮，不我活兮。于嗟洵兮，不我信兮。 \n执子之手，与子共著。\n执子之手，与子同眠。\n执子之手，与子偕老。\n执子之手，夫复何求？\n\n\n\n\n#*谨以此诗，献给天下有情人！！！__\n\n\n\n^版本：<?php echo THINK_VERSION; ?>_";
+	var time_interval = 0;
+	function index_type(){
+		var n_word = word.substring(0,index++)
+					.replace(/\n/g,'<br/>')
+					.replace(/#/g,'<span style="color:red">')
+					.replace(/@/g,'<span style="border-bottom:2px solid red;">')
+					.replace(/\^/g,'<span style="color:rgb(0,153,213);font-size:8px;">')
+					.replace(/\*/g,'<span style="font-size:20px;">')
+					.replace(/_/g,'</span>');
+		if(index <= word.length){
+			$('.content-default').html(n_word + ' _')
+		} else {
+			$('.content-default').html(n_word)
+			clearInterval(time_interval);
+		}
+	}
+    time_interval = setInterval(index_type, 100);
+});
+</script>
