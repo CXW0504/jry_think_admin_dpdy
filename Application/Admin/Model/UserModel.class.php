@@ -111,68 +111,6 @@ class UserModel extends \Common\Model\PdoModel {
     }
 
     /**
-     * 设置用户的登录token标识
-     * 
-     * @param intval $uid 用户编号
-     * @param string $token 用户token值
-     * @param intval $type 用户设备类型
-     * @return number
-     * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
-     * @copyright (c) 2017, xiaoyutab
-     * @adtime 2017-07-06 16:23:03
-     */
-    public function set_user_token($uid = 1, $token = '', $type = 1) {
-        $pir = C('DB_PREFIX');
-        $sql = "SELECT `id` FROM `{$pir}user_token` WHERE `uid` = ? AND `user_type` = ?";
-        $data = $this->query($sql, array($uid, $type));
-        if (empty($data[0])) {
-            $sql = "INSERT INTO `{$pir}user_token`(`uid`,`token`,`user_type`,`ad_time`) VALUE(?,?,?,UNIX_TIMESTAMP())";
-            return $this->query($sql, array($uid, $token, $type));
-        }
-        $sql = "UPDATE `{$pir}user_token` SET `token` = ?,`ad_time` = UNIX_TIMESTAMP() WHERE `id` = ? ";
-        return $this->query($sql, array($token, $data[0]['id']));
-    }
-
-    /**
-     * 检测用户的登录token标识
-     * 
-     * @param intval $uid 用户编号
-     * @param string $token 用户token值
-     * @param intval $type 用户设备类型
-     * @return boolean
-     * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.0
-     * @copyright (c) 2017, xiaoyutab
-     * @adtime 2017-09-04 21:55:09
-     */
-    public function check_user_token($uid = 1, $token = '', $type = 1) {
-        $pir = C('DB_PREFIX');
-        $sql = "SELECT `id`,`token` FROM `{$pir}user_token` WHERE `uid` = ? AND `user_type` = ?";
-        $data = $this->query($sql, array($uid, $type));
-        if (empty($data[0])) {
-            return FALSE;
-        }
-        return boolval($data[0]['token'] == $token);
-    }
-
-    /**
-     * 清除用户登录标识
-     * 
-     * @param type $uid 用户编号
-     * @param type $type 用户设备类型
-     * @return type
-     * @author xiaoyutab<xiaoyutab@qq.com>
-     * @version v1.0.2
-     * @copyright (c) 2017, xiaoyutab
-     * @adtime 2017-07-06 16:23:03
-     */
-    public function del_user_token($uid = 1, $type = 1) {
-        $sql = "DELETE FROM `dpdy_user_token` WHERE `uid` = ? AND `user_type` = ?";
-        return $this->query($sql, array($uid, $type));
-    }
-
-    /**
      * 设置用户登录日志
      * 
      * @return array
