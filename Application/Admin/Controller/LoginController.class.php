@@ -48,8 +48,6 @@ class LoginController extends \Common\Controller\PublicController{
                     session('admin.usertime',time());
                     session('admin.userinfo',$info);
                     session('admin.usertoken',md5(pass(I('post.password'), microtime ())));
-                    // 设置用户登录标识token
-                    $user->set_user_token($info['id'], session('admin.usertoken'),1);
                     // 设置用户登录日志
                     $user->set_user_login_log();
                     return $this->success('登录成功',U('Index/index'));
@@ -74,7 +72,6 @@ class LoginController extends \Common\Controller\PublicController{
     public function logoutAction(){
         $user = new UserModel();
         $info = $user->get_user_info();
-        $user->del_user_token($info['id'],1);// 退出系统
         $user->set_user_logout_log();
         $_SESSION = array();
         return $this->success('退出登录成功',U('Login/login'));
