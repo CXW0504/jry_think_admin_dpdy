@@ -3,21 +3,21 @@
     <div id="logo">
         <img src="__PUBLIC__/Images/Public/logo.png" alt=""/>
     </div><div class="padding-10"></div>
-    <form action="">
+    <form action="" method="post">
         <div class="userName">
             <lable>用户名：</lable>
-            <input type="text" name="name" placeholder="请输入用户名" pattern="[0-9A-Za-z]{6,16}" required/>
+            <input type="text" name="username" placeholder="请输入用户名" pattern="[0-9A-Za-z]{3,16}" title="请输入3~16个英文字母或数字" required/>
         </div>
         <div class="passWord">
             <lable>密&nbsp;&nbsp;&nbsp;码：</lable>
-            <input type="password" name="password" placeholder="请输入密码" pattern="[0-9A-Za-z]{6,25}" required/>
+            <input type="password" name="password" placeholder="请输入密码" required/>
         </div>
         <div class="choose_box">
             <div>
-                <input type="checkbox" checked="checked" name="checkbox"/>
-                <lable>记住密码</lable>
+                <input type="checkbox" checked="checked" name="auto_login"/>
+                <lable>自动登录</lable>
             </div>
-            <a href="newPassword.html">忘记密码</a>
+            <a href="{:U('new_password')}">忘记密码</a>
         </div>
         <button class="login_btn" type="submit">登&nbsp;&nbsp;录</button>
     </form>

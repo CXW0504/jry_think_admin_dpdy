@@ -54,6 +54,7 @@ class LoginController extends \Common\Controller\PublicController{
         if(!I('post.')){
             return $this->display();
         }
+        dump(I('post.'));
     }
 
     /**
