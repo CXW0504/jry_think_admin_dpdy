@@ -1,71 +1,85 @@
-<div class="aui-container">
-    <div class="aui-page">
-        <div class="aui-page-my">
-            <div class="aui-my-info">
-                <div class="aui-my-info-back"></div>
-                <a href="javascript:;" class="">
-                    <img src="__PUBLIC__/Images/Wap/my-aw.jpg" class="aui-my-avatar">
-                </a>
-                <div class="aui-mt-location aui-l-red"></div>
-            </div>
-            <div class="aui-l-content">
-                <div class="aui-menu-list aui-menu-list-clear">
-                    <ul>
-                        <li class="b-line">
-                            <a href="my-put.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in1.png"></div>
-                                <h3>个人信息</h3>
-                                <a href="http://azenui.com" target="_blank"><span>查看框架帮助</span></a>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-read.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in2.png"></div>
-                                <h3>我的首页</h3>
-                                <span>查看我的个人主页</span>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-secure.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in3.png"></div>
-                                <h3>安全中心</h3>
-                                <span class="aui-an-red">请设置密保邮箱以找回密码</span>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-up.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in4.png"></div>
-                                <h3>设置</h3>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-up.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in5.png"></div>
-                                <h3>阅读</h3>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-up.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in6.png"></div>
-                                <h3>服务区域</h3>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                        <li class="b-line">
-                            <a href="my-up.html">
-                                <div class="aui-icon"><img src="__PUBLIC__/Images/Icons/my-in8.png"></div>
-                                <h3>推荐给好友</h3>
-                                <div class="aui-time"><i class="aui-jump"></i></div>
-                            </a>
-                        </li>
-                    </ul>
+<style type="text/css">
+    .text-white {color: #ffffff !important;}
+    .aui-grid [class*=aui-col-] {padding: 0.75rem 0;}
+</style>
+<section class="aui-content" id="user-info">
+    <div class="aui-list aui-media-list aui-list-noborder aui-bg-info">
+        <div class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner ">
+                <div class="aui-list-item-media" style="width:3rem;">
+                    <img src="__PUBLIC__/Images/Wap/my-aw.jpg" class="aui-img-round" >
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text text-white aui-font-size-18">38dd4ef6d</div>
+                    <div class="aui-list-item-text text-white">
+                        <div><i class="aui-iconfont aui-icon-mobile aui-font-size-14"></i>152****0989</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<section class="aui-content aui-grid aui-margin-b-15">
+    <div class="aui-row">
+        <div class="aui-col-xs-4 aui-border-r">
+            <big class="aui-text-warning">0.00<small> 元</small></big>
+            <div class="aui-gird-lable aui-font-size-12">余额</div>
+        </div>
+        <div class="aui-col-xs-4 aui-border-r">
+            <big class="aui-text-danger">0.00<small> 个</small></big>
+            <div class="aui-gird-lable aui-font-size-12">优惠</div>
+        </div>
+        <div class="aui-col-xs-4">
+            <big class="aui-text-success">0.00<small> 分</small></big>
+            <div class="aui-gird-lable aui-font-size-12">积分</div>
+        </div>
+    </div>
+</section>
+<section class="aui-content">
+    <ul class="aui-list aui-list-in aui-margin-b-15">
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-location aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">收货地址</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">我的收藏</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">美食相册</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">积分商城</div>
+                <div class="aui-list-item-right">0元好物在这里</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cert aui-text-warning"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">会员卡</div>
+                <div class="aui-list-item-right">未开通</div>
+            </div>
+        </li>
+    </ul>
+</section>

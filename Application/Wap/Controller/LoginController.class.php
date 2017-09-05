@@ -22,9 +22,8 @@ class LoginController extends \Common\Controller\PublicController{
     public function __construct() {
         parent::__construct();
         // 登录页面样式
-        $this->css(array(
-            'Css/Wap/common','Css/Wap/login',
-        ));
+        $this->css('Css/Wap/login');
+        C('LAYOUT_NAME','Common/layout_login');
     }
     
     /**

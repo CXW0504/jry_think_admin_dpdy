@@ -20,9 +20,7 @@ class CommonController extends \Common\Controller\PublicController{
      */
     public function __construct() {
         parent::__construct();
-        $this->css(array(
-            'Css/Wap/common','Css/Wap/login',
-        ));
+        $this->wget('auicss');
         if(cookie('u_info') && !cookie('user_info')){
             // 如果设置了自动登录且目前未登录
             $this->auto_login();// 进行自动登录
