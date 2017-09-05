@@ -54,7 +54,11 @@ class LoginController extends \Common\Controller\PublicController{
         if(!I('post.')){
             return $this->display();
         }
-        dump(I('post.'));
+        echo get_api_data('User/login',array(
+            'username' => I('post.username'),
+            'password' => md5(I('post.password')),
+            'type' => 1,
+        ),'post');
     }
 
     /**

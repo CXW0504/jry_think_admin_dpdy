@@ -187,3 +187,19 @@ function check_wap() {
     }
     return false;
 }
+
+/**
+ * 将变量转换成Boolean类型
+ *      如果系统存在boolval函数就忽略，如果不存在就定义该函数
+ * 
+ * @return boolean
+ * @version v1.0.0
+ * @copyright (c) 2017, xiaoyutab
+ * @author xiaoyutab<xiaoyutab@qq.com>
+ * @adtime 2017-09-05 13:42:54
+ */
+if (!function_exists('boolval')) {
+    function boolval($val) {
+        return (bool) $val;
+    }
+}
