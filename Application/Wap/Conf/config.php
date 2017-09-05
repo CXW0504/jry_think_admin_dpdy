@@ -1,6 +1,8 @@
 <?php
 return array(
     'HTTP_URL_FIX' => 'http://xiaoyutab.cn/Api/',// URL前缀地址
+    'TMPL_ACTION_ERROR' => 'Common:tips_error',
+    'TMPL_ACTION_SUCCESS' => 'Common:tips_success',
     'HTML_CACHE_ON' => true, // 开启静态缓存
     'HTML_CACHE_TIME ' => -1, // 设置永久缓存
     'HTML_FILE_SUFFIX' => '.html',

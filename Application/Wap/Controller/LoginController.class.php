@@ -20,9 +20,6 @@ class LoginController extends \Common\Controller\PublicController{
      * @adtime 2017-09-01 16:56:24
      */
     public function __construct() {
-        $this->css(array(
-            'Css/Wap/common','Css/Wap/login',
-        ));
         parent::__construct();
     }
     
@@ -54,11 +51,15 @@ class LoginController extends \Common\Controller\PublicController{
         if(!I('post.')){
             return $this->display();
         }
-        echo get_api_data('User/login',array(
+        $info = get_api_data('User/login',array(
             'username' => I('post.username'),
             'password' => md5(I('post.password')),
             'type' => 1,
         ),'post');
+        dump($info);
+        if($info['code'] != 'R0000'){
+            $this->error($info['msg'],null,100000000);
+        }
     }
 
     /**

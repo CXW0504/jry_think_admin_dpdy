@@ -15,9 +15,10 @@ use Org\Net\Curl;
  * @param String $api_url 请求地址
  * @param array $api_data 附加参数
  * @param string $types 请求方式。get|post
+ * @param boolean $booleans 是否直接提取内容，默认转换成数组再返回
  * @return boolean
  */
-function get_api_data($api_url = '',$api_data = array(),$types = 'get'){
+function get_api_data($api_url = '',$api_data = array(),$types = 'get',$booleans = false){
     $curl = new Curl();
     $type = strtolower($types);// 讲类型转换为小写
     $api_url = C('HTTP_URL_FIX') . $api_url;
@@ -31,9 +32,17 @@ function get_api_data($api_url = '',$api_data = array(),$types = 'get'){
             $api_url .= '?_rand_nid=' . NOW_TIME . rand(1000, 9999);// 拼接一个随机字符串的_rand_nid，然后后面追加正常参数
             $api_url .= '&'.implode($api_data, '&');
         }
-        return $curl->get($api_url);
+        $data = $curl->get($api_url);
     } else if($type == 'post'){
-        return $curl->post($api_url, $api_data);
+        $data = $curl->post($api_url, $api_data);
+    } else {
+        $data = FALSE;
+    }
+    if($booleans){
+        return $data;
+    }
+    if($data){
+        return json_decode($data,TRUE);
     }
     return FALSE;
 }

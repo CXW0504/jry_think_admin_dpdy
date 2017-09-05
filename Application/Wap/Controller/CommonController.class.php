@@ -19,5 +19,8 @@ class CommonController extends \Common\Controller\PublicController{
      */
     public function __construct() {
         parent::__construct();
+        $this->css(array(
+            'Css/Wap/common','Css/Wap/login',
+        ));
     }
 }
