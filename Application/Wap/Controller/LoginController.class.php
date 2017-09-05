@@ -21,6 +21,10 @@ class LoginController extends \Common\Controller\PublicController{
      */
     public function __construct() {
         parent::__construct();
+        // 登录页面样式
+        $this->css(array(
+            'Css/Wap/common','Css/Wap/login',
+        ));
     }
     
     /**
@@ -56,10 +60,20 @@ class LoginController extends \Common\Controller\PublicController{
             'password' => md5(I('post.password')),
             'type' => 1,
         ),'post');
-        dump($info);
         if($info['code'] != 'R0000'){
-            $this->error($info['msg'],null,100000000);
+            $this->error($info['msg']);
         }
+        if(I('post.auto_login')){
+            // 如果选中了自动登录
+            cookie('u_info',array(
+                'uid' =>  $info['data']['uid'],// 用户编号
+                'token' => $info['data']['token'],// 设置用户登录token
+                'username' => $info['data']['username'],// 设置登录用户名
+            ),1536000);// 一年有效时间
+        }
+        session('user_info',$info['data']);// 有效时间到浏览器关闭
+        session('user_time',NOW_TIME); // 本次检测token时间
+        return $this->success('登录成功',U('User/info'));
     }
 
     /**

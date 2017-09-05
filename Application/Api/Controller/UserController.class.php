@@ -90,4 +90,64 @@ class UserController extends ApiController{
             'is_del' => boolval($info['status'] == 98)
         ));
     }
+    
+    /**
+     * 检测用户是否登录
+     * 
+     * @return json
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-09-05 17:01:16
+     */
+    public function check_user_loginAction(){
+        $tokens = new UserTokenModel();
+        $dat = I('post.');
+        $uid = $dat['uid'];// 用户名
+        $token = $dat['token'];// 密码,需要用户进行MD5计算以后再传输过来
+        $type = intval($dat['type']);// 登录设备类型 1网页登录2Android登录3IOS登录4微信登录5支付宝登录
+        if($tokens->check_user_token($uid, $token, $type)){
+            return $this->returnCode('R0000');
+        }
+        return $this->returnCode('U0005');
+    }
+    
+    /**
+     * 获取用户登录信息
+     * 
+     * @return json
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-09-05 17:20:13
+     */
+    public function get_user_infoAction(){
+        $tokens = new UserTokenModel();
+        $dat = I('post.');
+        $uid = $dat['uid'];// 用户名
+        $token = $dat['token'];// 密码,需要用户进行MD5计算以后再传输过来
+        $type = intval($dat['type']);// 登录设备类型 1网页登录2Android登录3IOS登录4微信登录5支付宝登录
+        
+        if($tokens->check_user_token($uid, $token, $type)){
+            // 如果检测token通过后则获取用户的信息进行返回
+            $users = new UserReceptionModel();
+            $info = $users->where(array('id'=>$uid,'status'=>array('neq',98)))->cache(true)->find();
+            $return_info = array(
+                'uid' => intval($info['id']),
+                'token' => $token,
+                'username' => $info['username'].'',
+                'nickname' => $info['nickname'].'',
+                'phone' => phont_view_type(3,$info['phone']).'',// 手机号隐藏中间四位
+                'email' => $info['email'].'',
+                'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
+                'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
+                'is_login' => boolval($info['status'] != 97),
+                'is_del' => boolval($info['status'] == 98)
+            );
+            if(!empty($info)){
+                return $this->returnCode($return_info);
+            }
+        }
+        return $this->returnCode('U0005');
+    }
 }

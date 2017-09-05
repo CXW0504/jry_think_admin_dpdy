@@ -1,6 +1,8 @@
 <?php
 return array(
     'HTTP_URL_FIX' => 'http://xiaoyutab.cn/Api/',// URL前缀地址
+    'COOKIE_PREFIX' => 'xy_'.md5('xiaoyutab_wap_'), // Cookie前缀 避免冲突
+    'TOKEN_CHECK_TIME' => 60, // TOKEN检测时间，即每隔多长时间检测一次。单位：秒
     'TMPL_ACTION_ERROR' => 'Common:tips_error',
     'TMPL_ACTION_SUCCESS' => 'Common:tips_success',
     'HTML_CACHE_ON' => true, // 开启静态缓存

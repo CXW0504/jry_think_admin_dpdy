@@ -23,7 +23,7 @@ class ApiController extends Controller {
      * @copyright (c) 2017, xiaoyutab
      * @adtime 2017-2-16 15:36:01
      */
-    public function returnCode($code = '') {
+    public function returnCode($code = 'R0000') {
         $error_code = C('ERROR_CODE');
         if (is_array($code)) {
             $success = array(

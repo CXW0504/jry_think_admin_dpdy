@@ -36,7 +36,7 @@ class UserReceptionModel extends AllModel{
         $data = $this->where(array(
             'username|phone|email' => trim($username),// 用户名相同
             'status' => array('neq',98) // 非删除用户
-        ))->select();
+        ))->cache(true)->select();
         // 如果没有该用户就返回false
         if(empty($data)){
             return FALSE;
