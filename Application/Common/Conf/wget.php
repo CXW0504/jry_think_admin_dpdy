@@ -80,6 +80,6 @@ return array(
     // AUI移动端样式库
     'auicss' => array(
         'js' => array('wget/auicss/aui-v2.1/script/api','wget/auicss/aui-v2.1/script/aui-actionsheet','wget/auicss/aui-v2.1/script/aui-collapse','wget/auicss/aui-v2.1/script/aui-dialog','wget/auicss/aui-v2.1/script/aui-lazyload','wget/auicss/aui-v2.1/script/aui-list-swipe-backup','wget/auicss/aui-v2.1/script/aui-list-swipe','wget/auicss/aui-v2.1/script/aui-popup-new','wget/auicss/aui-v2.1/script/aui-popup','wget/auicss/aui-v2.1/script/aui-pull-refresh','wget/auicss/aui-v2.1/script/aui-range','wget/auicss/aui-v2.1/script/aui-scroll','wget/auicss/aui-v2.1/script/aui-sharebox','wget/auicss/aui-v2.1/script/aui-skin','wget/auicss/aui-v2.1/script/aui-slide','wget/auicss/aui-v2.1/script/aui-tab','wget/auicss/aui-v2.1/script/aui-toast',),
-        'css' => array('wget/auicss/aui-v2.1/css/aui','wget/auicss/aui-v2.1/css/api','wget/auicss/aui-v2.1/css/aui-flex','wget/auicss/aui-v2.1/css/aui-pull-refresh')
+        'css' => array('wget/auicss/aui-v2.1/css/aui','wget/auicss/aui-v2.1/css/api','wget/auicss/aui-v2.1/css/aui-flex','wget/auicss/aui-v2.1/css/aui-pull-refresh','wget/auicss/aui-v2.1/css/aui-slide')
     ),
 );
