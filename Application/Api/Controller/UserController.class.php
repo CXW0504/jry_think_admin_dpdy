@@ -3,6 +3,7 @@ namespace Api\Controller;
 use Api\Model\UserReceptionModel;
 use Api\Model\UserTokenModel;
 use Api\Model\UserReceptionLogModel;
+use Admin\Model\FileLinkModel;
 
 /**
  * 用户相关接口列表
@@ -77,6 +78,8 @@ class UserController extends ApiController{
         }
         $user_log = new UserReceptionLogModel();
         $user_log->set_log($info['id'],1);// 设置登录日志
+        $file = new FileLinkModel();
+        $avatar = $file->get_file_info($info['id'], 'user_reception', TRUE);
         return $this->returnCode(array(
             'uid' => intval($info['id']),
             'token' => $user_token,
@@ -84,6 +87,7 @@ class UserController extends ApiController{
             'nickname' => $info['nickname'].'',
             'phone' => phont_view_type(3,$info['phone']).'',// 手机号隐藏中间四位
             'email' => $info['email'].'',
+            'avatar' => $avatar['thumb_200'],
             'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
             'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
             'is_login' => boolval($info['status'] != 97),

@@ -70,8 +70,8 @@ class LoginController extends \Common\Controller\PublicController{
                 'username' => $info['data']['username'],// 设置登录用户名
             ),1536000);// 一年有效时间
         }
-        session('user_info',$info['data']);// 有效时间到浏览器关闭
-        session('user_time',NOW_TIME); // 本次检测token时间
+        $_SESSION['user_info'] = $info['data'];// 有效时间到浏览器关闭
+        $_SESSION['user_time'] = NOW_TIME;// 本次检测token时间
         return $this->success('登录成功',U('User/info'));
     }
 

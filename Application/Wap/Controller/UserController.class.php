@@ -22,6 +22,7 @@ class UserController extends CommonController {
      * @adtime 2017-09-05 17:33:16
      */
     public function infoAction() {
+        dump($_SESSION);
         return $this->display();
     }
 
