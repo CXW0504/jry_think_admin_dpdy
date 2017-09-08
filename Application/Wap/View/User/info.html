@@ -1,18 +1,17 @@
 <style type="text/css">
-    .text-white {color: #ffffff !important;}
-    .aui-grid [class*=aui-col-] {padding: 0.75rem 0;}
+    .text-white {color: #ffffff !important;font-weight:bold !important;}
 </style>
 <section class="aui-content" id="user-info">
     <div class="aui-list aui-media-list aui-list-noborder aui-bg-info">
         <div class="aui-list-item aui-list-item-middle">
             <div class="aui-media-list-item-inner ">
                 <div class="aui-list-item-media" style="width:3rem;">
-                    <img src="__PUBLIC__/Images/Wap/my-aw.jpg" class="aui-img-round" >
+                    <img src="{:C('FILE_URL_FIX')}{$u_info.avatar}" class="aui-img-round">
                 </div>
                 <div class="aui-list-item-inner aui-list-item-arrow">
-                    <div class="aui-list-item-text text-white aui-font-size-18">38dd4ef6d</div>
+                    <div class="aui-list-item-text text-white aui-font-size-18">{$u_info.nickname}</div>
                     <div class="aui-list-item-text text-white">
-                        <div><i class="aui-iconfont aui-icon-mobile aui-font-size-14"></i>152****0989</div>
+                        <div><i class="aui-iconfont aui-icon-mobile aui-font-size-14"></i>{$u_info.phone}</div>
                     </div>
                 </div>
             </div>

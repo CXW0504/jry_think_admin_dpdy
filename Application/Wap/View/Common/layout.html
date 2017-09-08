@@ -21,30 +21,26 @@
 </head>
 <body>
     {__CONTENT__}
-    <footer class="aui-bar aui-bar-tab aui-border-t" id="footer">
-        <div class="aui-bar-tab-item aui-active" tapmode>
-            <i class="aui-iconfont aui-icon-home"></i>
-            <div class="aui-bar-tab-label">首页</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <i class="aui-iconfont aui-icon-paper"></i>
-            <div class="aui-bar-tab-label">健康</div>
-        </div>
-<!--        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-badge">99</div>
-            <i class="aui-iconfont aui-icon-cart"></i>
-            <div class="aui-bar-tab-label">购物车</div>
-        </div>-->
-        <div class="aui-bar-tab-item">
-            <i class="aui-iconfont aui-icon-location"></i>
-            <div class="aui-bar-tab-label">发现</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-dot"></div>
-            <i class="aui-iconfont aui-icon-my"></i>
-            <div class="aui-bar-tab-label">我的</div>
-        </div>
-    </footer>
+    <?php $menu = C('MENU_CONFIG.FOOTER_MENU'); if(!empty($menu)){
+        echo '<footer class="aui-bar aui-bar-tab aui-border-t" id="footer">';
+        foreach($menu as $k => $v){
+            echo '<div class="aui-bar-tab-item';
+            if($k == CONTROLLER_NAME){
+                echo ' aui-active';
+            }
+            echo '" onclick="location=\''.U($k.'/'.$v['index']).'\'">';
+            if($v['right_top_smail'] && !$v['right_top_big_type']){
+                echo '<div class="aui-dot"></div>';
+            }
+            if($v['right_top_big_type'] && !$v['right_top_smail']){
+                echo '<div class="aui-badge">'.$v['right_top_big'].'</div>';
+            }
+            echo '<i class="aui-iconfont '.$v['class'].'"></i>';
+            echo '<div class="aui-bar-tab-label">'.$v['label'].'</div>';
+            echo '</div>';
+        }
+        echo '</footer>';
+    }?>
 </body>
 <foreach name='__a__css_footer__' item='v'>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/{$v}.css" />
