@@ -91,7 +91,8 @@ class UserController extends ApiController{
             'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
             'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
             'is_login' => boolval($info['status'] != 97),
-            'is_del' => boolval($info['status'] == 98)
+            'is_del' => boolval($info['status'] == 98),
+                'info' => $avatar,
         ));
     }
     
@@ -136,6 +137,8 @@ class UserController extends ApiController{
             // 如果检测token通过后则获取用户的信息进行返回
             $users = new UserReceptionModel();
             $info = $users->where(array('id'=>$uid,'status'=>array('neq',98)))->cache(true)->find();
+            $file = new FileLinkModel();
+            $avatar = $file->get_file_info($info['id'], 'user_reception', TRUE);
             $return_info = array(
                 'uid' => intval($info['id']),
                 'token' => $token,
@@ -143,10 +146,12 @@ class UserController extends ApiController{
                 'nickname' => $info['nickname'].'',
                 'phone' => phont_view_type(3,$info['phone']).'',// 手机号隐藏中间四位
                 'email' => $info['email'].'',
+                'avatar' => $avatar['thumb_200'],
                 'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
                 'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
                 'is_login' => boolval($info['status'] != 97),
-                'is_del' => boolval($info['status'] == 98)
+                'is_del' => boolval($info['status'] == 98),
+                'info' => $avatar,
             );
             if(!empty($info)){
                 return $this->returnCode($return_info);
