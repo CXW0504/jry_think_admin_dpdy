@@ -87,12 +87,11 @@ class UserController extends ApiController{
             'nickname' => $info['nickname'].'',
             'phone' => phont_view_type(3,$info['phone']).'',// 手机号隐藏中间四位
             'email' => $info['email'].'',
-            'avatar' => $avatar['thumb_200'],
+            'avatar' => $avatar['file_info']['thumb_200'],
             'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
             'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
             'is_login' => boolval($info['status'] != 97),
             'is_del' => boolval($info['status'] == 98),
-                'info' => $avatar,
         ));
     }
     
@@ -146,12 +145,11 @@ class UserController extends ApiController{
                 'nickname' => $info['nickname'].'',
                 'phone' => phont_view_type(3,$info['phone']).'',// 手机号隐藏中间四位
                 'email' => $info['email'].'',
-                'avatar' => $avatar['thumb_200'],
+                'avatar' => $avatar['file_info']['thumb_200'],
                 'type' => intval($info['type']),// 用户类型,1抵押专员2调评专员3普通用户
                 'reg_time' => date('Y-m-d H:i:s',$info['ad_time']),
                 'is_login' => boolval($info['status'] != 97),
                 'is_del' => boolval($info['status'] == 98),
-                'info' => $avatar,
             );
             if(!empty($info)){
                 return $this->returnCode($return_info);
