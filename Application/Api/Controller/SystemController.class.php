@@ -56,7 +56,7 @@ class SystemController extends ApiController {
             );
         }
         return $this->returnCode(array(
-            'count' => $banner->get_banner_count($dat['p0'], $dat['p1'], $dat['type']),
+            'count' => $banner->get_banner_count($dat['type']),
             'list' => $return_list
         ));
     }
