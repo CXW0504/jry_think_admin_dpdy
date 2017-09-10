@@ -32,9 +32,9 @@ class SystemController extends ApiController {
         $dat['type'] || $dat['type'] = 1;
         $dat['p0'] || $dat['p0'] = 0;
         $dat['p1'] || $dat['p1'] = 20;
-        if(in_array($dat['type'], array(1))){
+        if(!in_array($dat['type'], array(1))){
             // 如果获取的type编号不在允许列表中,返回数据错误
-            return $this->returnCode('F0001');// UID必须大于0
+            return $this->returnCode('F0001');
         }
         $list = $banner->get_banner_list($dat['p0'], $dat['p1'], $dat['type']);
         if(empty($list)){
