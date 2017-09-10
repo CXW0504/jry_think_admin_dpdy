@@ -64,4 +64,29 @@ class BannerModel extends Model{
         }
         return $list;
     }
+    
+    /**
+     * 获取广告Banner条数
+     * 
+     * @param intval $p0 开始条数
+     * @param intval $p1 查询条数
+     * @param intval $type 获取类型,1手机
+     * @return int 查询到的条数
+     * @author xiaoyutab<xiaoyutab@qq.com>
+     * @version v1.0.0
+     * @copyright (c) 2017, xiaoyutab
+     * @adtime 2017-09-10 23:26:50
+     */
+    public function get_banner_count($p0 = 0,$p1 = 20,$type = 1){
+        if(!in_array($order, array('DESC','desc','ASC','asc'))){
+            return 0;
+        }
+        if(!in_array($type, array(1))){
+            return 0;
+        }
+        $count = $this
+                ->where(array('type'=> intval($type),'status'=>array('neq','98')))
+                ->count();
+        return intval($count);
+    }
 }

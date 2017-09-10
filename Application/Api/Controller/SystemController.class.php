@@ -55,7 +55,10 @@ class SystemController extends ApiController {
                 'thumb_200' => $v['file_info']['thumb_200'],
             );
         }
-        return $this->returnCode($return_list);
+        return $this->returnCode(array(
+            'count' => $banner->get_banner_count($dat['p0'], $dat['p1'], $dat['type']),
+            'list' => $return_list
+        ));
     }
 
     /**
