@@ -7,7 +7,7 @@
       <a href="{:U('System/refresh_all')}" target="right" class="button button-little bg-blue"><span class="icon-refresh"></span> 清除缓存</a> &nbsp;&nbsp;
       <a class="button button-little bg-red" href="{:U('Login/logout')}"><span class="icon-power-off"></span> 退出登录</a> </div>
 </div>
-<div class="leftnav">
+<div class="leftnav" style="overflow:auto;overflow-x:hidden;">
     <div class="leftnav-title"><h3>&nbsp;&nbsp;列表管理</h3></div>
   <?php $menu = C('MENU_CONFIG'); ?>
   <foreach item="v" name="menu" key="k">
@@ -20,6 +20,7 @@
         </foreach>
     </ul>   
   </foreach>
+  <h3 style="height:100px;">&nbsp;&nbsp;</h3>
 </div>
 <script type="text/javascript">
 $(function(){
