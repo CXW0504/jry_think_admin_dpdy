@@ -2,7 +2,7 @@
     <div id="docs_api_main">
         <div class="api_data">
             <div class="api_data_img png_bg">
-                <img src="__PUBLIC__/Upload/{$project.logo.file_info.file_path}" style="width:100%;height:100%;">
+                <img src="{:C('FILE_URL_FIX')}{$project.logo.file_info.file_path}" style="width:100%;height:100%;">
             </div>
             <div class="api_data_info">
                 <h2><strong>{$project.name}</strong></h2>
@@ -27,6 +27,7 @@
             <ul class="tabul clearfix">
                 <li id="apilists" class="active">API</li>
                 <li id="errorcode">错误码参照</li>
+                <li id="project_info">项目详情</li>
             </ul>
         </div>
         <div class="tabDiv">
@@ -49,6 +50,7 @@
                 </ul>
                 <div class="das_right">
                     <div class="simpleline"><strong>接口地址：</strong><span class="url">{$api_info.href}</span></div>
+                    <div class="simpleline"><strong>接口完整地址：</strong><span class="url">{$project.fix}{$api_info.href}</span></div>
                     <div class="simpleline"><strong>返回格式：</strong><span><?php 
                         $out = explode(',',$api_info['out_type']);
                         foreach($out as $k => $v){
@@ -126,6 +128,49 @@
                                 <td class="text">{$v}</td>
                             </tr>
                         </foreach>
+                    </table>
+                </div>
+            </div>
+            <div class="docs_api_show">
+                <div class="simpleline simpleTable">
+                    <b>项目详情信息：</b>
+                    <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th width="200">分类</th>
+                            <th>详情</th>
+                        </tr>
+                        <tr>
+                            <td class="url">项目名称</td>
+                            <td class="text">{$project.name}</td>
+                        </tr>
+                        <tr>
+                            <td class="url">项目所属</td>
+                            <td class="text">{$project.com_name}</td>
+                        </tr>
+                        <tr>
+                            <td class="url">项目参与人员</td>
+                            <td class="text">{$project.author}</td>
+                        </tr>
+                        <tr>
+                            <td class="url">文档编写人员</td>
+                            <td class="text">{$project.doc_author}</td>
+                        </tr>
+                        <tr>
+                            <td class="url">文档编写目的</td>
+                            <td class="text"><pre>{$project.md}</pre></td>
+                        </tr>
+                        <tr>
+                            <td class="url">文档名词解释</td>
+                            <td class="text"><pre>{$project.desc}</pre></td>
+                        </tr>
+                        <tr>
+                            <td class="url">项目备注</td>
+                            <td class="text"><pre>{$project.remarks}</pre></td>
+                        </tr>
+                        <tr>
+                            <td class="url">项目创建时间</td>
+                            <td class="text">{$project.ad_time|date="Y-m-d H:i:s",###}</td>
+                        </tr>
                     </table>
                 </div>
             </div>

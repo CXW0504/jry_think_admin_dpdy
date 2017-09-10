@@ -1,5 +1,6 @@
 <?php
 return array(
+    'FILE_URL_FIX' => 'http://xiaoyutab.cn/Public/Upload/',// 头像/下载文件等前缀地址
     'HTML_CACHE_ON' => true, // 开启静态缓存
     'HTML_CACHE_TIME ' => -1, // 设置永久缓存
     'HTML_FILE_SUFFIX' => '.html',
