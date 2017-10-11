@@ -28,6 +28,7 @@
             <th>文件类型</th>
             <th>文件大小</th>
             <th>缩略图</th>
+            <th>引用次数</th>
             <th width="15%">添加时间</th>
         </tr>
         <foreach name="list" item="v">
@@ -37,6 +38,7 @@
                 <td>{$v.type}</td>
                 <td>{$v.size|size_conversion=###}</td>
                 <td><img src="__PUBLIC__/Upload/{$v.thumb_100}" class="images" data-url="__PUBLIC__/Upload/{$v.file_path}" style="width:30px;" /></td>
+                <td>{$v.count_num}</td>
                 <td>{$v.ad_time|date="Y-m-d H:i:s",###}</td>
             </tr>
         </foreach>

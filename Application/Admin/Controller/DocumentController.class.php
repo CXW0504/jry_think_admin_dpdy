@@ -643,6 +643,13 @@ class DocumentController extends CommonController {
     	$page->setPageHtml('current_page_html','<span class="current">%CURRENT_PAGE_NUMBER%</span>');
     	$page->setConfig('theme','%UP_PAGE% %LINK_PAGE% %DOWN_PAGE%');
         $list = $file->where($where)->getList($page->firstRow, $page->listRows);
+        $file_link = new FileLinkModel();
+        foreach($list as $k => $v){
+            $list[$k]['count_num'] = $file_link->where(array(
+                'file_id'=>$v['id'],
+                'status' => array('neq',98)
+                ))->count();
+        }
         return $this->assign(array(
             'count' => $count,
             'list' => $list,
