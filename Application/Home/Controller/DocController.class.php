@@ -9,6 +9,7 @@ use Home\Model\ProjectApiParameterModel;
 use Home\Model\ProjectParameterTypeModel;
 use Home\Model\ProjectErrorCodeModel;
 use Home\Model\FileLinkModel;
+use Home\Model\LogModel;
 
 /**
  * 文档控制器模型
@@ -41,6 +42,9 @@ class DocController extends PublicController {
             echo '404 . Not Found';
             exit;
         }
+        // 初始化Log记录类
+        $log = new LogModel();
+        $info = $log->look_data('project',$info['id']);// 记录查看的数据编号
         $file_link = new FileLinkModel();
         $info['logo'] = $file_link->get_file_info($info['id'], 'project', TRUE);
         $err_code = new ProjectErrorCodeModel();
