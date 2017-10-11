@@ -44,7 +44,7 @@ class DocController extends PublicController {
         }
         // 初始化Log记录类
         $log = new LogModel();
-        $info = $log->look_data('project',$info['id']);// 记录查看的数据编号
+        $log->look_data('project',$info['id']);// 记录查看的数据编号
         $file_link = new FileLinkModel();
         $info['logo'] = $file_link->get_file_info($info['id'], 'project', TRUE);
         $err_code = new ProjectErrorCodeModel();
