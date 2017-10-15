@@ -69,6 +69,14 @@ class DocController extends PublicController {
         $ProjectParameterType_1 = $ProjectParameterTypeModel->get_type(1);
         // 获取返回类型列表
         $ProjectParameterType_2 = $ProjectParameterTypeModel->get_type(2);
+        $log = new LogModel();
+        $last_data = $log->where(array(
+            'user_name' => 33,
+            'old_key' => I('get.api_id',$list[0]['id'],'intval')
+        ))->order('`id` DESC')->find();
+        if(empty($last_data)){
+            $last_data['ad_time'] = strtotime('2017-01-01');
+        }
         $this->assign(array(
             'project' => $info,
             'error_code' => $error_code,
@@ -79,6 +87,7 @@ class DocController extends PublicController {
             'list_2' => $ProjectApiParameter_2,
             'type_1' => $ProjectParameterType_1,
             'type_2' => $ProjectParameterType_2,
+            'last_data' => $last_data,
         ));
         return $this->display();
     }
