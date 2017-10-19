@@ -82,4 +82,28 @@ return array(
         'js' => array('wget/auicss/aui-v2.1/script/api','wget/auicss/aui-v2.1/script/aui-actionsheet','wget/auicss/aui-v2.1/script/aui-collapse','wget/auicss/aui-v2.1/script/aui-dialog','wget/auicss/aui-v2.1/script/aui-lazyload','wget/auicss/aui-v2.1/script/aui-list-swipe-backup','wget/auicss/aui-v2.1/script/aui-list-swipe','wget/auicss/aui-v2.1/script/aui-popup-new','wget/auicss/aui-v2.1/script/aui-popup','wget/auicss/aui-v2.1/script/aui-pull-refresh','wget/auicss/aui-v2.1/script/aui-range','wget/auicss/aui-v2.1/script/aui-scroll','wget/auicss/aui-v2.1/script/aui-sharebox','wget/auicss/aui-v2.1/script/aui-skin','wget/auicss/aui-v2.1/script/aui-slide','wget/auicss/aui-v2.1/script/aui-tab','wget/auicss/aui-v2.1/script/aui-toast',),
         'css' => array('wget/auicss/aui-v2.1/css/aui','wget/auicss/aui-v2.1/css/api','wget/auicss/aui-v2.1/css/aui-flex','wget/auicss/aui-v2.1/css/aui-pull-refresh','wget/auicss/aui-v2.1/css/aui-slide')
     ),
+    // jquery 步进插件
+    'jquery-step' => array(
+        'js' => array('wget/jquery/jquery-step/jquery.step.min'),
+        'css' => array('wget/jquery/jquery-step/jquery.step'),
+    ),
+    // lay时间插件
+    // http://www.layui.com/laydate/
+    'laydata' => array(
+        'js' => array('wget/laydate/laydate-5.0.7/laydate'),
+    ),
+    // lay整套UI插件
+    // http://www.layui.com/doc/
+    'layui' => array(
+        // 默认按需加载
+        'js' => array('wget/layui/layui-v2.1.5/layui'),
+        'css' => array('wget/layui/layui-v2.1.5/css/layui'),
+    ),
+    // lay整套UI插件
+    // http://www.layui.com/doc/
+    'layui-all' => array(
+        // 全部加载方式
+        'js' => array('wget/layui/layui-v2.1.5/layui.all'),
+        'css' => array('wget/layui/layui-v2.1.5/css/layui'),
+    ),
 );
